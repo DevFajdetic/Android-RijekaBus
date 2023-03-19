@@ -19,4 +19,5 @@ You can also try from IDE 'clone or download' on project selection page.
 
 # Work-Done Log
 up to 18.03.2023 - Specifications file and basic design concepts created 
+\
 19.03.2023 - Created Project in Android Studio E, GitHub repository, Define SCRUM as project managment framework and some for next 2 weeks in Projects tab
