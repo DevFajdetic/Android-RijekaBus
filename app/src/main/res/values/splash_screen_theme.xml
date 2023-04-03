@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="Theme.BusSplashScreenTheme" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/color_secondary_dark</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/final__1_</item>
+        <item name="windowSplashScreenBackground">@color/wave</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/bus_illustration_2</item>
         <item name="postSplashScreenTheme">@style/Theme.RijekaBusApp</item>
     </style>
 </resources>

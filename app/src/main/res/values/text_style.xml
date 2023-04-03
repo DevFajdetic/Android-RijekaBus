@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- values/fonts.xml -->
+<?xml version="1.0" encoding="utf-8"?><!-- values/fonts.xml -->
 <resources>
+
     <style name="DisplayExtraLargeNLv1Right">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -9,6 +9,7 @@
         <item name="android:lineSpacingExtra">0sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="DisplayExtraLargeNLv1Left">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
@@ -16,6 +17,7 @@
         <item name="android:lineSpacingExtra">0sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="DisplayExtraLargeNLv1Center">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -24,6 +26,7 @@
         <item name="android:lineSpacingExtra">0sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="HeadlineLargeNLv1Right">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -31,12 +34,14 @@
         <item name="android:textSize">32sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="HeadlineLargeNLv1Left">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">32sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="HeadlineLargeNLv1Center">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -44,6 +49,7 @@
         <item name="android:textSize">32sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="DisplayLargeNLv1Right">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -52,6 +58,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="DisplayLargeNLv1Left">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
@@ -59,6 +66,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="DisplayLargeNLv1Center">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -67,6 +75,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="HeadlineMediumNLv1Right">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -75,6 +84,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="HeadlineMediumNLv1Left">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">bold</item>
@@ -82,6 +92,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="HeadlineMediumNLv1Center">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -90,6 +101,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="HeadlineMediumOnColorRight">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -98,6 +110,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/on_color_on_color_primary</item>
     </style>
+
     <style name="HeadlineMediumOnColorLeft">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">bold</item>
@@ -105,6 +118,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/on_color_on_color_primary</item>
     </style>
+
     <style name="HeadlineMediumOnColorCenter">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -113,6 +127,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/on_color_on_color_primary</item>
     </style>
+
     <style name="SpecificAndroidHeaderTitleOnColorPrimaryLeft">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
@@ -120,6 +135,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/on_color_on_color_primary</item>
     </style>
+
     <style name="SpecificIOsHeaderTitleNLv1Center">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -128,6 +144,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="SpecificIOsHeaderTitleOnColorPrimaryCenter">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -136,6 +153,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/on_color_on_color_primary</item>
     </style>
+
     <style name="BodyLargeNLv2Right">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -144,6 +162,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_2</item>
     </style>
+
     <style name="BodyLargeNLv2Left">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
@@ -151,6 +170,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_2</item>
     </style>
+
     <style name="BodyLargeNLv2Center">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -159,6 +179,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_2</item>
     </style>
+
     <style name="BodyLargeNLv1Right">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -167,6 +188,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="BodyLargeNLv1Left">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
@@ -174,6 +196,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="BodyLargeNLv1Center">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -182,6 +205,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="HeadlineSmallNLv2Right">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -190,6 +214,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_2</item>
     </style>
+
     <style name="HeadlineSmallNLv2Left">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">bold</item>
@@ -197,6 +222,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_2</item>
     </style>
+
     <style name="HeadlineSmallNLv2Center">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -205,6 +231,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_2</item>
     </style>
+
     <style name="HeadlineSmallNLv1Right">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -213,6 +240,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="HeadlineSmallNLv1Left">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">bold</item>
@@ -220,6 +248,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="HeadlineSmallNLv1Center">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -228,6 +257,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="ButtonLabelSecondaryRight">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -237,6 +267,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/color_secondary</item>
     </style>
+
     <style name="ButtonLabelSecondaryLeft">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
@@ -245,6 +276,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/color_secondary</item>
     </style>
+
     <style name="ButtonLabelSecondaryCenter">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -254,6 +286,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/color_secondary</item>
     </style>
+
     <style name="ButtonLabelPrimaryRight">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -263,6 +296,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/color_primary</item>
     </style>
+
     <style name="ButtonLabelPrimaryLeft">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
@@ -271,6 +305,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/color_primary</item>
     </style>
+
     <style name="ButtonLabelPrimaryCenter">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -280,6 +315,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/color_primary</item>
     </style>
+
     <style name="ButtonLabelOnSurfaceRight">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -289,6 +325,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/on_color_on_color_primary</item>
     </style>
+
     <style name="ButtonLabelOnSurfaceLeft">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
@@ -297,6 +334,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/on_color_on_color_primary</item>
     </style>
+
     <style name="ButtonLabelOnSurfaceCenter">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -306,6 +344,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/on_color_on_color_primary</item>
     </style>
+
     <style name="ButtonLabelErrorRight">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -315,6 +354,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/status_error</item>
     </style>
+
     <style name="ButtonLabelErrorLeft">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
@@ -323,6 +363,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/status_error</item>
     </style>
+
     <style name="ButtonLabelErrorCenter">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -332,6 +373,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/status_error</item>
     </style>
+
     <style name="BodyMediumNLv2Right">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -340,6 +382,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_2</item>
     </style>
+
     <style name="BodyMediumNLv2Left">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
@@ -347,6 +390,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_2</item>
     </style>
+
     <style name="BodyMediumNLv2Center">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -355,6 +399,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_2</item>
     </style>
+
     <style name="BodyMediumNLv1Right">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -363,6 +408,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="BodyMediumNLv1Left">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
@@ -370,6 +416,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="BodyMediumNLv1Center">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -378,6 +425,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="BodyMediumOnColorRight">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -386,6 +434,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/on_color_on_color_primary</item>
     </style>
+
     <style name="BodyMediumOnColorLeft">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
@@ -393,6 +442,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/on_color_on_color_primary</item>
     </style>
+
     <style name="BodyMediumOnColorCenter">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
@@ -400,6 +450,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/on_color_on_color_primary</item>
     </style>
+
     <style name="AssistiveNLv2Right">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -408,6 +459,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_2</item>
     </style>
+
     <style name="AssistiveNLv2Left">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
@@ -415,6 +467,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_2</item>
     </style>
+
     <style name="AssistiveNLv2Center">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -423,6 +476,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_2</item>
     </style>
+
     <style name="AssistiveNLv1Right">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -431,6 +485,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="AssistiveNLv1Left">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
@@ -438,6 +493,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="AssistiveNLv1Center">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -446,6 +502,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="AssistiveSecondaryRight">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -454,6 +511,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/color_secondary</item>
     </style>
+
     <style name="AssistiveSecondaryLeft">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
@@ -461,6 +519,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/color_secondary</item>
     </style>
+
     <style name="AssistiveSecondaryCenter">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -469,6 +528,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/color_secondary</item>
     </style>
+
     <style name="AssistivePrimaryRight">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -477,6 +537,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/color_primary</item>
     </style>
+
     <style name="AssistivePrimaryLeft">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
@@ -484,6 +545,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/color_primary</item>
     </style>
+
     <style name="AssistivePrimaryCenter">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -492,6 +554,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/color_primary</item>
     </style>
+
     <style name="AssistiveOnColorPrimaryRight">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -500,6 +563,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/on_color_on_color_primary</item>
     </style>
+
     <style name="AssistiveOnColorPrimaryLeft">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
@@ -507,6 +571,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/on_color_on_color_primary</item>
     </style>
+
     <style name="AssistiveOnColorPrimaryCenter">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -515,6 +580,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/on_color_on_color_primary</item>
     </style>
+
     <style name="AssistiveErrorRight">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -523,6 +589,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/status_error</item>
     </style>
+
     <style name="AssistiveErrorLeft">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
@@ -530,6 +597,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/status_error</item>
     </style>
+
     <style name="AssistiveErrorCenter">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -538,6 +606,7 @@
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">@color/status_error</item>
     </style>
+
     <style name="DescriptionNLv2Right">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -547,6 +616,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_2</item>
     </style>
+
     <style name="DescriptionNLv2Left">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
@@ -555,6 +625,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_2</item>
     </style>
+
     <style name="DescriptionNLv2Center">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -564,6 +635,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_2</item>
     </style>
+
     <style name="DescriptionNLv1Right">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -573,6 +645,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="DescriptionNLv1Left">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
@@ -581,6 +654,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="DescriptionNLv1Center">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -590,6 +664,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/neutrals_n_lv_1</item>
     </style>
+
     <style name="DescriptionOnColorRight">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -599,6 +674,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/on_color_on_color_primary</item>
     </style>
+
     <style name="DescriptionOnColorLeft">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">normal</item>
@@ -607,6 +683,7 @@
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/on_color_on_color_primary</item>
     </style>
+
     <style name="DescriptionOnColorCenter">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:fontFamily">sans-serif-medium</item>
