@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Rijeka Bus</string>
     <string name="hello_world">Hello World</string>
+    <string name="bus_illustration">Bus illustration</string>
+    <string name="app_description">Discover Rijeka public transport</string>
+    <string name="login_description_detailed">Detailed information and navigation for bus lines and stations in city of Rijeka.</string>
+    <string name="try_without_an_account">TRY WITHOUT AN ACCOUNT</string>
+    <string name="sign_in_with_google">SIGN IN WITH GOOGLE</string>
 </resources>
