@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jlleitschuh.gradle.ktlint' version "11.1.0"
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -33,6 +34,8 @@ android {
     }
 }
 
+tasks.getByPath("preBuild").dependsOn("ktlintFormat")
+
 ktlint {
     android = true
     ignoreFailures = false
@@ -51,4 +54,13 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // Splash Screen API
+    implementation 'androidx.core:core-splashscreen:1.0.0'
+    // Google Play Services
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'com.google.android.gms:play-services-auth:20.4.1'
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:31.4.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx'
 }
