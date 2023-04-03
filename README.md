@@ -22,3 +22,5 @@ up to 18.03.2023 - Specifications file and basic design concepts created
 \
 19.03.2023 - Created Project in Android Studio E, GitHub repository with ReadMe and GitIgnore, Define SCRUM as project management framework and some for next 2 weeks in Projects tab
 \
+27.03. - 04.04. - Completed Login activity design and functionality, Firebase and Google Services for authentication dependencies and logic, View Binding dependency, Additionally SavedPreference object added to retrieve User Profile data for future uses, Text Styles xml
+\
