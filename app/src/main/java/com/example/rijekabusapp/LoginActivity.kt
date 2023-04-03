@@ -1,7 +1,11 @@
 package com.example.rijekabusapp
 
 import android.content.Intent
+import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.rijekabusapp.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -10,16 +14,13 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    lateinit var mGoogleSignInClient: GoogleSignInClient
-    val req_code = 123
-    val firebaseAuth = FirebaseAuth.getInstance()
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private val req_code = 123
+    private val firebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,11 +40,11 @@ class LoginActivity : AppCompatActivity() {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        binding.btnSignIn.setOnClickListener {
+        binding.googleSignIn.setOnClickListener {
             signInGoogle()
         }
 
-        binding.btnNoAcc.setOnClickListener {
+        binding.anonymousSignIn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             this.startActivity(intent)
         }
@@ -79,6 +80,7 @@ class LoginActivity : AppCompatActivity() {
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 SavedPreference.setUsername(this, account.email.toString())
+                SavedPreference.setPictureUrl(this, account.photoUrl.toString())
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
