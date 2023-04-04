@@ -7,4 +7,5 @@
     <string name="login_description_detailed">Detailed information and navigation for bus lines and stations in city of Rijeka.</string>
     <string name="try_without_an_account">Try without an account</string>
     <string name="sign_in_with_google">Sign in with google</string>
+    <string name="user_profile_picture">User profile picture</string>
 </resources>
