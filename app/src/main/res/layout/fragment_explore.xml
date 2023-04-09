@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gradient_background"
+    tools:context=".ExploreFragment">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profile_pic_wrapper"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05">
+
+        <ImageView
+            android:id="@+id/user_profile_pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/user_profile_picture"
+            android:scaleType="centerCrop"
+            android:src="@color/wave" />
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/user_profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/placeholder"
+        android:textAppearance="@style/BodyLargeNLv1Left"
+        app:layout_constraintBottom_toTopOf="@id/user_profile_address"
+        app:layout_constraintStart_toEndOf="@id/profile_pic_wrapper"
+        app:layout_constraintTop_toTopOf="@id/profile_pic_wrapper" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/user_profile_surname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/placeholder"
+        android:textAppearance="@style/BodyLargeNLv1Left"
+        app:layout_constraintBottom_toTopOf="@id/user_profile_address"
+        app:layout_constraintStart_toEndOf="@id/user_profile_name"
+        app:layout_constraintTop_toTopOf="@id/profile_pic_wrapper" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/user_profile_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/placeholder"
+        android:textAppearance="@style/BodyMediumNLv1Center"
+        app:layout_constraintBottom_toBottomOf="@id/profile_pic_wrapper"
+        app:layout_constraintStart_toEndOf="@id/profile_pic_wrapper"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_name" />
+
+    <ImageView
+        android:id="@+id/weather_ic"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@color/bluish"
+        app:layout_constraintBottom_toBottomOf="@id/profile_pic_wrapper"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/user_profile_surname"
+        app:layout_constraintTop_toTopOf="@id/profile_pic_wrapper" />
+
+    <View
+        android:id="@+id/explore_line"
+        android:layout_width="0dp"
+        android:layout_height="0.6dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/grey"
+        app:layout_constraintEnd_toEndOf="@id/weather_ic"
+        app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
+        app:layout_constraintTop_toBottomOf="@id/profile_pic_wrapper" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/important_information"
+        android:textAppearance="@style/BodyMediumNLv1Center"
+        app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
+        app:layout_constraintTop_toBottomOf="@id/explore_line" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/news"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
+        app:layout_constraintTop_toBottomOf="@id/text" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/produljenje"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="@id/weather_ic"
+        app:layout_constraintTop_toBottomOf="@id/text" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/telefon"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
+        app:layout_constraintTop_toBottomOf="@id/news" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/mail"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
+        app:layout_constraintTop_toBottomOf="@id/telefon" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/nesto"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@color/white"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="1dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="@id/weather_ic"
+        app:layout_constraintTop_toBottomOf="@id/produljenje" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

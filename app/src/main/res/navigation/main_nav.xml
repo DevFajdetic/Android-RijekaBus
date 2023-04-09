@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/exploreFragment">
+
+    <fragment
+        android:id="@+id/exploreFragment"
+        android:name="com.example.rijekabusapp.ExploreFragment"
+        android:label="Explore"
+        tools:layout="@layout/fragment_explore" />
+    <fragment
+        android:id="@+id/linesFragment"
+        android:name="com.example.rijekabusapp.LinesFragment"
+        android:label="Bus Lines"
+        tools:layout="@layout/fragment_blank" />
+    <fragment
+        android:id="@+id/stationsFragment"
+        android:name="com.example.rijekabusapp.StationsFragment"
+        android:label="Bus Stations"
+        tools:layout="@layout/fragment_stations" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.rijekabusapp.FavoritesFragment"
+        android:label="Favorites"
+        tools:layout="@layout/fragment_favorites" />
+</navigation>

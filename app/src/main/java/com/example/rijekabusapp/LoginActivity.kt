@@ -36,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.web_client_id))
             .requestEmail()
+            .requestProfile()
             .build()
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
@@ -79,8 +80,10 @@ class LoginActivity : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                SavedPreference.setUsername(this, account.email.toString())
+                SavedPreference.setEmail(this, account.email.toString())
                 SavedPreference.setPictureUrl(this, account.photoUrl.toString())
+                SavedPreference.setGivenName(this, account.givenName.toString())
+                SavedPreference.setFamilyName(this, account.familyName.toString())
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
