@@ -6,7 +6,7 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="grey">#D9050505</color>
+    <color name="grey">#D95C5A5A</color>
     <color name="white">#FFFFFFFF</color>
     <color name="some">#EC7D2B</color>
     <!-- CUSTOM APP COLORS -->
@@ -69,5 +69,8 @@
     <color name="wave">#0099ff</color>
     <color name="gradient_white">#E5ECEE</color>
     <color name="gradient_blue">#B0D7E6</color>
-    <color name="gradient_purple">#DABBFC</color>
+    <color name="gradient_purple">#A7D5E6</color>
+    <color name="clean_blue">#2573FA</color>
+    <color name="fade_blue">#82A0AF</color>
+    <color name="favorites_background">#0B9CDB</color>
 </resources>
