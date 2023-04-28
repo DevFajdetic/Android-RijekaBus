@@ -1,11 +1,13 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface_surface_0">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
@@ -20,10 +22,23 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvFavoriteLines"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/bus_line_item_view"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="14dp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/dividerHorizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvStationsTitle"
@@ -37,11 +52,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvFavoriteTeams"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/bus_station_item_view"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="14dp" />
 
     </LinearLayout>
 
-</ScrollView>
+</LinearLayout>
