@@ -29,7 +29,7 @@
     <color name="status_success">#557d23</color>
     <color name="elevation_elevation_1">#19000000</color>
     <color name="elevation_elevation_2">#33000000</color>
-    <color name="overlay_overlay">#8B000000</color>
+    <color name="overlay_overlay">#00000000</color>
     <color name="team_pacers_primary">#fcb424</color>
     <color name="team_bulls_primary">#ce1141</color>
     <color name="team_hornets_primary">#008ca8</color>

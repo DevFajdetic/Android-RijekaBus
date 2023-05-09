@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/exploreFragment"
-        android:name="com.example.rijekabusapp.ExploreFragment"
+        android:name="com.example.rijekabusapp.fragments.ExploreFragment"
         android:label="Explore"
         tools:layout="@layout/fragment_explore" />
     <fragment
         android:id="@+id/linesFragment"
-        android:name="com.example.rijekabusapp.LinesFragment"
+        android:name="com.example.rijekabusapp.fragments.LinesFragment"
         android:label="Bus Lines"
-        tools:layout="@layout/fragment_blank" />
+        tools:layout="@layout/fragment_lines" />
     <fragment
         android:id="@+id/stationsFragment"
-        android:name="com.example.rijekabusapp.StationsFragment"
+        android:name="com.example.rijekabusapp.fragments.StationsFragment"
         android:label="Bus Stations"
         tools:layout="@layout/fragment_stations" />
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.example.rijekabusapp.FavoritesFragment"
+        android:name="com.example.rijekabusapp.fragments.FavoritesFragment"
         android:label="Favorites"
         tools:layout="@layout/fragment_favorites" />
 </navigation>

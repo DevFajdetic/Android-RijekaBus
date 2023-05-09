@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/gradient_background"
-    tools:context=".ExploreFragment">
+    android:theme="@style/Theme.RijekaBusApp"
+    tools:context=".fragments.ExploreFragment">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/profile_pic_wrapper"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -28,7 +29,7 @@
             android:scaleType="centerCrop"
             android:src="@color/wave" />
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/user_profile_name"
@@ -76,10 +77,10 @@
     <View
         android:id="@+id/explore_line"
         android:layout_width="0dp"
-        android:layout_height="0.6dp"
+        android:layout_height="2dp"
         android:layout_marginTop="24dp"
-        android:background="@color/grey"
-        app:layout_constraintEnd_toEndOf="@id/weather_ic"
+        android:background="#D4D6F0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
         app:layout_constraintTop_toBottomOf="@id/profile_pic_wrapper" />
 
@@ -93,62 +94,150 @@
         app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
         app:layout_constraintTop_toBottomOf="@id/explore_line" />
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/news"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="170dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="#EEEEFC"
+        app:cardCornerRadius="15dp"
         app:cardElevation="2dp"
         app:cardUseCompatPadding="true"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/white"
-        app:cardCornerRadius="15dp"
         app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
-        app:layout_constraintTop_toBottomOf="@id/text" />
+        app:layout_constraintTop_toBottomOf="@id/text"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp">
 
-    <androidx.cardview.widget.CardView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            android:text="News"
+            android:textAppearance="@style/BodyLargeNLv1Center" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom|end"
+            android:src="@drawable/img_news" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/produljenje"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="170dp"
+        android:layout_height="160dp"
         android:layout_marginTop="16dp"
         android:background="@color/white"
         app:cardCornerRadius="15dp"
         app:cardElevation="2dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="@id/weather_ic"
-        app:layout_constraintTop_toBottomOf="@id/text" />
+        app:layout_constraintTop_toBottomOf="@id/text">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/telefon"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_gravity="bottom|end"
+            android:src="@drawable/img_id_card" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            android:text="Extend"
+            android:textAppearance="@style/BodyLargeNLv1Center" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:layout_width="170dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="19dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
+        app:layout_constraintTop_toBottomOf="@id/news">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/telefon"
+            android:layout_width="170dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:layout_margin="8dp"
+                android:text="Telephone"
+                android:textAppearance="@style/BodyLargeNLv1Center" />
+
+            <ImageView
+                android:layout_width="52dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|end"
+                android:src="@drawable/img_telephone" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mail"
+            android:layout_width="170dp"
+            android:layout_height="60dp"
+            android:background="@color/white"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
+            app:layout_constraintTop_toBottomOf="@id/telefon">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:layout_margin="8dp"
+                android:text="Mail"
+                android:textAppearance="@style/BodyLargeNLv1Center" />
+
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|end"
+                android:src="@drawable/img_mail" />
+
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/chat"
+        android:layout_width="170dp"
+        android:layout_height="160dp"
         android:layout_marginTop="16dp"
         android:background="@color/white"
         app:cardCornerRadius="15dp"
         app:cardElevation="2dp"
         app:cardUseCompatPadding="true"
-        app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
-        app:layout_constraintTop_toBottomOf="@id/news" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/mail"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="2dp"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
-        app:layout_constraintTop_toBottomOf="@id/telefon" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/nesto"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:background="@color/white"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="1dp"
-        app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="@id/weather_ic"
-        app:layout_constraintTop_toBottomOf="@id/produljenje" />
+        app:layout_constraintTop_toBottomOf="@id/produljenje">
+
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_gravity="bottom|end"
+            android:src="@drawable/img_id_card" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            android:text="Extend"
+            android:textAppearance="@style/BodyLargeNLv1Center" />
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

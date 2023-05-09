@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="SpinnerItemsLines" >
+        <item>Svi smjerovi</item>
+        <item>Smjer Istok</item>
+        <item>Smjer Zapad</item>
+    </string-array>
+</resources>

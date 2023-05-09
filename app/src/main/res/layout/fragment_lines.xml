@@ -116,10 +116,10 @@
             android:theme="@style/HeadlineSmallNLv2Left"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            tools:text="All stations" />
+            tools:text="All Bus Lines Rijeka" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPlayers"
+            android:id="@+id/rvLines"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -127,7 +127,7 @@
             android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvAll"
-            tools:listitem="@layout/bus_station_item_view" />
+            tools:listitem="@layout/bus_line_item_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
