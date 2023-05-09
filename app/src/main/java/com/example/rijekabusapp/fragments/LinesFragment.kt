@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rijekabusapp.R
 import com.example.rijekabusapp.databinding.FragmentLinesBinding
 
@@ -17,11 +19,12 @@ class LinesFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentLinesBinding.inflate(inflater, container, false)
+        binding.rvLines.layoutManager = LinearLayoutManager(requireContext())
 
-        val directions = arrayOf("Istok -> Zapad", "Zapad -> Istok")
+        val directions = resources.getStringArray(R.array.SpinnerItemsLines)
         val spinnerAdapter = ArrayAdapter(
             requireContext(),
             R.layout.drop_down_item,
