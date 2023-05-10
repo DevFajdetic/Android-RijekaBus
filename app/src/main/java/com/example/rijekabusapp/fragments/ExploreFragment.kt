@@ -19,7 +19,7 @@ class ExploreFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        //setupUserProfile()
+        // setupUserProfile()
         return inflater.inflate(R.layout.fragment_explore, container, false)
     }
 

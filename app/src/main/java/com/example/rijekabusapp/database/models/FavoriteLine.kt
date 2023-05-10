@@ -1,4 +1,3 @@
 package com.example.rijekabusapp.database.models
 
-class FavoriteLine {
-}
+class FavoriteLine
