@@ -10,18 +10,16 @@ import retrofit2.http.Query
 interface BusService {
     @GET("ATlinije.json")
     suspend fun getAllLines(
-        @Query("per_page") numberOfResults: Int, @Query("page") pageNumber: Int
+        @Query("per_page") numberOfResults: Int,
+        @Query("page") pageNumber: Int
     ): LinesResponse
 
     @GET("ATstanice.json")
-    suspend fun getAllStations(
-    ): StationsResponse
+    suspend fun getAllStations(): StationsResponse
 
     @GET("ATPoz.php?type=json")
-    suspend fun getAllBusesLocations(
-    ): BusesLocationsResponse
+    suspend fun getAllBusesLocations(): BusesLocationsResponse
 
     @GET("ATvoznired.json")
-    suspend fun getTodaySchedule(
-    ): ScheduleResponse
+    suspend fun getTodaySchedule(): ScheduleResponse
 }

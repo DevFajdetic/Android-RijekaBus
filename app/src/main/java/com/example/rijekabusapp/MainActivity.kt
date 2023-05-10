@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.rijekabusapp.databinding.ActivityMainBinding
 import com.google.android.material.shape.CornerFamily
@@ -36,16 +34,5 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = binding.fragmentContainerView.getFragment() as NavHostFragment
         navController = navHostFragment.navController
         binding.mainNavView.setupWithNavController(navController)
-        setupActionBarWithNavController(
-            navController,
-            AppBarConfiguration(
-                setOf(
-                    R.id.exploreFragment,
-                    R.id.favoritesFragment,
-                    R.id.linesFragment,
-                    R.id.stationsFragment
-                )
-            )
-        )
     }
 }

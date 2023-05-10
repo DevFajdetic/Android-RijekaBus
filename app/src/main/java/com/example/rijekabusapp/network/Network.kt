@@ -11,7 +11,7 @@ const val BASE_URL_WEATHER = "https://www.metaweather.com/api/"
 class Network {
 
     private val busService: BusService
-    //private val weatherService: WeatherService
+    // private val weatherService: WeatherService
 
     init {
         val interceptor = HttpLoggingInterceptor()
@@ -32,10 +32,10 @@ class Network {
                 ).build()
         */
         busService = retrofitBus.create(BusService::class.java)
-        //weatherService = retrofitWeather.create(WeatherService::class.java)
+        // weatherService = retrofitWeather.create(WeatherService::class.java)
     }
 
     fun getBusService(): BusService = busService
 
-    //fun getWeatherService(): WeatherService = weatherService
+    // fun getWeatherService(): WeatherService = weatherService
 }

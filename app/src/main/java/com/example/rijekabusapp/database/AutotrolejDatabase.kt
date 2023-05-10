@@ -29,5 +29,4 @@ abstract class AutotrolejDatabase : RoomDatabase() {
             Room.databaseBuilder(context, AutotrolejDatabase::class.java, "AutotrolejDatabase")
                 .allowMainThreadQueries().build()
     }
-
 }

@@ -26,7 +26,6 @@ interface AutotrolejDao {
     @Query("DELETE FROM favoritePlayers")
     fun deleteFavoriteLines()
 
-
     // Favorite Station
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavoriteStation(station: FavoriteStation)
