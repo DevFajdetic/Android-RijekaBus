@@ -1,11 +1,12 @@
 package com.example.rijekabusapp.network
 
+import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-const val BASE_URL_BUS = "http://e-usluge2.rijeka.hr/OpenData/"
+const val BASE_URL_BUS = "https://e-usluge2.rijeka.hr/OpenData/"
 const val BASE_URL_WEATHER = "https://www.metaweather.com/api/"
 
 class Network {
@@ -19,7 +20,14 @@ class Network {
         val httpClient = OkHttpClient.Builder().addInterceptor(interceptor)
 
         val retrofitBus = Retrofit.Builder().baseUrl(BASE_URL_BUS)
-            .addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build()
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(
+                httpClient
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(120, TimeUnit.SECONDS)
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .build()
+            ).build()
 
         /*val retrofitWeather =
             Retrofit.Builder().baseUrl(BASE_URL_WEATHER)

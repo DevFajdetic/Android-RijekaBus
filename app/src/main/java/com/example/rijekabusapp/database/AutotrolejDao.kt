@@ -11,37 +11,37 @@ interface AutotrolejDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavoriteLine(line: FavoriteLine)
 
-    @Query("SELECT * FROM favoritePlayers")
+    @Query("SELECT * FROM favoriteLines")
     fun getFavoriteLines(): List<FavoriteLine>
 
-    @Query("SELECT * FROM favoritePlayers")
+    @Query("SELECT * FROM favoriteLines")
     suspend fun getFavoriteLinesAsync(): List<FavoriteLine>
 
-    @Query("SELECT * FROM favoritePlayers WHERE id = :id")
+    @Query("SELECT * FROM favoriteLines WHERE id = :id")
     fun isLineFavorite(id: Int): Boolean
 
     @Delete
     fun deleteFavoriteLine(line: FavoriteLine)
 
-    @Query("DELETE FROM favoritePlayers")
+    @Query("DELETE FROM favoriteLines")
     fun deleteFavoriteLines()
 
     // Favorite Station
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavoriteStation(station: FavoriteStation)
 
-    @Query("SELECT * FROM favoriteTeams")
+    @Query("SELECT * FROM favoriteStations")
     fun getFavoriteStations(): List<FavoriteStation>
 
-    @Query("SELECT * FROM favoriteTeams")
+    @Query("SELECT * FROM favoriteStations")
     suspend fun getFavoriteStationsAsync(): List<FavoriteStation>
 
-    @Query("SELECT * FROM favoriteTeams WHERE id = :id")
+    @Query("SELECT * FROM favoriteStations WHERE id = :id")
     fun isStationFavorite(id: Int): Boolean
 
     @Delete
     fun deleteFavoriteStation(station: FavoriteStation)
 
-    @Query("DELETE FROM favoriteTeams")
+    @Query("DELETE FROM favoriteStations")
     fun deleteFavoriteStations()
 }
