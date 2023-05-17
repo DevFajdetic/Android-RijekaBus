@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/ivTeamImage"
+            android:id="@+id/ivLineNumber"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -30,7 +30,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/tvPlayerName"
+        android:id="@+id/tvLineName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="72dp"
@@ -42,20 +42,20 @@
         tools:text="LeBron James" />
 
     <TextView
-        android:id="@+id/tvPlayerTeam"
+        android:id="@+id/tvDirection"
         android:layout_width="168dp"
         android:layout_height="20dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:theme="@style/BodyMediumNLv2Left"
         app:layout_constraintStart_toEndOf="@+id/imageContainer"
-        app:layout_constraintTop_toBottomOf="@id/tvPlayerName"
+        app:layout_constraintTop_toBottomOf="@id/tvLineName"
         tools:text="LAL" />
 
     <ImageButton
         android:id="@+id/btnFavorite"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginEnd="24dp"
         android:background="@android:color/transparent"
         android:src="@drawable/favorite_button_selector"

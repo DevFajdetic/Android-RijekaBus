@@ -5,14 +5,10 @@ import com.example.rijekabusapp.network.response.LinesResponse
 import com.example.rijekabusapp.network.response.ScheduleResponse
 import com.example.rijekabusapp.network.response.StationsResponse
 import retrofit2.http.GET
-import retrofit2.http.Query
 
 interface BusService {
     @GET("ATlinije.json")
-    suspend fun getAllLines(
-        @Query("per_page") numberOfResults: Int,
-        @Query("page") pageNumber: Int
-    ): LinesResponse
+    suspend fun getAllLines(): LinesResponse
 
     @GET("ATstanice.json")
     suspend fun getAllStations(): StationsResponse
