@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/surface_surface_0"
-    android:theme="@style/Theme.RijekaBusApp"
-    tools:context=".fragments.ExploreFragment">
+    android:theme="@style/Theme.RijekaBusApp" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -41,33 +40,16 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <Spinner
                         android:id="@+id/spinner"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                        android:layout_width="240dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="25dp"
-                        android:hint="Select Direction"
-                        android:textColorHint="@color/white"
-                        app:boxStrokeWidth="0dp"
-                        app:endIconTint="@color/white"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginHorizontal="80dp"
                         app:layout_constraintStart_toEndOf="@id/logo"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                            android:id="@+id/filled_exposed"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="none"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                            android:textColor="@color/white"
-                            android:textColorHighlight="@color/white"
-                            android:textColorHint="@color/white"
-                            android:textStyle="bold"
-                            app:simpleItemSelectedColor="@color/white" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:backgroundTint="@color/white"
+                        android:dropDownWidth="120dp"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -84,7 +66,7 @@
                         app:cardCornerRadius="25dp">
 
                         <androidx.appcompat.widget.SearchView
-                            android:id="@+id/sVLines"
+                            android:id="@+id/SVLines"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:hideNavigationIcon="false"
@@ -116,18 +98,32 @@
             android:theme="@style/HeadlineSmallNLv2Left"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            tools:text="All stations" />
+            tools:text="All Bus Stations Rijeka" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:translationZ="2dp"
+            android:background="@drawable/transparent_background"
+            android:scaleX="3"
+            android:scaleY="3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/rvStations"
+            app:layout_constraintEnd_toEndOf="@id/rvStations" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPlayers"
+            android:id="@+id/rvStations"
+            android:minHeight="500dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="50dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="14dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvAll"
-            tools:listitem="@layout/bus_station_item_view" />
+            app:layout_constraintTop_toBottomOf="@id/tvAll" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

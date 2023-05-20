@@ -2,4 +2,5 @@
 <resources>
     <string name="hello_world">Hello World</string>
     <string name="important_information">Important information</string>
+    <string name="about">About</string>
 </resources>

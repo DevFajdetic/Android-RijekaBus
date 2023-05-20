@@ -2,6 +2,7 @@ package com.example.rijekabusapp.network.models
 
 import com.example.rijekabusapp.database.models.FavoriteLine
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Line(
     @SerializedName("BrojLinije")
@@ -20,7 +21,7 @@ data class Line(
     val currentStationId: Int,
     @SerializedName("Varijanta")
     val variant: String
-) {
+) : Serializable {
     fun convertToFavoriteLine(): FavoriteLine {
         return FavoriteLine(
             this.lineNumber,
