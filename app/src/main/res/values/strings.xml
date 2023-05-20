@@ -17,4 +17,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="maps_action_button">Maps action button</string>
+    <string name="about">About</string>
+    <string name="vestibulum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse aliquam sapien odio, eget auctor ante congue at. Praesent nec dolor leo. In hac habitasse platea dictumst. In porttitor lobortis diam tincidunt faucibus. Mauris pharetra libero eu quam sodales porta. Quisque fermentum nunc eros, quis lobortis justo iaculis iaculis. Morbi fringilla ligula et lorem interdum congue.</string>
+    <string name="more_info">More Info</string>
+    <string name="clear_my_favorites_list">Clear Favorites List</string>
+    <string name="youtube_url">htttp://youtube.com</string>
+    <string name="ok">OK</string>
+    <string name="enter_valid_url">Enter a valid url</string>
+    <string name="please_insert_value">Please insert value</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="no_results_found">No results found</string>
 </resources>

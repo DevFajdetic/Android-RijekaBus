@@ -43,12 +43,12 @@ class AutotrolejRepository(private val autotrolejDao: AutotrolejDao) {
         return autotrolejDao.isStationFavorite(id)
     }
 
-    fun insertFavoriteStation(team: FavoriteStation) {
-        autotrolejDao.insertFavoriteStation(team)
+    fun insertFavoriteStation(station: FavoriteStation) {
+        autotrolejDao.insertFavoriteStation(station)
     }
 
-    fun deleteFavoriteStation(team: FavoriteStation) {
-        autotrolejDao.deleteFavoriteStation(team)
+    fun deleteFavoriteStation(station: FavoriteStation) {
+        autotrolejDao.deleteFavoriteStation(station)
     }
 
     fun deleteFavoriteStations() {

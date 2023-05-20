@@ -8,6 +8,51 @@
     android:theme="@style/Theme.RijekaBusApp"
     tools:context=".fragments.ExploreFragment">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        app:contentInsetStart="0dp"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/color_primary">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:layout_weight="0.15"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:background="@drawable/transparent_background"
+                android:src="@drawable/ic_menu"
+                android:scaleY="1.5"
+                android:scaleX="1.5" />
+
+            <TextView
+                android:layout_weight="0.7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textAppearance="@style/HeadlineLargeNLv1Center"
+                android:text="RiBus"/>
+
+            <ImageButton
+                android:layout_gravity="center"
+                android:layout_weight="0.15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/transparent_background"
+                android:src="@drawable/ic_settings"
+                android:scaleY="1.5"
+                android:scaleX="1.5" />
+
+        </LinearLayout>
+    </com.google.android.material.appbar.MaterialToolbar>
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/profile_pic_wrapper"
         android:layout_width="60dp"
@@ -18,7 +63,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintVertical_bias="0.05">
 
         <ImageView
@@ -145,7 +190,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="14dp"
-            android:text="Extend"
+            android:text="Services"
             android:textAppearance="@style/BodyLargeNLv1Center" />
 
     </com.google.android.material.card.MaterialCardView>

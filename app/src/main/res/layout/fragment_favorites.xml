@@ -1,4 +1,6 @@
-<LinearLayout android:layout_width="match_parent"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -19,13 +21,30 @@
             android:text="@string/menu_bus_lines_title"
             android:theme="@style/HeadlineSmallNLv2Left" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvFavoriteLines"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/bus_line_item_view"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="14dp" />
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFavoriteLines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/bus_line_item_view"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="14dp" />
+
+            <ProgressBar
+                android:id="@+id/progressLines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <com.example.rijekabusapp.views.EmptyStateView
+                android:id="@+id/emptyStateLines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -49,13 +68,30 @@
             android:text="@string/menu_bus_station_title"
             android:theme="@style/HeadlineSmallNLv2Left" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvFavoriteTeams"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/bus_station_item_view"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="14dp" />
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFavoriteStations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/bus_station_item_view"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="14dp" />
+
+            <ProgressBar
+                android:id="@+id/progressStations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <com.example.rijekabusapp.views.EmptyStateView
+                android:id="@+id/emptyStateStations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
 
     </LinearLayout>
 
