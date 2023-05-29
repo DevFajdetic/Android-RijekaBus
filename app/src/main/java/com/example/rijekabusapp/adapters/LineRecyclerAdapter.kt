@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rijekabusapp.LineActivity
 import com.example.rijekabusapp.R
 import com.example.rijekabusapp.databinding.BusLineItemViewBinding
+import com.example.rijekabusapp.helpers.ItemMoveCallback
 import com.example.rijekabusapp.network.models.Line
+import java.util.*
+import kotlin.collections.ArrayList
 
 const val EXTRA_LINE = "com.example.rijekabusapp.extraLine"
 
@@ -22,9 +25,13 @@ class LineRecyclerAdapter(
     private val favoriteLines: ArrayList<Line>?,
     private val usedForFavorites: Boolean,
     private val insertCallback: ((Line) -> Unit)?,
+    private var isEditModeEnabled: Boolean,
     private val deleteCallback: ((Line) -> Unit)?
-) : RecyclerView.Adapter<LineRecyclerAdapter.LineViewHolder>(), Filterable {
+) : RecyclerView.Adapter<LineRecyclerAdapter.LineViewHolder>(),
+    ItemMoveCallback.ItemTouchHelperAdapter,
+    Filterable {
     private var filterList = linesList
+    private var savedPositions: List<Int> = emptyList()
 
     class LineViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = BusLineItemViewBinding.bind(view)
@@ -67,6 +74,10 @@ class LineRecyclerAdapter(
 
     override fun getItemCount(): Int {
         return filterList.size
+    }
+
+    fun setEditModeEnabled(isEditModeEnabled: Boolean) {
+        this.isEditModeEnabled = isEditModeEnabled
     }
 
     private fun isLineFavorite(stationId: Int): Boolean {
@@ -129,5 +140,26 @@ class LineRecyclerAdapter(
                 notifyDataSetChanged()
             }
         }
+    }
+
+    fun getSavedPositions(): List<Int> {
+        return savedPositions
+    }
+
+    fun setSavedPositions(positions: List<Int>) {
+        savedPositions = positions
+    }
+    override fun onItemMove(sourcePosition: Int, targetPosition: Int) {
+        // Update the positions in the adapter, but don't save them yet
+        if (sourcePosition < targetPosition) {
+            for (i in sourcePosition until targetPosition) {
+                Collections.swap(linesList, i, i + 1)
+            }
+        } else {
+            for (i in sourcePosition downTo targetPosition + 1) {
+                Collections.swap(linesList, i, i - 1)
+            }
+        }
+        notifyItemMoved(sourcePosition, targetPosition)
     }
 }

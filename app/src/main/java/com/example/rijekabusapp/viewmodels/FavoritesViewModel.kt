@@ -6,14 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.rijekabusapp.database.AutotrolejDatabase
 import com.example.rijekabusapp.database.AutotrolejRepository
+import com.example.rijekabusapp.database.models.FavoriteLine
+import com.example.rijekabusapp.database.models.FavoriteStation
 import com.example.rijekabusapp.network.models.Line
 import com.example.rijekabusapp.network.models.Station
 import kotlinx.coroutines.launch
 
 class FavoritesViewModel(application: Application) : AndroidViewModel(application) {
 
-    val favoriteLines = MutableLiveData<ArrayList<Line>>()
-    val favoriteStations = MutableLiveData<ArrayList<Station>>()
+    val favoriteLines = MutableLiveData<ArrayList<FavoriteLine>>()
+    val favoriteStations = MutableLiveData<ArrayList<FavoriteStation>>()
 
     // val stationImages = MutableLiveData<ArrayList<ArrayList<StationImage>>>()
 
@@ -26,9 +28,10 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun getFavoriteStationsAndImages() {
         viewModelScope.launch {
-            val stations = ArrayList<Station>()
-            repository.getFavoriteStationsAsync().forEach {
-                stations.add(it.convertToStation())
+            val stations = ArrayList<FavoriteStation>()
+            val sortedStations = repository.getFavoriteStations().sortedBy { it.position }
+            sortedStations.forEach {
+                stations.add(it)
             }
             /*
             val asyncTasks = stations.map { station ->
@@ -53,20 +56,41 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun deleteFavoriteStation(station: Station) {
-        repository.deleteFavoriteStation(station.convertToFavoriteStation())
+        repository.deleteFavoriteStation(station.convertToFavoriteStation(null))
+    }
+
+    fun updateFavoriteStation(station: Station, position: Int) {
+        viewModelScope.launch {
+            repository.updateFavoriteStation(station.convertToFavoriteStation(position))
+        }
     }
 
     fun getFavoriteLines() {
         viewModelScope.launch {
-            val lines = ArrayList<Line>()
-            repository.getFavoriteLines().forEach {
-                lines.add(it.convertToLine())
+            val lines = ArrayList<FavoriteLine>()
+            val sortedLines = repository.getFavoriteLines().sortedBy { it.position }
+            sortedLines.forEach {
+                lines.add(it)
             }
             favoriteLines.value = lines
         }
     }
 
     fun deleteFavoriteLine(line: Line) {
-        repository.deleteFavoriteLine(line.convertToFavoriteLine())
+        repository.deleteFavoriteLine(line.convertToFavoriteLine(null))
+    }
+
+    fun favoriteLinesUpdate() {
+        favoriteLines.value?.forEachIndexed { index, line ->
+            line.position = index
+            repository.updateFavoriteLine(line)
+        }
+    }
+
+    fun favoriteStationsUpdate() {
+        favoriteStations.value?.forEachIndexed() { index, station ->
+            station.position = index
+            repository.updateFavoriteStation(station)
+        }
     }
 }

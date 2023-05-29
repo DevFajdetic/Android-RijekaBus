@@ -12,7 +12,8 @@ data class FavoriteStation(
     val shortName: String,
     val longName: String,
     @PrimaryKey
-    val id: Int
+    val id: Int,
+    var position: Int?
 ) : Serializable {
 
     fun convertToStation(): Station {

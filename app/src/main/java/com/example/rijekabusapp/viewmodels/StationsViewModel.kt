@@ -30,11 +30,13 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun insertFavoriteStation(station: Station) {
-        repository.insertFavoriteStation(station.convertToFavoriteStation())
+        repository.insertFavoriteStation(
+            station.convertToFavoriteStation(repository.countFavoriteStations() + 1)
+        )
     }
 
     fun deleteFavoriteStation(station: Station) {
-        repository.deleteFavoriteStation(station.convertToFavoriteStation())
+        repository.deleteFavoriteStation(station.convertToFavoriteStation(null))
     }
 
     fun getFavoriteStations() {

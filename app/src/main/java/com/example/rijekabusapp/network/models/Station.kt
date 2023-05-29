@@ -16,13 +16,14 @@ data class Station(
     @SerializedName("StanicaId")
     val id: Int
 ) : Serializable {
-    fun convertToFavoriteStation(): FavoriteStation {
+    fun convertToFavoriteStation(position: Int?): FavoriteStation {
         return FavoriteStation(
             this.gpsX,
             this.gpsY,
             this.shortName,
             this.longName,
-            this.id
+            this.id,
+            position
         )
     }
 }

@@ -59,7 +59,7 @@ class StationsFragment : Fragment() {
                     1 -> selectedDirection = "A"
                     2 -> selectedDirection = "B"
                 }
-                getTeamsList(selectedDirection)
+                getStationsList(selectedDirection)
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -70,7 +70,7 @@ class StationsFragment : Fragment() {
     private var insertFavoriteStation = fun(it: Station) { viewModel.insertFavoriteStation(it) }
     private var deleteFavoriteStation = fun(it: Station) { viewModel.deleteFavoriteStation(it) }
 
-    fun getTeamsList(direction: String) {
+    fun getStationsList(direction: String) {
         viewModel.getFavoriteStations()
         val favoriteStations = viewModel.favoriteStations.value
 

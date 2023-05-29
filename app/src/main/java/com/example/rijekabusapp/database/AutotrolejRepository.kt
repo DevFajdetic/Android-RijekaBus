@@ -10,6 +10,14 @@ class AutotrolejRepository(private val autotrolejDao: AutotrolejDao) {
         return autotrolejDao.getFavoriteLines()
     }
 
+    fun updateFavoriteLine(line: FavoriteLine) {
+        return autotrolejDao.updateFavoriteLine(line)
+    }
+
+    fun countFavoriteLines(): Int {
+        return autotrolejDao.countFavoriteLines()
+    }
+
     suspend fun getFavoriteLinesAsync(): List<FavoriteLine> {
         return autotrolejDao.getFavoriteLinesAsync()
     }
@@ -33,6 +41,14 @@ class AutotrolejRepository(private val autotrolejDao: AutotrolejDao) {
     // Favorite Station
     fun getFavoriteStations(): List<FavoriteStation> {
         return autotrolejDao.getFavoriteStations()
+    }
+
+    fun updateFavoriteStation(station: FavoriteStation) {
+        return autotrolejDao.updateFavoriteStation(station)
+    }
+
+    fun countFavoriteStations(): Int {
+        return autotrolejDao.countFavoriteStations()
     }
 
     suspend fun getFavoriteStationsAsync(): List<FavoriteStation> {

@@ -28,17 +28,18 @@ class LinesViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: AutotrolejRepository
 
     init {
-        Log.d("viewmodel", currentDirection)
         val autotrolejDao = AutotrolejDatabase.getDatabase(application)!!.autotrolejDao()
         repository = AutotrolejRepository(autotrolejDao)
     }
 
     fun insertFavoriteLine(line: Line) {
-        repository.insertFavoriteLine(line.convertToFavoriteLine())
+        repository.insertFavoriteLine(
+            line.convertToFavoriteLine(repository.countFavoriteLines() + 1)
+        )
     }
 
     fun deleteFavoriteLine(line: Line) {
-        repository.deleteFavoriteLine(line.convertToFavoriteLine())
+        repository.deleteFavoriteLine(line.convertToFavoriteLine(null))
     }
 
     fun getFavoriteLines() {
