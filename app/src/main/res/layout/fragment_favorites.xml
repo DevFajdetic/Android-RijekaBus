@@ -1,10 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/surface_surface_0"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:theme="@style/Theme.RijekaBusApp">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary"
+        app:contentInsetStart="0dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <ImageButton
+                android:id="@+id/ibMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.15"
+                android:background="@drawable/transparent_background"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:src="@drawable/ic_menu" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.35"
+                android:text="Ri"
+                android:textAlignment="textEnd"
+                android:textAppearance="@style/HeadlineLargeNLv1Center"
+                android:textColor="@color/wave" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.35"
+                android:text="Bus"
+                android:textAlignment="textStart"
+                android:textAppearance="@style/HeadlineLargeNLv1Center"
+                android:textColor="@color/white" />
+
+
+            <ImageButton
+                android:id="@+id/ibEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.15"
+                android:background="@drawable/transparent_background"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:src="@drawable/ic_edit" />
+
+        </LinearLayout>
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,21 +89,22 @@
                 android:id="@+id/rvFavoriteLines"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/bus_line_item_view"
                 android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="14dp" />
+                android:layout_marginTop="14dp"
+                tools:listitem="@layout/bus_line_item_view" />
 
             <ProgressBar
                 android:id="@+id/progressLines"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/pink_alpha" />
 
             <com.example.rijekabusapp.views.EmptyStateView
                 android:id="@+id/emptyStateLines"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:layout_gravity="top" />
         </FrameLayout>
 
     </LinearLayout>
@@ -76,23 +137,22 @@
                 android:id="@+id/rvFavoriteStations"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/bus_station_item_view"
                 android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="14dp" />
+                android:layout_marginTop="14dp"
+                tools:listitem="@layout/bus_station_item_view" />
 
             <ProgressBar
                 android:id="@+id/progressStations"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/pink_alpha" />
 
             <com.example.rijekabusapp.views.EmptyStateView
                 android:id="@+id/emptyStateStations"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:layout_gravity="top" />
         </FrameLayout>
-
     </LinearLayout>
-
 </LinearLayout>

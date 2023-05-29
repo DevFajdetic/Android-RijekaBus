@@ -11,6 +11,9 @@ interface AutotrolejDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavoriteLine(line: FavoriteLine)
 
+    @Update
+    fun updateFavoriteLine(line: FavoriteLine)
+
     @Query("SELECT * FROM favoriteLines")
     fun getFavoriteLines(): List<FavoriteLine>
 
@@ -26,9 +29,15 @@ interface AutotrolejDao {
     @Query("DELETE FROM favoriteLines")
     fun deleteFavoriteLines()
 
+    @Query("SELECT COUNT(*) FROM favoriteLines")
+    fun countFavoriteLines(): Int
+
     // Favorite Station
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavoriteStation(station: FavoriteStation)
+
+    @Update
+    fun updateFavoriteStation(station: FavoriteStation)
 
     @Query("SELECT * FROM favoriteStations")
     fun getFavoriteStations(): List<FavoriteStation>
@@ -44,4 +53,7 @@ interface AutotrolejDao {
 
     @Query("DELETE FROM favoriteStations")
     fun deleteFavoriteStations()
+
+    @Query("SELECT COUNT(*) FROM favoriteStations")
+    fun countFavoriteStations(): Int
 }

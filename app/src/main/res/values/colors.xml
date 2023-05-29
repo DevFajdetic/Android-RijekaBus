@@ -73,4 +73,5 @@
     <color name="clean_blue">#2573FA</color>
     <color name="fade_blue">#82A0AF</color>
     <color name="favorites_background">#0B9CDB</color>
+    <color name="pink_alpha">#7EFF8784</color>
 </resources>

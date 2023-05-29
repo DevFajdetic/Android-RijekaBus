@@ -15,7 +15,8 @@ data class FavoriteLine(
     val stationOrdinal: Int,
     val direction: String,
     val currentStationId: Int,
-    val variant: String
+    val variant: String,
+    var position: Int?
 ) : Serializable {
 
     fun convertToLine(): Line {
