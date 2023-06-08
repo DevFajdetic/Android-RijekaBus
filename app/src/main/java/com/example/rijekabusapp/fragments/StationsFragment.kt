@@ -40,7 +40,7 @@ class StationsFragment : Fragment() {
     }
 
     private fun setupSpinner() {
-        val directions = resources.getStringArray(R.array.SpinnerItemsLines)
+        val directions = resources.getStringArray(R.array.SpinnerDirectionsItems)
         val spinnerAdapter = ArrayAdapter(
             requireContext(), R.layout.drop_down_item, directions
         )

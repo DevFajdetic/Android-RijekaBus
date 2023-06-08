@@ -1,288 +1,435 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
+    android:fitsSystemWindows="true"
     android:theme="@style/Theme.RijekaBusApp"
     tools:context=".fragments.ExploreFragment">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        app:contentInsetStart="0dp"
-        android:id="@+id/toolbar"
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/drawer_header"
+        app:itemIconTint="#007DFF"
+        app:itemTextColor="#333333"
+        app:menu="@menu/drawer_body_menu" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/color_primary">
+        android:layout_height="match_parent"
+        android:background="@color/surface_surface_0"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_primary"
+            app:contentInsetStart="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageButton
+                    android:id="@+id/ib_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.15"
+                    android:background="@drawable/transparent_background"
+                    android:contentDescription="Menu"
+                    android:scaleX="1.5"
+                    android:scaleY="1.5"
+                    android:src="@drawable/ic_menu" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.35"
+                    android:text="Ri"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/HeadlineLargeNLv1Center"
+                    android:textColor="@color/bluish" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.35"
+                    android:text="Bus"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/HeadlineLargeNLv1Center"
+                    android:textColor="@color/white" />
+
+                <ImageButton
+                    android:id="@+id/ib_settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.15"
+                    android:background="@drawable/transparent_background"
+                    android:contentDescription="Settings"
+                    android:scaleX="1.5"
+                    android:scaleY="1.5"
+                    android:src="@drawable/ic_settings" />
+
+            </LinearLayout>
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true"
+            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="16dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/profile_pic_wrapper"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        app:cardCornerRadius="250dp">
+
+                        <ImageView
+                            android:id="@+id/user_profile_pic"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/user_profile_picture"
+                            android:scaleType="centerCrop"
+                            android:src="@color/wave" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="top|end"
+                        android:backgroundTint="@color/color_secondary"
+                        android:contentDescription="@string/user_profile_picture"
+                        app:cardCornerRadius="250dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="3dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_edit"
+                            app:tint="@color/white" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_Hello"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Good Morning,"
+                        android:textAppearance="@style/HeadlineSmallNLv2Left" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/user_profile_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kristijan Fajdetić"
+                        android:textAppearance="@style/HeadlineMediumNLv1Left" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Location: off"
+                        android:textAppearance="@style/BodySmallNLv1Left" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginEnd="15dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/weather_ic"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@color/bluish" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rijeka"
+                        android:textAppearance="@style/AssistiveNLv1Left" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="26 C"
+                        android:textAppearance="@style/BodyMediumNLv1Left" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="1"
-            android:orientation="horizontal" >
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-            <ImageButton
-                android:layout_weight="0.15"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                android:background="@drawable/transparent_background"
-                android:src="@drawable/ic_menu"
-                android:scaleY="1.5"
-                android:scaleX="1.5" />
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/news"
+                android:layout_width="170dp"
+                android:layout_height="160dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true">
 
-            <TextView
-                android:layout_weight="0.7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textAppearance="@style/HeadlineLargeNLv1Center"
-                android:text="RiBus"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:text="News"
+                    android:textAppearance="@style/HeadlineMediumNLv1Left" />
 
-            <ImageButton
-                android:layout_gravity="center"
-                android:layout_weight="0.15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/transparent_background"
-                android:src="@drawable/ic_settings"
-                android:scaleY="1.5"
-                android:scaleX="1.5" />
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="bottom|end"
+                    android:src="@drawable/img_news" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/city_card"
+                android:layout_width="170dp"
+                android:layout_height="160dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:text="City Card"
+                    android:textAppearance="@style/HeadlineMediumNLv1Left" />
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="bottom|end"
+                    android:src="@drawable/img_card" />
+
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
-    </com.google.android.material.appbar.MaterialToolbar>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/profile_pic_wrapper"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="250dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintVertical_bias="0.05">
-
-        <ImageView
-            android:id="@+id/user_profile_pic"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/user_profile_picture"
-            android:scaleType="centerCrop"
-            android:src="@color/wave" />
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/user_profile_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/placeholder"
-        android:textAppearance="@style/BodyLargeNLv1Left"
-        app:layout_constraintBottom_toTopOf="@id/user_profile_address"
-        app:layout_constraintStart_toEndOf="@id/profile_pic_wrapper"
-        app:layout_constraintTop_toTopOf="@id/profile_pic_wrapper" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/user_profile_surname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/placeholder"
-        android:textAppearance="@style/BodyLargeNLv1Left"
-        app:layout_constraintBottom_toTopOf="@id/user_profile_address"
-        app:layout_constraintStart_toEndOf="@id/user_profile_name"
-        app:layout_constraintTop_toTopOf="@id/profile_pic_wrapper" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/user_profile_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/placeholder"
-        android:textAppearance="@style/BodyMediumNLv1Center"
-        app:layout_constraintBottom_toBottomOf="@id/profile_pic_wrapper"
-        app:layout_constraintStart_toEndOf="@id/profile_pic_wrapper"
-        app:layout_constraintTop_toBottomOf="@id/user_profile_name" />
-
-    <ImageView
-        android:id="@+id/weather_ic"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:src="@color/bluish"
-        app:layout_constraintBottom_toBottomOf="@id/profile_pic_wrapper"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/user_profile_surname"
-        app:layout_constraintTop_toTopOf="@id/profile_pic_wrapper" />
-
-    <View
-        android:id="@+id/explore_line"
-        android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:layout_marginTop="24dp"
-        android:background="#D4D6F0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
-        app:layout_constraintTop_toBottomOf="@id/profile_pic_wrapper" />
-
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/important_information"
-        android:textAppearance="@style/BodyMediumNLv1Center"
-        app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
-        app:layout_constraintTop_toBottomOf="@id/explore_line" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/news"
-        android:layout_width="170dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="16dp"
-        app:cardBackgroundColor="#EEEEFC"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="2dp"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
-        app:layout_constraintTop_toBottomOf="@id/text"
-        app:strokeColor="@color/white"
-        app:strokeWidth="2dp">
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="14dp"
-            android:text="News"
-            android:textAppearance="@style/BodyLargeNLv1Center" />
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="bottom|end"
-            android:src="@drawable/img_news" />
+            <LinearLayout
+                android:layout_width="170dp"
+                android:layout_height="160dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
+                app:layout_constraintTop_toBottomOf="@id/news">
 
-    </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/telefon"
+                    android:layout_width="170dp"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/white"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="2dp"
+                    app:cardUseCompatPadding="true">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/produljenje"
-        android:layout_width="170dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/white"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="2dp"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="@id/weather_ic"
-        app:layout_constraintTop_toBottomOf="@id/text">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|start"
+                        android:layout_margin="8dp"
+                        android:text="Telephone"
+                        android:textAppearance="@style/HeadlineSmallNLv1Left" />
 
-        <ImageView
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_gravity="bottom|end"
-            android:src="@drawable/img_id_card" />
+                    <ImageView
+                        android:layout_width="52dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|end"
+                        android:src="@drawable/img_telephone" />
 
-        <TextView
-            android:layout_width="wrap_content"
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mail"
+                    android:layout_width="170dp"
+                    android:layout_height="60dp"
+                    android:background="@color/white"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="2dp"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
+                    app:layout_constraintTop_toBottomOf="@id/telefon">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|start"
+                        android:layout_margin="8dp"
+                        android:text="Mail"
+                        android:textAppearance="@style/HeadlineSmallNLv1Left" />
+
+                    <ImageView
+                        android:layout_width="72dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|end"
+                        android:src="@drawable/img_mail" />
+
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/schedules"
+                android:layout_width="170dp"
+                android:layout_height="160dp"
+                android:background="@color/white"
+                app:cardBackgroundColor="@color/bluish"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="bottom|end"
+                    android:background="@drawable/img_schedule" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="14dp"
+                    android:text="Schedules"
+                    android:textAppearance="@style/HeadlineMediumNLv1Left"
+                    android:textColor="@color/white" />
+
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="14dp"
-            android:text="Services"
-            android:textAppearance="@style/BodyLargeNLv1Center" />
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-    </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/chat"
+                android:layout_width="170dp"
+                android:layout_height="160dp"
+                android:background="@color/white"
+                app:cardBackgroundColor="@color/bluish"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
 
-    <LinearLayout
-        android:layout_width="170dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="19dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
-        app:layout_constraintTop_toBottomOf="@id/news">
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="bottom|end"
+                    android:background="@drawable/img_highway" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/telefon"
-            android:layout_width="170dp"
-            android:layout_height="60dp"
-            android:layout_marginBottom="8dp"
-            android:background="@color/white"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="2dp"
-            app:cardUseCompatPadding="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="14dp"
+                    android:text="My Routes"
+                    android:textAppearance="@style/HeadlineMediumNLv1Left"
+                    android:textColor="@color/white" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|start"
-                android:layout_margin="8dp"
-                android:text="Telephone"
-                android:textAppearance="@style/BodyLargeNLv1Center" />
+            </com.google.android.material.card.MaterialCardView>
 
-            <ImageView
-                android:layout_width="52dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical|end"
-                android:src="@drawable/img_telephone" />
+            <LinearLayout
+                android:layout_width="170dp"
+                android:layout_height="160dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
+                app:layout_constraintTop_toBottomOf="@id/news">
 
-        </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/prigradska"
+                    android:layout_width="170dp"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/white"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="2dp"
+                    app:cardUseCompatPadding="true">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/mail"
-            android:layout_width="170dp"
-            android:layout_height="60dp"
-            android:background="@color/white"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="2dp"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
-            app:layout_constraintTop_toBottomOf="@id/telefon">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|start"
+                        android:layout_margin="8dp"
+                        android:text="Prigradska karta"
+                        android:textAppearance="@style/HeadlineSmallNLv1Left" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|start"
-                android:layout_margin="8dp"
-                android:text="Mail"
-                android:textAppearance="@style/BodyLargeNLv1Center" />
+                </com.google.android.material.card.MaterialCardView>
 
-            <ImageView
-                android:layout_width="72dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical|end"
-                android:src="@drawable/img_mail" />
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/gradska"
+                    android:layout_width="170dp"
+                    android:layout_height="60dp"
+                    android:background="@color/white"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="2dp"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
+                    app:layout_constraintTop_toBottomOf="@id/telefon">
 
-        </com.google.android.material.card.MaterialCardView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|start"
+                        android:layout_margin="8dp"
+                        android:text="Gradska karta"
+                        android:textAppearance="@style/HeadlineSmallNLv1Left" />
+
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/chat"
-        android:layout_width="170dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/white"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="2dp"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="@id/weather_ic"
-        app:layout_constraintTop_toBottomOf="@id/produljenje">
-
-        <ImageView
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_gravity="bottom|end"
-            android:src="@drawable/img_id_card" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="14dp"
-            android:text="Extend"
-            android:textAppearance="@style/BodyLargeNLv1Center" />
-
-    </com.google.android.material.card.MaterialCardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -1,5 +1,6 @@
 package com.example.rijekabusapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -34,5 +35,10 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = binding.fragmentContainerView.getFragment() as NavHostFragment
         navController = navHostFragment.navController
         binding.mainNavView.setupWithNavController(navController)
+
+        binding.mainFAB.setOnClickListener {
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

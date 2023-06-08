@@ -25,7 +25,6 @@ class LineRecyclerAdapter(
     private val favoriteLines: ArrayList<Line>?,
     private val usedForFavorites: Boolean,
     private val insertCallback: ((Line) -> Unit)?,
-    private var isEditModeEnabled: Boolean,
     private val deleteCallback: ((Line) -> Unit)?
 ) : RecyclerView.Adapter<LineRecyclerAdapter.LineViewHolder>(),
     ItemMoveCallback.ItemTouchHelperAdapter,
@@ -47,7 +46,7 @@ class LineRecyclerAdapter(
     override fun onBindViewHolder(holder: LineViewHolder, position: Int) {
         val line = filterList[position]
 
-        holder.binding.ivLineNumber.text = line.lineNumber[0].toString()
+        holder.binding.ivLineNumber.text = line.lineNumber
         holder.binding.tvLineName.text = line.name
         holder.binding.tvDirection.text = line.direction
 
@@ -74,10 +73,6 @@ class LineRecyclerAdapter(
 
     override fun getItemCount(): Int {
         return filterList.size
-    }
-
-    fun setEditModeEnabled(isEditModeEnabled: Boolean) {
-        this.isEditModeEnabled = isEditModeEnabled
     }
 
     private fun isLineFavorite(stationId: Int): Boolean {

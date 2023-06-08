@@ -96,11 +96,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginTop="14dp"
             android:theme="@style/HeadlineSmallNLv2Left"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            tools:text="All Bus Lines Rijeka" />
+            android:text="All Bus Lines Rijeka" />
 
         <ProgressBar
             android:id="@+id/progressBar"

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -13,18 +15,45 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BusSplashScreenTheme"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <activity
+            android:name=".MyRoutesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.RijekaBusApp" />
+        <activity
+            android:name=".MapsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.RijekaBusApp" />
+        <activity
+            android:name=".NavigationActivity"
+            android:exported="false"
+            android:theme="@style/Theme.RijekaBusApp" />
+        <activity
+            android:name=".NewsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.RijekaBusApp" />
         <activity
             android:name=".AboutActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.RijekaBusApp" />
         <activity
             android:name=".StationActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.RijekaBusApp" />
         <activity
             android:name=".LineActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.RijekaBusApp" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.RijekaBusApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

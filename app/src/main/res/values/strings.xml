@@ -27,4 +27,8 @@
     <string name="please_insert_value">Please insert value</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="no_results_found">No results found</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="unit_type">Unit type</string>
+    <string name="metric_cm_kg">Metric (cm, kg)</string>
+    <string name="imperial_ft_lb">Imperial (ft, lb)</string>
 </resources>

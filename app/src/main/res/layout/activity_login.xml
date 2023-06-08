@@ -10,32 +10,53 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/login_wave_background" />
+        android:background="@drawable/untitled" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/login_desc"
+        android:id="@+id/welcome_to"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/login_image"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="52dp"
-        android:gravity="center"
-        android:text="@string/app_description"
-        android:textAppearance="@style/DisplayExtraLargeNLv1Left"
-        android:textColor="@color/white" />
+        android:layout_marginTop="114dp"
+        android:fontFamily="@font/poppins"
+        android:gravity="center_horizontal"
+        android:text="Welcome to"
+        android:textColor="#4e4e4e"
+        android:textSize="24sp" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/login_desc_detailed"
+        android:id="@+id/app_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/login_desc"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="32dp"
-        android:gravity="center"
-        android:text="@string/login_description_detailed"
-        android:textAppearance="@style/BodyLargeNLv1Left"
-        android:textColor="@color/white"
-        tools:ignore="TextContrastCheck" />
+        android:layout_below="@id/welcome_to"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center_horizontal"
+        android:text="Rijeka Bus"
+        android:textColor="@color/black"
+        android:textSize="38sp" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_name"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:id="@+id/login_image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="50dp"
+            android:contentDescription="@string/bus_illustration"
+            android:src="@drawable/lo" />
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="5dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="45dp"
+            android:background="@drawable/circle_shape" />
+
+    </FrameLayout>
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/googleSignIn"
@@ -50,7 +71,7 @@
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textStyle="bold"
-        app:backgroundTint="@color/some"
+        app:backgroundTint="@color/wave"
         app:cornerRadius="16dp"
         tools:ignore="TextContrastCheck,VisualLintButtonSize" />
 
@@ -73,15 +94,4 @@
         app:strokeWidth="2dp"
         tools:ignore="VisualLintButtonSize" />
 
-    <ImageView
-        android:id="@+id/login_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
-        android:contentDescription="@string/bus_illustration"
-        android:scaleX="1.6"
-        android:scaleY="1.7"
-        android:src="@drawable/bus_illustration_1"
-        tools:ignore="ImageContrastCheck" />
 </RelativeLayout>

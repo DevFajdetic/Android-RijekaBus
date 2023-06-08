@@ -4,6 +4,7 @@ plugins {
     id 'org.jlleitschuh.gradle.ktlint' version "11.1.0"
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -91,4 +92,8 @@ dependencies {
     // Paging
     implementation 'androidx.paging:paging-common-ktx:3.1.1'
     implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
+    // jsoup
+    implementation 'org.jsoup:jsoup:1.14.3'
+    // maps
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
 }

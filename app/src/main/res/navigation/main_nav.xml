@@ -9,7 +9,17 @@
         android:id="@+id/exploreFragment"
         android:name="com.example.rijekabusapp.fragments.ExploreFragment"
         android:label="Explore"
-        tools:layout="@layout/fragment_explore" />
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/action_exploreFragment_to_newsFragment"
+            app:destination="@id/newsFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_cityCardFragment"
+            app:destination="@id/cityCardFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/linesFragment"
         android:name="com.example.rijekabusapp.fragments.LinesFragment"
@@ -25,4 +35,28 @@
         android:name="com.example.rijekabusapp.fragments.FavoritesFragment"
         android:label="Favorites"
         tools:layout="@layout/fragment_favorites" />
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.example.rijekabusapp.fragments.NewsFragment"
+        android:label="NewsFragment" >
+        <action
+            android:id="@+id/action_newsFragment_to_exploreFragment"
+            app:destination="@id/exploreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cityCardFragment"
+        android:name="com.example.rijekabusapp.fragments.CityCardFragment"
+        android:label="CityCardFragment" >
+        <action
+            android:id="@+id/action_cityCardFragment_to_exploreFragment"
+            app:destination="@id/exploreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.rijekabusapp.fragments.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_exploreFragment"
+            app:destination="@id/exploreFragment" />
+    </fragment>
 </navigation>
