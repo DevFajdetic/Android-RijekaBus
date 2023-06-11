@@ -5,19 +5,25 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import coil.load
 import com.example.rijekabusapp.R
 import com.example.rijekabusapp.databinding.FragmentExploreBinding
+import com.example.rijekabusapp.network.response.WeatherResponse
+import com.example.rijekabusapp.viewmodels.WeatherViewModel
 
 class ExploreFragment : Fragment() {
 
     private lateinit var binding: FragmentExploreBinding
+    private lateinit var viewModel: WeatherViewModel
 
     @SuppressLint("QueryPermissionsNeeded")
     override fun onCreateView(
@@ -77,7 +83,36 @@ class ExploreFragment : Fragment() {
             true
         }
 
+        binding.schedules.setOnClickListener() {
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.exploretosch)
+        }
+
+        viewModel = ViewModelProvider(this)[WeatherViewModel::class.java]
+        viewModel.currentWeather.observe(viewLifecycleOwner) { weatherResponse ->
+            weatherResponse?.let {
+                updateWeatherData(weatherResponse)
+            }
+        }
+
+        viewModel.getCurrentWeather()
+
         return binding.root
+    }
+
+    private fun updateWeatherData(weatherResponse: WeatherResponse) {
+        binding.tvTemp.text = weatherResponse.main.temp.toString()
+        binding.tvWeather.text = weatherResponse.weather[0].description
+        binding.tvHumidity.text = weatherResponse.main.humidity.toString()
+        binding.tvWind.text = weatherResponse.wind.speed.toString()
+        binding.tvPressure.text = weatherResponse.main.pressure.toString()
+        binding.tvSight.text = weatherResponse.visibility.toString()
+        val iconCode = weatherResponse.weather[0].icon
+        Log.d("tag", "https://openweathermap.org/img/w/$iconCode.png")
+        binding.ivWeather.load("https://openweathermap.org/img/w/$iconCode.png") {
+            crossfade(true)
+            placeholder(R.drawable.ic_weather_placeholder)
+        }
     }
 
     /*

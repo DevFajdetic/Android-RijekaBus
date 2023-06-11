@@ -1,7 +1,9 @@
 package com.example.rijekabusapp.viewmodels
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.rijekabusapp.database.AutotrolejDatabase
 import com.example.rijekabusapp.database.AutotrolejRepository
 import com.example.rijekabusapp.network.Network
@@ -20,7 +22,7 @@ class BusLocationViewModel(application: Application) : AndroidViewModel(applicat
 
     fun getBusLocations() {
         viewModelScope.launch {
-            busLocationsLiveData.value = Network().getBusService().getAllBusesLocations()
+            busLocationsLiveData.value = Network().getAutotrolejService().getBusesLocations()
         }
     }
 }

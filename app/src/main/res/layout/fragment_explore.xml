@@ -22,7 +22,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/surface_surface_0"
         android:orientation="vertical">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -45,7 +44,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.15"
                     android:background="@drawable/transparent_background"
-                    android:contentDescription="Menu"
+                    android:contentDescription="@string/menu"
                     android:scaleX="1.5"
                     android:scaleY="1.5"
                     android:src="@drawable/ic_menu" />
@@ -75,7 +74,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.15"
                     android:background="@drawable/transparent_background"
-                    android:contentDescription="Settings"
+                    android:contentDescription="@string/settings"
                     android:scaleX="1.5"
                     android:scaleY="1.5"
                     android:src="@drawable/ic_settings" />
@@ -83,353 +82,590 @@
             </LinearLayout>
         </com.google.android.material.appbar.MaterialToolbar>
 
-        <com.google.android.material.card.MaterialCardView
+        <ScrollView
             android:layout_width="wrap_content"
-            android:layout_gravity="center_horizontal"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="4dp"
-            app:cardUseCompatPadding="true"
-            android:layout_marginTop="16dp"
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:background="@color/surface_surface_0"
+                android:paddingBottom="70dp"
+                android:orientation="vertical">
 
-                <FrameLayout
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:layout_gravity="start|center_vertical"
-                    android:layout_marginStart="16dp">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="4dp"
+                    app:cardUseCompatPadding="true">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/profile_pic_wrapper"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        app:cardCornerRadius="250dp">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="8dp">
 
-                        <ImageView
-                            android:id="@+id/user_profile_pic"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:contentDescription="@string/user_profile_picture"
-                            android:scaleType="centerCrop"
-                            android:src="@color/wave" />
+                        <FrameLayout
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_gravity="start|center_vertical"
+                            android:layout_marginStart="16dp">
 
-                    </com.google.android.material.card.MaterialCardView>
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/profile_pic_wrapper"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                app:cardCornerRadius="250dp">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_gravity="top|end"
-                        android:backgroundTint="@color/color_secondary"
-                        android:contentDescription="@string/user_profile_picture"
-                        app:cardCornerRadius="250dp">
+                                <ImageView
+                                    android:id="@+id/user_profile_pic"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:contentDescription="@string/user_profile_picture"
+                                    android:scaleType="centerCrop"
+                                    android:src="@color/wave" />
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:padding="3dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ic_edit"
-                            app:tint="@color/white" />
+                            </com.google.android.material.card.MaterialCardView>
 
-                    </com.google.android.material.card.MaterialCardView>
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_gravity="top|end"
+                                android:backgroundTint="@color/color_secondary"
+                                android:contentDescription="@string/user_profile_picture"
+                                app:cardCornerRadius="250dp">
 
-                </FrameLayout>
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:padding="3dp"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/ic_edit"
+                                    app:tint="@color/white"
+                                    android:contentDescription="@string/edit" />
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tv_Hello"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Welcome,"
+                                android:textAppearance="@style/HeadlineSmallNLv2Left" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/user_profile_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Kristijan Fajdetić"
+                                android:textAppearance="@style/HeadlineMediumNLv1Left" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/location"
+                                android:textAppearance="@style/BodySmallNLv1Left" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50dp"
+                            android:layout_marginEnd="15dp"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_city"
+                                app:tint="@color/wave"
+                                android:contentDescription="@string/city_icon" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/rijeka"
+                                android:textAppearance="@style/HeadlineSmallNLv1Left" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginHorizontal="32dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="4dp"
+                    app:cardUseCompatPadding="true">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/ll_weather"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toStartOf="@id/ll_temp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/iv_weather"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center_horizontal"
+                                android:scaleType="fitXY"
+                                android:contentDescription="@string/weather_icon" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="@string/weather"
+                                android:textAppearance="@style/BodyMediumNLv1Left" />
+
+                            <TextView
+                                android:id="@+id/tv_weather"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:gravity="center_horizontal"
+                                android:maxWidth="70dp"
+                                android:maxLines="2"
+                                android:text="moderate rain blaasd bla blasdsa"
+                                android:textAppearance="@style/HeadlineSmallNLv1Left" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_temp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toStartOf="@id/ll_humidity"
+                            app:layout_constraintStart_toEndOf="@id/ll_weather"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_temperature"
+                                app:tint="@color/wave" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="@string/temperature"
+                                android:textAppearance="@style/BodyMediumNLv1Left" />
+
+                            <TextView
+                                android:id="@+id/tv_temp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="24*C"
+                                android:textAppearance="@style/HeadlineSmallNLv1Left" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_humidity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ll_temp"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_humidity"
+                                app:tint="@color/wave" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="@string/humidity"
+                                android:textAppearance="@style/BodyMediumNLv1Left" />
+
+                            <TextView
+                                android:id="@+id/tv_humidity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="24*C"
+                                android:textAppearance="@style/HeadlineSmallNLv1Left" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_wind"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/ll_weather"
+                            app:layout_constraintStart_toStartOf="@id/ll_weather"
+                            app:layout_constraintTop_toBottomOf="@id/ll_weather">
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_wind"
+                                app:tint="@color/wave" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="@string/wind"
+                                android:textAppearance="@style/BodyMediumNLv1Left" />
+
+                            <TextView
+                                android:id="@+id/tv_wind"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="24*C"
+                                android:textAppearance="@style/HeadlineSmallNLv1Left" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_pressure"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/ll_temp"
+                            app:layout_constraintStart_toStartOf="@id/ll_temp"
+                            app:layout_constraintTop_toTopOf="@id/ll_wind">
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_pressure"
+                                app:tint="@color/wave" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="Pressure"
+                                android:textAppearance="@style/BodyMediumNLv1Left" />
+
+                            <TextView
+                                android:id="@+id/tv_pressure"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="24*C"
+                                android:textAppearance="@style/HeadlineSmallNLv1Left" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_sight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/ll_humidity"
+                            app:layout_constraintStart_toStartOf="@id/ll_humidity"
+                            app:layout_constraintTop_toTopOf="@id/ll_wind">
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_eye"
+                                app:tint="@color/wave" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="Sight"
+                                android:textAppearance="@style/BodyMediumNLv1Left" />
+
+                            <TextView
+                                android:id="@+id/tv_sight"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="24*C"
+                                android:textAppearance="@style/HeadlineSmallNLv1Left" />
+
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="10dp"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tv_Hello"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Good Morning,"
-                        android:textAppearance="@style/HeadlineSmallNLv2Left" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/user_profile_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Kristijan Fajdetić"
-                        android:textAppearance="@style/HeadlineMediumNLv1Left" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Location: off"
-                        android:textAppearance="@style/BodySmallNLv1Left" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginEnd="15dp"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/weather_ic"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@color/bluish" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/news"
+                        android:layout_width="170dp"
+                        android:layout_height="160dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rijeka"
-                        android:textAppearance="@style/AssistiveNLv1Left" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:text="News"
+                            android:textAppearance="@style/HeadlineMediumNLv1Left" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="26 C"
-                        android:textAppearance="@style/BodyMediumNLv1Left" />
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="bottom|end"
+                            android:src="@drawable/img_news" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/city_card"
+                        android:layout_width="170dp"
+                        android:layout_height="160dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:text="City Card"
+                            android:textAppearance="@style/HeadlineMediumNLv1Left" />
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="bottom|end"
+                            android:src="@drawable/img_card" />
+
+                    </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="170dp"
+                        android:layout_height="160dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
+                        app:layout_constraintTop_toBottomOf="@id/news">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/telefon"
+                            android:layout_width="170dp"
+                            android:layout_height="60dp"
+                            android:layout_marginBottom="8dp"
+                            app:cardBackgroundColor="@color/bluish"
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical|start"
+                                android:layout_margin="8dp"
+                                android:text="@string/telephone"
+                                android:textColor="@color/white"
+                                android:textAppearance="@style/HeadlineSmallNLv1Left" />
+
+                            <ImageView
+                                android:layout_width="52dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical|end"
+                                android:src="@drawable/img_telephone"
+                                android:contentDescription="@string/telephone_icon" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/mail"
+                            android:layout_width="170dp"
+                            android:layout_height="60dp"
+                            android:background="@color/white"
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@color/bluish"
+                            app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
+                            app:layout_constraintTop_toBottomOf="@id/telefon">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical|start"
+                                android:layout_margin="8dp"
+                                android:textColor="@color/white"
+                                android:text="Mail"
+                                android:textAppearance="@style/HeadlineSmallNLv1Left" />
+
+                            <ImageView
+                                android:layout_width="72dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical|end"
+                                android:src="@drawable/img_mail" />
+
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/schedules"
+                        android:layout_width="170dp"
+                        android:layout_height="160dp"
+                        app:cardCornerRadius="15dp"
+                        app:cardElevation="2dp"
+                        app:cardUseCompatPadding="true">
+
+                        <ImageView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_gravity="bottom|end"
+                            android:background="@drawable/img_schedule" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="14dp"
+                            android:text="Schedules"
+                            android:textAppearance="@style/HeadlineMediumNLv1Left" />
+
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/chat"
+                        android:layout_width="170dp"
+                        android:layout_height="160dp"
+                        android:background="@color/white"
+                        app:cardBackgroundColor="@color/bluish"
+                        app:cardCornerRadius="15dp"
+                        app:cardElevation="2dp"
+                        app:cardUseCompatPadding="true">
+
+                        <ImageView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_gravity="bottom|end"
+                            android:background="@drawable/img_highway" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="14dp"
+                            android:text="My Routes"
+                            android:textAppearance="@style/HeadlineMediumNLv1Left"
+                            android:textColor="@color/white" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:layout_width="170dp"
+                        android:layout_height="160dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
+                        app:layout_constraintTop_toBottomOf="@id/news">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/prigradska"
+                            android:layout_width="170dp"
+                            android:layout_height="60dp"
+                            android:layout_marginBottom="8dp"
+                            android:background="@color/white"
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical|start"
+                                android:layout_margin="8dp"
+                                android:text="Prigradska karta"
+                                android:textAppearance="@style/HeadlineSmallNLv1Left" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/gradska"
+                            android:layout_width="170dp"
+                            android:layout_height="60dp"
+                            android:background="@color/white"
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
+                            app:layout_constraintTop_toBottomOf="@id/telefon">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical|start"
+                                android:layout_margin="8dp"
+                                android:text="Gradska karta"
+                                android:textAppearance="@style/HeadlineSmallNLv1Left" />
+
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/news"
-                android:layout_width="170dp"
-                android:layout_height="160dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:text="News"
-                    android:textAppearance="@style/HeadlineMediumNLv1Left" />
-
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="bottom|end"
-                    android:src="@drawable/img_news" />
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/city_card"
-                android:layout_width="170dp"
-                android:layout_height="160dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:text="City Card"
-                    android:textAppearance="@style/HeadlineMediumNLv1Left" />
-
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="bottom|end"
-                    android:src="@drawable/img_card" />
-
-            </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="170dp"
-                android:layout_height="160dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
-                app:layout_constraintTop_toBottomOf="@id/news">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/telefon"
-                    android:layout_width="170dp"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/white"
-                    app:cardCornerRadius="15dp"
-                    app:cardElevation="2dp"
-                    app:cardUseCompatPadding="true">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|start"
-                        android:layout_margin="8dp"
-                        android:text="Telephone"
-                        android:textAppearance="@style/HeadlineSmallNLv1Left" />
-
-                    <ImageView
-                        android:layout_width="52dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical|end"
-                        android:src="@drawable/img_telephone" />
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/mail"
-                    android:layout_width="170dp"
-                    android:layout_height="60dp"
-                    android:background="@color/white"
-                    app:cardCornerRadius="15dp"
-                    app:cardElevation="2dp"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
-                    app:layout_constraintTop_toBottomOf="@id/telefon">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|start"
-                        android:layout_margin="8dp"
-                        android:text="Mail"
-                        android:textAppearance="@style/HeadlineSmallNLv1Left" />
-
-                    <ImageView
-                        android:layout_width="72dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical|end"
-                        android:src="@drawable/img_mail" />
-
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/schedules"
-                android:layout_width="170dp"
-                android:layout_height="160dp"
-                android:background="@color/white"
-                app:cardBackgroundColor="@color/bluish"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="2dp"
-                app:cardUseCompatPadding="true">
-
-                <ImageView
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_gravity="bottom|end"
-                    android:background="@drawable/img_schedule" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="14dp"
-                    android:text="Schedules"
-                    android:textAppearance="@style/HeadlineMediumNLv1Left"
-                    android:textColor="@color/white" />
-
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/chat"
-                android:layout_width="170dp"
-                android:layout_height="160dp"
-                android:background="@color/white"
-                app:cardBackgroundColor="@color/bluish"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="2dp"
-                app:cardUseCompatPadding="true">
-
-                <ImageView
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_gravity="bottom|end"
-                    android:background="@drawable/img_highway" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="14dp"
-                    android:text="My Routes"
-                    android:textAppearance="@style/HeadlineMediumNLv1Left"
-                    android:textColor="@color/white" />
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <LinearLayout
-                android:layout_width="170dp"
-                android:layout_height="160dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
-                app:layout_constraintTop_toBottomOf="@id/news">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/prigradska"
-                    android:layout_width="170dp"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/white"
-                    app:cardCornerRadius="15dp"
-                    app:cardElevation="2dp"
-                    app:cardUseCompatPadding="true">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|start"
-                        android:layout_margin="8dp"
-                        android:text="Prigradska karta"
-                        android:textAppearance="@style/HeadlineSmallNLv1Left" />
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/gradska"
-                    android:layout_width="170dp"
-                    android:layout_height="60dp"
-                    android:background="@color/white"
-                    app:cardCornerRadius="15dp"
-                    app:cardElevation="2dp"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintStart_toStartOf="@id/profile_pic_wrapper"
-                    app:layout_constraintTop_toBottomOf="@id/telefon">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|start"
-                        android:layout_margin="8dp"
-                        android:text="Gradska karta"
-                        android:textAppearance="@style/HeadlineSmallNLv1Left" />
-
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
-        </LinearLayout>
-
+        </ScrollView>
     </LinearLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

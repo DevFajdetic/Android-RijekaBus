@@ -3,4 +3,7 @@
     <string name="hello_world">Hello World</string>
     <string name="important_information">Important information</string>
     <string name="about">About</string>
+    <string name="weather">Weather</string>
+    <string name="city_icon">City icon</string>
+    <string name="filters_search_error_desc">Try adjusting your search or filter to find what you are looking for.</string>
 </resources>

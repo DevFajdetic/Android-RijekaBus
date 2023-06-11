@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="96dp">
 
@@ -15,16 +14,26 @@
             android:layout_height="match_parent"
             android:background="@color/surface_surface_2">
 
-            <ImageView
+            <FrameLayout
                 android:id="@+id/ivEmpty"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/ic_empty_state"
+                android:background="@color/waveALPHA"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleX="2.5"
+                    android:scaleY="2.5"
+                    android:src="@drawable/ic_empty_state" />
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/tvTitle"
@@ -43,10 +52,10 @@
                 android:layout_height="32dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:text="@string/filters_search_error_desc"
                 android:theme="@style/AssistiveNLv2Left"
                 app:layout_constraintStart_toEndOf="@id/ivEmpty"
-                app:layout_constraintTop_toBottomOf="@id/tvTitle"
-                tools:text="Try adjusting your search or filter to find what you are looking for." />
+                app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

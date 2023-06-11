@@ -83,6 +83,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
             binding.progressStations.visibility = ProgressBar.GONE
             // }
+            binding.emptyStateStations.setupEmptyStateView(getString(R.string.favorites_error_desc))
             setEmptyState(binding.emptyStateStations, stationList.isNotEmpty())
         }
     }
@@ -101,6 +102,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             itemTouchHelper.attachToRecyclerView(binding.rvFavoriteLines)
             binding.rvFavoriteLines.adapter = favoriteLineAdapter
             binding.progressLines.visibility = ProgressBar.GONE
+            binding.emptyStateLines.setupEmptyStateView(getString(R.string.favorites_error_desc))
             setEmptyState(binding.emptyStateLines, linesList.isNotEmpty())
         }
     }
