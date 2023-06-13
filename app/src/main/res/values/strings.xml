@@ -48,4 +48,11 @@
     <string name="favorites_error_desc">No favorites, try clicking a star for line or station, or contact support.</string>
     <string name="no_buses_error_desc">Current line is not driving currently, please check the schedule.</string>
     <string name="no_stations_error_desc">Current station does not receive any buses soon, please check the schedule.</string>
+    <string name="departure_failed">Unkown</string>
+    <string name="map">Map</string>
+    <string name="class_name">Razvoj Mobilnih Aplikacija</string>
+    <string name="class_year">Class 2023</string>
+    <string name="label_app_name">APP NAME</string>
+    <string name="lbl_api_credit">API CREDIT</string>
+    <string name="api_credits"><![CDATA[Autotrolej, OpenWeather & City Rijeka]]></string>
 </resources>

@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:theme="@style/Theme.RijekaBusApp"
     tools:context=".AboutActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:layout_height="?actionBarSize"
+        android:background="@drawable/transparent_background"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/aboutActivityToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="pin"
-            app:titleMarginEnd="16dp"
-            app:titleMarginStart="16dp"
-            app:titleMarginTop="8dp"
-            app:titleTextColor="@color/black" />
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_back"
+            app:tint="@color/black" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <TextView
         android:id="@+id/tvAbout"
@@ -33,9 +32,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="@string/about"
-        android:theme="@style/HeadlineLargeNLv1Left"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
+        android:theme="@style/HeadlineLargeNLv1Left" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -43,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="48dp"
-        android:text="Razvoj Mobilnih Aplikacija"
+        android:text="@string/class_name"
         android:theme="@style/HeadlineMediumNLv1Left"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvAbout" />
@@ -53,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Class 2023"
+        android:text="@string/class_year"
         android:theme="@style/BodyLargeNLv1Left"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
@@ -62,39 +59,37 @@
         android:id="@+id/imageContainer"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
         app:cardCornerRadius="12dp"
         app:layout_constraintTop_toBottomOf="@id/tvClass">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/surface_surface_2">
+            android:orientation="horizontal">
 
             <ImageView
+                android:layout_gravity="center_vertical|start"
                 android:id="@+id/ivSofa"
-                android:layout_width="107dp"
-                android:layout_height="18dp"
-                android:layout_marginStart="45dp"
-                android:src="@drawable/ic_person"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/riteh"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:layout_gravity="center_vertical|end"
                 android:id="@+id/ivAndroid"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginEnd="58dp"
-                android:src="@drawable/ic_menu"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxWidth="150dp"
+                android:maxHeight="150dp"
+                android:src="@drawable/ic_android"
+                app:tint="@color/greenish" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -102,12 +97,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
-        android:text="@string/app_name"
-        android:textAllCaps="true"
-        android:theme="@style/AssistiveNLv2Left"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageContainer" />
+        android:layout_marginTop="32dp"
+        android:text="@string/label_app_name"
+        android:textAppearance="@style/HeadlineSmallNLv2Left" />
 
     <TextView
         android:id="@+id/tvAppName"
@@ -115,9 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="@string/app_name"
-        android:theme="@style/BodyLargeNLv1Left"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lblAppName" />
+        android:textAppearance="@style/BodyLargeNLv1Left" />
 
     <TextView
         android:id="@+id/lblApiCredit"
@@ -125,21 +115,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="API CREDIT"
-        android:textAllCaps="true"
-        android:theme="@style/AssistiveNLv2Left"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAppName" />
+        android:text="@string/lbl_api_credit"
+        android:textAppearance="@style/HeadlineSmallNLv2Left" />
 
     <TextView
         android:id="@+id/tvApiCredit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Autotrolej"
-        android:theme="@style/BodyLargeNLv1Left"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lblApiCredit" />
+        android:text="@string/api_credits"
+        android:textAppearance="@style/BodyLargeNLv1Left" />
 
     <TextView
         android:id="@+id/lblDeveloper"
@@ -148,10 +133,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="Developer"
-        android:textAllCaps="true"
-        android:theme="@style/AssistiveNLv2Left"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvApiCredit" />
+        android:textAppearance="@style/HeadlineSmallNLv2Left" />
 
     <TextView
         android:id="@+id/tvDeveloper"
@@ -159,8 +141,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="KF"
-        android:theme="@style/BodyLargeNLv1Left"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lblDeveloper" />
+        android:textAppearance="@style/BodyLargeNLv1Left" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

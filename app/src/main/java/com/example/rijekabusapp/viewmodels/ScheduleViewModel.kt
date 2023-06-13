@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.rijekabusapp.database.AutotrolejDatabase
 import com.example.rijekabusapp.network.Network
 import com.example.rijekabusapp.network.models.Schedule
 import java.text.SimpleDateFormat
@@ -15,10 +14,6 @@ class ScheduleViewModel(
     application: Application,
 ) : ViewModel() {
     val scheduleList = MutableLiveData<ArrayList<Schedule>>()
-
-    init {
-        val autotrolejDao = AutotrolejDatabase.getDatabase(application)!!.autotrolejDao()
-    }
 
     fun getScheduleList() {
         viewModelScope.launch {
