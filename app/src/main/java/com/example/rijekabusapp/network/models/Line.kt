@@ -7,12 +7,10 @@ import java.io.Serializable
 data class Line(
     @SerializedName("BrojLinije")
     val lineNumber: String,
-    @SerializedName("Id")
-    val id: Int,
     @SerializedName("LinVarId")
-    val linVarId: String,
+    var linVarId: String,
     @SerializedName("NazivVarijanteLinije")
-    val name: String,
+    var name: String,
     @SerializedName("RedniBrojStanice")
     val stationOrdinal: Int,
     @SerializedName("Smjer")
@@ -25,7 +23,6 @@ data class Line(
     fun convertToFavoriteLine(position: Int?): FavoriteLine {
         return FavoriteLine(
             this.lineNumber,
-            this.id,
             this.linVarId,
             this.name,
             this.stationOrdinal,

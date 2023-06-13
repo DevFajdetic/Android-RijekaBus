@@ -20,8 +20,8 @@ interface AutotrolejDao {
     @Query("SELECT * FROM favoriteLines")
     suspend fun getFavoriteLinesAsync(): List<FavoriteLine>
 
-    @Query("SELECT * FROM favoriteLines WHERE id = :id")
-    fun isLineFavorite(id: Int): Boolean
+    @Query("SELECT * FROM favoriteLines WHERE name = :name")
+    fun isLineFavorite(name: String): Boolean
 
     @Delete
     fun deleteFavoriteLine(line: FavoriteLine)

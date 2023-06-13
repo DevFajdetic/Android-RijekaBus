@@ -9,7 +9,6 @@ import java.io.Serializable
 data class FavoriteLine(
     val lineNumber: String,
     @PrimaryKey
-    val id: Int,
     val linVarId: String,
     val name: String,
     val stationOrdinal: Int,
@@ -22,7 +21,6 @@ data class FavoriteLine(
     fun convertToLine(): Line {
         return Line(
             this.lineNumber,
-            this.id,
             this.linVarId,
             this.name,
             this.stationOrdinal,

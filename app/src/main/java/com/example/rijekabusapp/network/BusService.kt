@@ -1,5 +1,6 @@
 package com.example.rijekabusapp.network
 
+import com.example.rijekabusapp.network.response.LinesResponse
 import com.example.rijekabusapp.network.response.ScheduleResponse
 import com.example.rijekabusapp.network.response.StationsResponse
 import retrofit2.http.GET
@@ -10,6 +11,9 @@ interface BusService {
 
     @GET("ATvoznired-tjedan.json")
     suspend fun getWeekSchedule(): ScheduleResponse
+
+    @GET("ATvoznired-tjedan.json")
+    suspend fun getAllLines(): LinesResponse
 
     @GET("ATvoznired-subota.json")
     suspend fun getSaturdaySchedule(): ScheduleResponse

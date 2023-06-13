@@ -26,8 +26,8 @@ class AutotrolejRepository(private val autotrolejDao: AutotrolejDao) {
         autotrolejDao.insertFavoriteLine(line)
     }
 
-    fun isLineFavorite(id: Int): Boolean {
-        return autotrolejDao.isLineFavorite(id)
+    fun isLineFavorite(name: String): Boolean {
+        return autotrolejDao.isLineFavorite(name)
     }
 
     fun deleteFavoriteLine(line: FavoriteLine) {

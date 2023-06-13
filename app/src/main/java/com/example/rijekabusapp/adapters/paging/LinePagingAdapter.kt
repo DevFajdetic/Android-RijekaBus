@@ -38,7 +38,7 @@ class LinePagingAdapter(
         holder.binding.tvLineName.text = line?.name
         holder.binding.tvDirection.text = line?.direction
 
-        val exists = isLineFavorite(line!!.id)
+        val exists = isLineFavorite(line!!.name)
 
         holder.binding.btnFavorite.isActivated = exists
         holder.binding.btnFavorite.setOnClickListener {
@@ -57,10 +57,10 @@ class LinePagingAdapter(
         }
     }
 
-    private fun isLineFavorite(lineId: Int): Boolean {
+    private fun isLineFavorite(name: String): Boolean {
         var exists = false
         favouriteLines?.forEach {
-            if (it.id == lineId) exists = true
+            if (it.name == name) exists = true
         }
         return exists
     }

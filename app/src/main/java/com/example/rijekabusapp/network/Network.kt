@@ -1,12 +1,12 @@
 package com.example.rijekabusapp.network
 
+import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
-const val BASE_URL_BUS = "https://e-usluge2.rijeka.hr/OpenData/"
+const val BASE_URL_BUS = "https://busri.alwaysdata.net/maps/"
 const val BASE_URL_AUTOTROLEJ = "https://winter-star-9de5.kombajn.workers.dev/"
 private val BASE_URL_WEATHER = "https://api.openweathermap.org/data/2.5/"
 

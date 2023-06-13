@@ -7,9 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.rijekabusapp.database.AutotrolejDatabase
 import com.example.rijekabusapp.network.Network
 import com.example.rijekabusapp.network.models.Schedule
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlinx.coroutines.launch
 
 class ScheduleViewModel(
     application: Application,

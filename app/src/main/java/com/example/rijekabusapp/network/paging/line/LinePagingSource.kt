@@ -1,11 +1,6 @@
 package com.example.rijekabusapp.network.paging.line
 
-import android.util.Log
-import androidx.paging.PagingSource
-import androidx.paging.PagingState
-import com.example.rijekabusapp.network.BusService
-import com.example.rijekabusapp.network.models.Line
-
+/*
 class LinePagingSource(
     private val service: BusService,
     private var direction: String = "A"
@@ -15,13 +10,13 @@ class LinePagingSource(
     private var cachedResponse: List<Line>? = null
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Line> {
-        try {
+        /*try {
             Log.d("LinePS", "load")
             val pageNumber = params.key ?: 0
 
             val response = cachedResponse ?: run {
                 // Fetch the entire data set from the backend if not cached
-                val freshResponse = service.getAllLines()
+                val freshResponse = service.getAllStations()
                 cachedResponse = freshResponse // Cache the response
                 freshResponse
             }
@@ -43,7 +38,8 @@ class LinePagingSource(
             )
         } catch (e: Exception) {
             return LoadResult.Error(e)
-        }
+        } */
+        return LoadResult.Error()
     }
 
     private fun filterDuplicates(lines: List<Line>, direction: String): List<Line> {
@@ -78,3 +74,4 @@ class LinePagingSource(
         return null
     }
 }
+ */

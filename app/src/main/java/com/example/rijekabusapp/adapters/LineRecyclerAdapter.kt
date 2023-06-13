@@ -15,7 +15,6 @@ import com.example.rijekabusapp.databinding.BusLineItemViewBinding
 import com.example.rijekabusapp.helpers.ItemMoveCallback
 import com.example.rijekabusapp.network.models.Line
 import java.util.*
-import kotlin.collections.ArrayList
 
 const val EXTRA_LINE = "com.example.rijekabusapp.extraLine"
 
@@ -50,7 +49,7 @@ class LineRecyclerAdapter(
         holder.binding.tvLineName.text = line.name
         holder.binding.tvDirection.text = line.direction
 
-        val exists = isLineFavorite(line.id)
+        val exists = isLineFavorite(line.name)
         if (usedForFavorites) {
             holder.binding.btnFavorite.isActivated = true
             holder.binding.btnFavorite.setOnClickListener {
@@ -75,10 +74,10 @@ class LineRecyclerAdapter(
         return filterList.size
     }
 
-    private fun isLineFavorite(stationId: Int): Boolean {
+    private fun isLineFavorite(name: String): Boolean {
         var exists = false
         favoriteLines?.forEach {
-            if (it.id == stationId) exists = true
+            if (it.name == name) exists = true
         }
         return exists
     }

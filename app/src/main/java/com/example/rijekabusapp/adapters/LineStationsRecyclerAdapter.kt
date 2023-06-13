@@ -1,7 +1,7 @@
 package com.example.rijekabusapp.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rijekabusapp.R
 import com.example.rijekabusapp.databinding.LineStationsScheduleItemBinding
 import com.example.rijekabusapp.network.models.Schedule
-import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class LineStationsRecyclerAdapter(
     private val context: Context,
-    private val lineStationsItems: List<Schedule>
+    private val lineStationsItems: List<Schedule>,
+    private val nextStation: Schedule?
 ) : RecyclerView.Adapter<LineStationsRecyclerAdapter.LineStationsViewHolder>() {
 
     class LineStationsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -29,27 +33,35 @@ class LineStationsRecyclerAdapter(
         return LineStationsViewHolder(view)
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: LineStationsViewHolder, position: Int) {
         val item = lineStationsItems[position]
 
         holder.binding.tvArriveTime.text = item.startTime.substring(0, 5)
         holder.binding.tvStationName.text = item.stationId.toString()
 
-        val currentTime = Calendar.getInstance(TimeZone.getTimeZone("Europe/Zagreb"))
-        val sdf = SimpleDateFormat("HH:mm:ss.SSSSSSS", Locale("hr", "HR"))
-        val startTime: Date = sdf.parse(item.startTime) as Date
-        val startCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Zagreb"))
-        startCalendar.time = startTime
-
-        Log.d("tag", startCalendar.time.toString())
-        Log.d("tag", currentTime.time.toString())
-        if (startCalendar.compareTo(currentTime) > 0) {
-            holder.binding.ivDone.setImageResource(R.drawable.ic_hourglass)
+        if (nextStation?.stationId == item.stationId) {
+            holder.binding.ivDone.setImageResource(R.drawable.ic_in_progress)
             holder.binding.vTimeline.setBackgroundColor(
-                ContextCompat.getColor(holder.itemView.context, R.color.wave)
+                ContextCompat.getColor(holder.itemView.context, R.color.greenish)
             )
         } else {
-            holder.binding.ivDone.setImageResource(R.drawable.ic_check)
+            val currentTime = Calendar.getInstance(TimeZone.getTimeZone("Europe/Zagreb"))
+            val zoneId = ZoneId.of("Europe/Zagreb")
+            val formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSSSSSS")
+            val startTime = LocalTime.parse(item.startTime, formatter)
+            val arriveTime = startTime.atDate(LocalDate.now()).atZone(zoneId).toInstant()
+            if (currentTime.toInstant().compareTo(arriveTime) < 0) {
+                holder.binding.ivDone.setImageResource(R.drawable.ic_hourglass)
+                holder.binding.vTimeline.setBackgroundColor(
+                    ContextCompat.getColor(holder.itemView.context, R.color.wave)
+                )
+            } else {
+                holder.binding.ivDone.setImageResource(R.drawable.ic_check)
+                holder.binding.vTimeline.setBackgroundColor(
+                    ContextCompat.getColor(holder.itemView.context, R.color.grey)
+                )
+            }
         }
     }
 

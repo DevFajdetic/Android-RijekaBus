@@ -6,7 +6,7 @@ import com.example.rijekabusapp.network.models.Line
 object LineDiff : DiffUtil.ItemCallback<Line>() {
 
     override fun areItemsTheSame(oldItem: Line, newItem: Line): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.name == newItem.name
     }
 
     override fun areContentsTheSame(oldItem: Line, newItem: Line): Boolean {

@@ -1,61 +1,71 @@
 package com.example.rijekabusapp
 
 import android.os.Bundle
-import android.view.View
-import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.example.rijekabusapp.adapters.EXTRA_LINE
-import com.example.rijekabusapp.adapters.LineStationsRecyclerAdapter
+import com.example.rijekabusapp.adapters.viewpager.ViewPagerAdapter
 import com.example.rijekabusapp.databinding.ActivityLineBinding
+import com.example.rijekabusapp.fragments.LineScheduleFragment
+import com.example.rijekabusapp.fragments.LineStationsFragment
 import com.example.rijekabusapp.network.models.Line
-import com.example.rijekabusapp.viewmodels.BusLocationViewModel
 import com.example.rijekabusapp.viewmodels.ScheduleViewModel
-import java.text.SimpleDateFormat
-import java.util.*
+import com.google.android.material.tabs.TabLayout
 
 class LineActivity : AppCompatActivity() {
 
+    lateinit var scheduleViewModel: ScheduleViewModel
     private lateinit var binding: ActivityLineBinding
-    private lateinit var scheduleViewModel: ScheduleViewModel
-    private lateinit var busLocationViewModel: BusLocationViewModel
-    private lateinit var sdf: SimpleDateFormat
-    private lateinit var currentTime: Date
+    private lateinit var lineItem: Line
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLineBinding.inflate(layoutInflater)
-        val lineItem = intent.getSerializableExtra(EXTRA_LINE) as? Line
-
-        setContentView(binding.root)
+        lineItem = (intent.getSerializableExtra(EXTRA_LINE) as? Line)!!
 
         scheduleViewModel = MainActivity.ViewModelHolder.getScheduleViewModel(this, application)
-        binding.rvLineStations.layoutManager = LinearLayoutManager(this)
+        setupViewPagerAndTabs()
 
-        busLocationViewModel = ViewModelProvider(this)[BusLocationViewModel::class.java]
+        setContentView(binding.root)
+    }
 
-        // Access the scheduleList and observe changes as needed
-        scheduleViewModel.scheduleList.observe(this) { scheduleList ->
-            busLocationViewModel.busLocationsLiveData.observe(this) { busLocations ->
-                val filteredSchedules = scheduleList.filter { schedule ->
-                    schedule.lineNumber == lineItem?.lineNumber &&
-                        schedule.variantLineName == lineItem.name &&
-                        schedule.linVarId == lineItem.linVarId &&
-                        busLocations.any { it.startId.toString() == schedule.startId }
-                }
-
-                val adapter = LineStationsRecyclerAdapter(this, filteredSchedules)
-                binding.rvLineStations.adapter = adapter
-
-                if (filteredSchedules.isEmpty()) {
-                    binding.emptyState.setupEmptyStateView(getString(R.string.no_buses_error_desc))
-                    binding.emptyState.visibility = View.VISIBLE
-                    binding.rvLineStations.visibility = View.GONE
-                }
-                binding.progressBar.visibility = ProgressBar.GONE
-            }
-            busLocationViewModel.getBusLocations()
+    private fun setupViewPagerAndTabs() {
+        binding.tvIcon.text = lineItem.lineNumber
+        binding.tvLineName.text = lineItem.name
+        binding.ivBack.setOnClickListener {
+            onBackPressed()
         }
+
+        // Initialize TabLayout
+        val tabs = listOf("Active", "Schedule")
+        tabs.forEach { tabTitle ->
+            binding.tabLayout.addTab(binding.tabLayout.newTab().setText(tabTitle))
+        }
+
+        // Initialize ViewPager2
+        val fragments = listOf(LineStationsFragment(), LineScheduleFragment())
+        val pagerAdapter = ViewPagerAdapter(this, fragments, lineItem)
+        binding.viewPager.adapter = pagerAdapter
+
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(position))
+            }
+        })
+
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                binding.viewPager.setCurrentItem(tab.position, true)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                // No action needed
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+                // No action needed
+            }
+        })
     }
 }

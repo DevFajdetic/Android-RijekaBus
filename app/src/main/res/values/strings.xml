@@ -47,4 +47,5 @@
     <string name="filters_search_error_desc">Try adjusting your search or filter to find what you are looking for.</string>
     <string name="favorites_error_desc">No favorites, try clicking a star for line or station, or contact support.</string>
     <string name="no_buses_error_desc">Current line is not driving currently, please check the schedule.</string>
+    <string name="no_stations_error_desc">Current station does not receive any buses soon, please check the schedule.</string>
 </resources>

@@ -83,11 +83,6 @@ class ExploreFragment : Fragment() {
             true
         }
 
-        binding.schedules.setOnClickListener() {
-            Navigation.findNavController(binding.root)
-                .navigate(R.id.exploretosch)
-        }
-
         viewModel = ViewModelProvider(this)[WeatherViewModel::class.java]
         viewModel.currentWeather.observe(viewLifecycleOwner) { weatherResponse ->
             weatherResponse?.let {
