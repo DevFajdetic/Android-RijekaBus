@@ -19,6 +19,7 @@ import android.widget.TextView
 import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
 import com.example.rijekabusapp.R
+import com.example.rijekabusapp.SavedPreference
 import com.example.rijekabusapp.network.models.Station
 import com.google.android.material.textfield.TextInputEditText
 
@@ -57,6 +58,27 @@ fun TextInputEditText.customValidate(context: Context): Boolean {
         }
     }
     return valid
+}
+
+fun showProfileCustomDialog(context: Context) {
+    val dialog = Dialog(context).apply {
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        this.setCancelable(true)
+        this.setContentView(R.layout.custom_dialog_profile)
+        this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    val btnOk = dialog.findViewById<Button>(R.id.btnDialogOk)
+    val edit = dialog.findViewById<TextInputEditText>(R.id.nameEditText)
+    btnOk.text = context.getText(R.string.ok)
+
+    btnOk.setOnClickListener {
+        if (edit.text.toString() != "") {
+            SavedPreference.setUsername(context, edit.text.toString())
+        }
+        dialog.dismiss()
+    }
+    dialog.show()
 }
 
 fun showCustomDialog(title: String, context: Context) {
@@ -126,4 +148,12 @@ fun callDelayed(delay: Long, function: Runnable) {
     Handler(Looper.getMainLooper()).postDelayed(
         function, delay
     )
+}
+
+private const val PREF_SELECTED_LANGUAGE = "selected_language"
+private const val PREF_THEME_MODE = "theme_mode"
+
+fun getThemePreferenceFromPreferences(context: Context): Boolean {
+    val sharedPreferences = context.getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
+    return sharedPreferences.getBoolean(PREF_THEME_MODE, false)
 }

@@ -10,6 +10,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.rijekabusapp.databinding.ActivityMainBinding
+import com.example.rijekabusapp.helpers.isOnline
+import com.example.rijekabusapp.helpers.showCustomDialog
 import com.example.rijekabusapp.viewmodels.ScheduleViewModel
 import com.example.rijekabusapp.viewmodels.factory.ScheduleViewModelFactory
 import com.google.android.material.shape.CornerFamily
@@ -19,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-    private lateinit var scheduleViewModel: ScheduleViewModel
+    lateinit var scheduleViewModel: ScheduleViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +38,11 @@ class MainActivity : AppCompatActivity() {
         setupNavigation()
 
         scheduleViewModel = ViewModelHolder.getScheduleViewModel(this, application)
-        scheduleViewModel.getScheduleList()
+        if (this.isOnline()) {
+            scheduleViewModel.getScheduleList()
+        } else {
+            showCustomDialog(getString(R.string.no_internet_connection), this)
+        }
     }
 
     private fun setupNavigation() {

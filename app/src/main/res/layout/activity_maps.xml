@@ -20,11 +20,14 @@
             android:src="@drawable/ic_back" />
 
         <TextView
+            android:gravity="center_vertical"
             android:id="@+id/tv_title"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:text="@string/map" />
+            android:text="@string/map"
+            android:textAppearance="@style/HeadlineMediumNLv1Center"
+            android:textColor="@color/white" />
 
     </androidx.appcompat.widget.Toolbar>
 

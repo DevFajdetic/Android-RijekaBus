@@ -3,7 +3,7 @@
 
     <style name="Theme.BusSplashScreenTheme" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/wave</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/lo</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo</item>
         <item name="postSplashScreenTheme">@style/Theme.RijekaBusApp</item>
         <item name="background">@color/wave</item>
     </style>

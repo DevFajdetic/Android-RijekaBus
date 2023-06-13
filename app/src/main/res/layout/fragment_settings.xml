@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface_surface_0"
+    android:paddingBottom="40dp"
+    android:background="@color/white"
     android:orientation="vertical"
     android:theme="@style/Theme.RijekaBusApp"
     android:weightSum="1">
@@ -54,6 +55,7 @@
                 android:text="Dark theme" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilLang"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,12 +96,14 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
+                android:layout_height="150dp"
                 android:layout_marginTop="16dp"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/surface_surface_2"
-                app:cardCornerRadius="14dp">
+                app:cardCornerRadius="20dp"
+                app:cardBackgroundColor="@color/surface_surface_0"
+                app:cardElevation="0dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:id="@+id/unit_type_selecting_container"
@@ -122,6 +126,7 @@
                         android:layout_height="wrap_content">
 
                         <RadioButton
+                            android:checked="true"
                             android:id="@+id/metric"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -137,14 +142,17 @@
 
                     </RadioGroup>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+
+            </com.google.android.material.card.MaterialCardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@color/surface_surface_2"
-                app:cardCornerRadius="14dp">
+                app:cardBackgroundColor="@color/surface_surface_0"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:id="@+id/time_format_selecting_container"
@@ -171,6 +179,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:buttonTint="@color/color_primary"
+                            android:checked="true"
                             android:text="24 hour clock" />
 
                         <RadioButton

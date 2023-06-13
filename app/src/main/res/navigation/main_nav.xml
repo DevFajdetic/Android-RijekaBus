@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_exploreFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_aboutActivity"
+            app:destination="@id/aboutActivity" />
     </fragment>
     <fragment
         android:id="@+id/linesFragment"
@@ -59,4 +62,9 @@
             android:id="@+id/action_settingsFragment_to_exploreFragment"
             app:destination="@id/exploreFragment" />
     </fragment>
+    <activity
+        android:id="@+id/aboutActivity"
+        android:name="com.example.rijekabusapp.AboutActivity"
+        android:label="activity_about"
+        tools:layout="@layout/activity_about" />
 </navigation>

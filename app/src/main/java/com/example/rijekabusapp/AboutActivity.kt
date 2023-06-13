@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rijekabusapp.databinding.ActivityAboutBinding
 
-
 class AboutActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAboutBinding
@@ -28,10 +27,12 @@ class AboutActivity : AppCompatActivity() {
             )
             if (intent.resolveActivity(packageManager) != null) {
                 startActivity(intent)
-            } else { Toast.makeText(
+            } else {
+                Toast.makeText(
                     applicationContext,
                     "No web browser app found",
-                    Toast.LENGTH_SHORT).show()
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

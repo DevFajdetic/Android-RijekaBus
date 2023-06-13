@@ -71,4 +71,14 @@ object SavedPreference {
             context, FAMILY_NAME, familyName
         )
     }
+
+    fun clearPreferences(context: Context) {
+        val editor = getSharedPreference(context)?.edit()
+        editor?.putString(EMAIL, "")
+        editor?.putString(USERNAME, "")
+        editor?.putString(PICTURE_URL, "")
+        editor?.putString(GIVEN_NAME, "")
+        editor?.putString(FAMILY_NAME, "")
+        editor?.apply()
+    }
 }

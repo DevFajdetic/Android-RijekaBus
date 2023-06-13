@@ -29,6 +29,7 @@
             android:id="@+id/mainNavView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:longClickable="false"
             app:itemIconTint="@color/color_nav_icons"
             app:labelVisibilityMode="unlabeled"
             app:itemTextColor="@color/clean_blue"
@@ -46,7 +47,7 @@
         app:tint="@null"
         android:scaleType="center"
         app:maxImageSize="33dp"
-        app:backgroundTint="@color/clean_blue"
+        app:backgroundTint="@color/color_quinary"
         app:layout_anchor="@id/mainAppBar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

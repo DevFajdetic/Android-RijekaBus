@@ -12,7 +12,6 @@ import com.example.rijekabusapp.R
 import com.example.rijekabusapp.database.models.FavoriteLine
 import com.example.rijekabusapp.databinding.BusLineItemViewBinding
 import com.example.rijekabusapp.helpers.ItemMoveCallback
-import java.util.*
 
 class FavoriteLineRecyclerAdapter(
     private val context: Context,
@@ -58,7 +57,7 @@ class FavoriteLineRecyclerAdapter(
         holder.binding.root.setOnClickListener {
             if (!isEditModeEnabled) {
                 val intent = Intent(context, LineActivity::class.java).apply {
-                    putExtra(EXTRA_LINE, line)
+                    putExtra(EXTRA_LINE, line.convertToLine())
                 }
                 context.startActivity(intent)
             }

@@ -16,6 +16,7 @@ import com.example.rijekabusapp.databinding.FragmentLineStationsBinding
 import com.example.rijekabusapp.network.models.Line
 import com.example.rijekabusapp.viewmodels.BusLocationViewModel
 import com.example.rijekabusapp.viewmodels.ScheduleViewModel
+import com.example.rijekabusapp.viewmodels.StationsViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -26,6 +27,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 class LineStationsFragment : Fragment(), OnMapReadyCallback {
 
     private val busLocationViewModel: BusLocationViewModel by activityViewModels()
+    private val stationsViewModel: StationsViewModel by activityViewModels()
+
     private lateinit var binding: FragmentLineStationsBinding
     private lateinit var scheduleViewModel: ScheduleViewModel
     private var latitude: Double = 0.0
@@ -50,38 +53,46 @@ class LineStationsFragment : Fragment(), OnMapReadyCallback {
         binding.rvLineStations.layoutManager = LinearLayoutManager(requireContext())
 
         scheduleViewModel.scheduleList.observe(viewLifecycleOwner) { scheduleList ->
-            busLocationViewModel.busLocationsLiveData.observe(viewLifecycleOwner) { busLocations ->
-                val filteredSchedules = scheduleList.filter { schedule ->
-                    schedule.lineNumber == lineItem?.lineNumber &&
-                        schedule.variantLineName == lineItem.name &&
-                        busLocations.any { it.startId.toString() == schedule.startId }
-                }.sortedBy { it.startTime }
+            stationsViewModel.stationsList.observe(viewLifecycleOwner) { stationsList ->
+                busLocationViewModel
+                    .busLocationsLiveData.observe(viewLifecycleOwner) { busLocations ->
+                        val filteredSchedules = scheduleList.filter { schedule ->
+                            schedule.lineNumber == lineItem?.lineNumber &&
+                                schedule.variantLineName == lineItem.name &&
+                                busLocations.any { it.startId.toString() == schedule.startId }
+                        }.sortedBy { it.startTime }
 
-                val nextStation = filteredSchedules.find { schedule ->
-                    busLocations.any { it.nextStationId == schedule.stationId }
-                }
-                for (busLoc in busLocations) {
-                    if (busLoc.startId.toString() == filteredSchedules[0].startId) {
-                        latitude = busLoc.gpsX
-                        longitude = busLoc.gpsY
+                        val nextStation = filteredSchedules.find { schedule ->
+                            busLocations.any { it.nextStationId == schedule.stationId }
+                        }
+
+                        val adapter = LineStationsRecyclerAdapter(
+                            requireContext(), filteredSchedules, stationsList, nextStation
+                        )
+                        binding.rvLineStations.adapter = adapter
+
+                        if (filteredSchedules.isEmpty()) {
+                            binding.emptyState.setupEmptyStateView(
+                                getString(R.string.no_buses_error_desc)
+                            )
+                            binding.ivMissing.visibility = View.VISIBLE
+                            binding.emptyState.visibility = View.VISIBLE
+                            binding.rvLineStations.visibility = View.GONE
+                        } else {
+                            for (busLoc in busLocations) {
+                                if (busLoc.startId.toString() == filteredSchedules[0].startId) {
+                                    latitude = busLoc.gpsX
+                                    longitude = busLoc.gpsY
+                                }
+                            }
+                            binding.googleMap.getMapAsync(this)
+                        }
+
+                        binding.progressBar.visibility = ProgressBar.GONE
                     }
-                }
-                binding.googleMap.getMapAsync(this)
-                val adapter = LineStationsRecyclerAdapter(
-                    requireContext(), filteredSchedules, nextStation
-                )
-                binding.rvLineStations.adapter = adapter
-
-                if (filteredSchedules.isEmpty()) {
-                    binding.emptyState.setupEmptyStateView(getString(R.string.no_buses_error_desc))
-                    binding.ivMissing.visibility = View.VISIBLE
-                    binding.emptyState.visibility = View.VISIBLE
-                    binding.rvLineStations.visibility = View.GONE
-                }
-
-                binding.progressBar.visibility = ProgressBar.GONE
+                busLocationViewModel.getBusLocations()
             }
-            busLocationViewModel.getBusLocations()
+            stationsViewModel.getStationsList()
         }
     }
 

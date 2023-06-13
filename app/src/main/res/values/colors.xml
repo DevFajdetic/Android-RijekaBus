@@ -10,11 +10,16 @@
     <color name="white">#FFFFFFFF</color>
     <color name="some">#EC7D2B</color>
     <!-- CUSTOM APP COLORS -->
-    <color name="color_primary">#1d4289</color>
+    <color name="color_primary">#015c92</color>
+    <color name="color_primary_variant">#016FAD</color>
+    <color name="color_secondary">#2d82b5</color>
+    <color name="color_secondary_variant">#2970a1</color>
+    <color name="color_tertiary">#53a7d8</color>
+    <color name="color_quaternary">#88cdf6</color>
+    <color name="color_quinary">#bce6ff</color>
     <color name="color_primary_dark">#001544</color>
     <color name="color_primary_light">#556cb9</color>
     <color name="color_primary_hightlight">#261d4289</color>
-    <color name="color_secondary">#ff5357</color>
     <color name="color_secondary_dark">#c5112e</color>
     <color name="color_secondary_light">#ff8784</color>
     <color name="color_secondary_highlight">#19ff604b</color>
@@ -59,7 +64,7 @@
     <color name="team_timberwolves_primary">#004f83</color>
     <color name="team_spurs_primary">#9ea6ac</color>
     <color name="team_nuggets_primary">#0e2240</color>
-    <color name="team_blazers_primary">#e03a3e</color>
+    <color name="redish">#e03a3e</color>
     <color name="on_color_on_color_secondary">#80ffffff</color>
     <color name="beige">#DDDEE0</color>
     <color name="bluish">#0CAEC0</color>

@@ -12,7 +12,6 @@ import com.example.rijekabusapp.StationActivity
 import com.example.rijekabusapp.database.models.FavoriteStation
 import com.example.rijekabusapp.databinding.BusStationItemViewBinding
 import com.example.rijekabusapp.helpers.ItemMoveCallback
-import java.util.*
 
 class FavoriteStationRecyclerAdapter(
     private val context: Context,
@@ -57,7 +56,7 @@ class FavoriteStationRecyclerAdapter(
         holder.binding.root.setOnClickListener {
             if (!isEditModeEnabled) {
                 val intent = Intent(context, StationActivity::class.java).apply {
-                    putExtra(EXTRA_STATION, station)
+                    putExtra(EXTRA_STATION, station.convertToStation())
                 }
                 context.startActivity(intent)
             }

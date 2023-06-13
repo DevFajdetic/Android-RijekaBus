@@ -11,17 +11,20 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rijekabusapp.MainActivity
 import com.example.rijekabusapp.R
 import com.example.rijekabusapp.adapters.StationRecyclerAdapter
 import com.example.rijekabusapp.databinding.FragmentStationsBinding
 import com.example.rijekabusapp.helpers.isOnline
 import com.example.rijekabusapp.helpers.showCustomDialog
 import com.example.rijekabusapp.network.models.Station
+import com.example.rijekabusapp.viewmodels.ScheduleViewModel
 import com.example.rijekabusapp.viewmodels.StationsViewModel
 
 class StationsFragment : Fragment() {
 
     private val viewModel: StationsViewModel by activityViewModels()
+    private lateinit var scheduleViewModel: ScheduleViewModel
     private lateinit var binding: FragmentStationsBinding
     private var selectedDirection: String = ""
 
@@ -46,6 +49,7 @@ class StationsFragment : Fragment() {
         )
 
         binding.spinner.adapter = spinnerAdapter
+        scheduleViewModel = (requireActivity() as MainActivity).scheduleViewModel
 
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -77,24 +81,30 @@ class StationsFragment : Fragment() {
         binding.progressBar.visibility = ProgressBar.VISIBLE
 
         viewModel.stationsList.observe(viewLifecycleOwner) { stations ->
-            val adapter = StationRecyclerAdapter(
-                requireContext(),
-                (
+            scheduleViewModel.scheduleList.observe(viewLifecycleOwner) { scheduleList ->
+                val adapter = StationRecyclerAdapter(
+                    requireContext(),
                     (
-                        if (direction != "") {
-                            stations.distinctBy { it.longName }
-                        } else stations
-                        ) as ArrayList<Station>
-                    ),
-                favoriteStations,
-                false,
-                insertFavoriteStation,
-                deleteFavoriteStation
-            )
-            binding.rvStations.adapter = adapter
-            binding.progressBar.visibility = ProgressBar.GONE
+                        (
+                            if (direction != "") {
+                                stations.filter { st ->
+                                    scheduleList.any { sch ->
+                                        sch.stationId == st.id && sch.direction == direction
+                                    }
+                                }
+                            } else stations
+                            ) as ArrayList<Station>
+                        ),
+                    favoriteStations,
+                    false,
+                    insertFavoriteStation,
+                    deleteFavoriteStation
+                )
+                binding.rvStations.adapter = adapter
+                binding.progressBar.visibility = ProgressBar.GONE
 
-            setTeamSearchListener(adapter)
+                setTeamSearchListener(adapter)
+            }
         }
 
         if (requireContext().isOnline()) {

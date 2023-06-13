@@ -32,7 +32,7 @@
     <string name="metric_cm_kg">Metric (cm, kg)</string>
     <string name="imperial_ft_lb">Imperial (ft, lb)</string>
     <string name="weather">Weather</string>
-    <string name="temperature">Temperature</string>
+    <string name="temperature" translatable="false">Temperature</string>
     <string name="humidity">Humidity</string>
     <string name="wind">Wind</string>
     <string name="menu">Menu</string>
@@ -55,4 +55,26 @@
     <string name="label_app_name">APP NAME</string>
     <string name="lbl_api_credit">API CREDIT</string>
     <string name="api_credits"><![CDATA[Autotrolej, OpenWeather & City Rijeka]]></string>
+    <string name="city_map">Gradska karta</string>
+    <string name="outer_city_map">Prigradska karta</string>
+    <string name="my_routes">My Routes</string>
+    <string name="schedules">Schedules</string>
+    <string name="mail">Mail</string>
+    <string name="city_card">City Card</string>
+    <string name="news">News</string>
+    <string name="pressure">Pressure</string>
+    <string name="sight">Sight</string>
+    <string name="welcome">Welcome,</string>
+    <string name="welcome_to">Welcome to</string>
+    <string name="off">off</string>
+    <string name="on">on</string>
+    <string name="enter_your_new_name">Enter your new name</string>
+    <string name="enter_your_name">Edit your username</string>
+    <string name="not_implemented">Not implemented</string>
+    <string name="clear_favorites_list">Clear all favorites</string>
+    <string name="clear">Clear</string>
+    <string name="cancel">Cancel</string>
+    <string name="navigation_drawer_open">Navigation drawer opened</string>
+    <string name="navigation_drawer_close">Navigation drawer closed</string>
+    <string name="all_bus_stations_rijeka">All Bus Stations Rijeka</string>
 </resources>
