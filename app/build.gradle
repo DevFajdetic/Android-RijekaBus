@@ -97,4 +97,6 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.14.3'
     // maps
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    // indicator
+    implementation 'me.relex:circleindicator:2.1.6'
 }

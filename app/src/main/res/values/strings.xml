@@ -32,7 +32,7 @@
     <string name="metric_cm_kg">Metric (cm, kg)</string>
     <string name="imperial_ft_lb">Imperial (ft, lb)</string>
     <string name="weather">Weather</string>
-    <string name="temperature" translatable="false">Temperature</string>
+    <string name="temperature">Temperature</string>
     <string name="humidity">Humidity</string>
     <string name="wind">Wind</string>
     <string name="menu">Menu</string>
@@ -55,8 +55,8 @@
     <string name="label_app_name">APP NAME</string>
     <string name="lbl_api_credit">API CREDIT</string>
     <string name="api_credits"><![CDATA[Autotrolej, OpenWeather & City Rijeka]]></string>
-    <string name="city_map">Gradska karta</string>
-    <string name="outer_city_map">Prigradska karta</string>
+    <string name="city_map">City scheme</string>
+    <string name="outer_city_map">Suburban scheme</string>
     <string name="my_routes">My Routes</string>
     <string name="schedules">Schedules</string>
     <string name="mail">Mail</string>
@@ -76,5 +76,28 @@
     <string name="cancel">Cancel</string>
     <string name="navigation_drawer_open">Navigation drawer opened</string>
     <string name="navigation_drawer_close">Navigation drawer closed</string>
-    <string name="all_bus_stations_rijeka">All Bus Stations Rijeka</string>
+    <string name="all_bus_stations_rijeka">All Bus Stations</string>
+    <string name="no_mail_app">No email app found</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="all_bus_lines_rijeka">All Bus Lines</string>
+    <string name="filter_lines">Filter Lines</string>
+    <string name="lines">Lines</string>
+    <string name="filter_stations">Filter Stations</string>
+    <string name="stations">Stations</string>
+    <string name="zone">Zones</string>
+    <string name="city_bus">City</string>
+    <string name="suburban_bus">Suburban</string>
+    <string name="night_bus">Night</string>
+    <string name="nearest_to_my_location">Nearest to my location</string>
+    <string name="apply">APPLY</string>
+    <string name="current_stops">Current stops</string>
+    <string name="add">Add</string>
+    <string name="type_a_photo_title_ie">Photo title</string>
+    <string name="paste_photo_url">Paste photo url</string>
+    <string name="url">Url</string>
+    <string name="add_player_photo">Add station photo</string>
+    <string name="delete_all_photos">Delete all photos</string>
+    <string name="editbutton">Edit button</string>
+    <string name="manage_photos">Manage photos</string>
+    <string name="error_deleting_image">Error deleting image</string>
 </resources>

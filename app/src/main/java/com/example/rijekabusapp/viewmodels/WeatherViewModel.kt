@@ -12,10 +12,8 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
     val currentWeather = MutableLiveData<WeatherResponse>()
     private val apiKey = "5fccc012ba66eed8f23349a033b2377f"
     private val cityName = "Rijeka"
-    private val metric = "metric"
-    private val lang = "hr"
 
-    fun getCurrentWeather() {
+    fun getCurrentWeather(metric: String, lang: String) {
         viewModelScope.launch {
             currentWeather.value = Network().getWeatherService().getCurrentWeather(
                 cityName,

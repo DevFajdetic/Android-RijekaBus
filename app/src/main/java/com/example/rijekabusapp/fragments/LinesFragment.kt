@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ProgressBar
+import android.widget.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -18,6 +16,9 @@ import com.example.rijekabusapp.helpers.isOnline
 import com.example.rijekabusapp.helpers.showCustomDialog
 import com.example.rijekabusapp.network.models.Line
 import com.example.rijekabusapp.viewmodels.LinesViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.switchmaterial.SwitchMaterial
+import com.google.android.material.textfield.TextInputLayout
 
 class LinesFragment : Fragment() {
 
@@ -34,15 +35,41 @@ class LinesFragment : Fragment() {
         binding = FragmentLinesBinding.inflate(inflater, container, false)
         binding.rvLines.layoutManager = LinearLayoutManager(requireContext())
 
+        setupFilters()
         setupSpinner()
 
         return binding.root
     }
 
+    private fun setupFilters() {
+        binding.filter.setOnClickListener {
+            val bsDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
+            val bsView = LayoutInflater.from(binding.root.context)
+                .inflate(
+                    R.layout.bottom_sheet_filter,
+                    binding.root.findViewById(R.id.bs_container)
+                )
+
+            bsView.findViewById<Button>(R.id.b_apply).setOnClickListener {
+                bsDialog.dismiss()
+            }
+            bsView.findViewById<Button>(R.id.b_reset).setOnClickListener {
+                bsDialog.dismiss()
+            }
+            bsView.findViewById<SwitchMaterial>(R.id.s_location).visibility = View.GONE
+            bsView.findViewById<TextView>(R.id.tv_filter_lines).text =
+                getString(R.string.filter_stations)
+            bsView.findViewById<TextInputLayout>(R.id.til_lines).hint = getString(R.string.stations)
+
+            bsDialog.setContentView(bsView)
+            bsDialog.show()
+        }
+    }
+
     private fun setupSpinner() {
         val directions = resources.getStringArray(R.array.SpinnerDirectionsItems)
         val spinnerAdapter = ArrayAdapter(
-            requireContext(), R.layout.drop_down_item, directions
+            requireContext(), R.layout.drop_down_toolbar_item, directions
         )
 
         binding.spinner.adapter = spinnerAdapter
@@ -56,8 +83,8 @@ class LinesFragment : Fragment() {
             ) {
                 when (position) {
                     0 -> selectedDirection = "" // All lines
-                    1 -> selectedDirection = "A"
-                    2 -> selectedDirection = "B"
+                    1 -> selectedDirection = "B"
+                    2 -> selectedDirection = "A"
                 }
                 getLinesList(selectedDirection)
             }

@@ -17,8 +17,3 @@ fun compareWithCurrentTime(time: LocalTime): Int {
         else -> 0
     }
 }
-
-fun main() {
-    val str = "12:57:13.0000000"
-    println(compareWithCurrentTime(stringToTime(str)))
-}

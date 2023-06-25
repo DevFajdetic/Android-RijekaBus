@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_sheet">
+
+    <RelativeLayout
+        android:id="@+id/bs_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="32dp"
+        tools:ignore="UselessParent">
+
+        <ImageView
+            android:id="@+id/iv_drag"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_remove"
+            app:tint="@color/grey" />
+
+        <TextView
+            android:id="@+id/tv_filter_lines"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_drag"
+            android:layout_marginTop="4dp"
+            android:text="@string/filter_lines"
+            android:textAppearance="@style/HeadlineMediumNLv1Left" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_lines"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_filter_lines"
+            android:layout_marginVertical="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:hint="@string/lines"
+            android:textColorHint="@color/color_primary"
+            app:boxBackgroundColor="@color/surface_surface_0"
+            app:endIconMode="dropdown_menu" >
+
+            <AutoCompleteTextView
+                android:id="@+id/atv_names"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_filter_zones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/til_lines"
+            android:layout_marginTop="4dp"
+            android:text="@string/zone"
+            android:textAppearance="@style/HeadlineMediumNLv1Left" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chips_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_filter_zones"
+            android:padding="16dp"
+            app:singleSelection="false">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/c_gradski"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/city_bus" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/c_prigradski"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/suburban_bus" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/c_nocni"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/night_bus" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/s_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chips_group"
+            android:layout_marginTop="16dp"
+            android:text="@string/nearest_to_my_location"
+            android:textAppearance="@style/HeadlineMediumNLv1Left"
+            app:switchPadding="40dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/s_location"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/b_reset"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@drawable/transparent_background"
+                android:backgroundTint="@color/white"
+                android:paddingVertical="17dp"
+                android:text="@string/cancel"
+                android:textColor="@color/color_primary"
+                app:cornerRadius="5dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/b_apply"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:paddingVertical="17dp"
+                android:text="@string/apply"
+                app:cornerRadius="5dp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
+
+

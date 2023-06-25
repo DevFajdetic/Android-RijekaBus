@@ -7,16 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.rijekabusapp.R
 import com.example.rijekabusapp.StationActivity
 import com.example.rijekabusapp.database.models.FavoriteStation
 import com.example.rijekabusapp.databinding.BusStationItemViewBinding
 import com.example.rijekabusapp.helpers.ItemMoveCallback
+import com.example.rijekabusapp.network.models.StationImage
 
 class FavoriteStationRecyclerAdapter(
     private val context: Context,
     private val favoritesList: ArrayList<FavoriteStation>,
-    // private val imagesList: ArrayList<ArrayList<StationImage>>,
+    private val imagesList: ArrayList<ArrayList<StationImage>>,
     private var isEditModeEnabled: Boolean,
     private val deleteCallback: (FavoriteStation) -> Unit
 ) : RecyclerView.Adapter<FavoriteStationRecyclerAdapter.FavoriteStationViewHolder>(),
@@ -61,17 +63,18 @@ class FavoriteStationRecyclerAdapter(
                 context.startActivity(intent)
             }
         }
-        /*imagesList.forEach {
-            for (i in 0..it.size) {
-                if (it[0].playerId == player.id) {
-                    Picasso.get().load(it[0].imageUrl).fit().centerCrop()
-                        .into(holder.binding.ivPlayerImage)
-                    return
-                } else {
-                    loadPlayerImagePlaceholder(position, holder.binding.ivPlayerImage)
-                }
+
+        imagesList.forEach {
+            if (it.size > 0 && it[0].stationId == station.id) {
+                holder.binding.ivStationImage.load(it[0].imageUrl)
+                return
+            } else {
+                if (position % 2 == 0) holder.binding.ivStationImage
+                    .load(R.drawable.ic_bus_stop_one)
+                else holder.binding.ivStationImage
+                    .load(R.drawable.ic_bus_stop_two)
             }
-        } */
+        }
     }
 
     override fun getItemCount(): Int {

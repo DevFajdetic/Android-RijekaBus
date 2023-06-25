@@ -1,6 +1,7 @@
 package com.example.rijekabusapp.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -8,8 +9,12 @@ import com.example.rijekabusapp.database.AutotrolejDatabase
 import com.example.rijekabusapp.database.AutotrolejRepository
 import com.example.rijekabusapp.database.models.FavoriteLine
 import com.example.rijekabusapp.database.models.FavoriteStation
+import com.example.rijekabusapp.network.Network
 import com.example.rijekabusapp.network.models.Line
 import com.example.rijekabusapp.network.models.Station
+import com.example.rijekabusapp.network.models.StationImage
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 class FavoritesViewModel(application: Application) : AndroidViewModel(application) {
@@ -17,7 +22,7 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
     val favoriteLines = MutableLiveData<ArrayList<FavoriteLine>>()
     val favoriteStations = MutableLiveData<ArrayList<FavoriteStation>>()
 
-    // val stationImages = MutableLiveData<ArrayList<ArrayList<StationImage>>>()
+    val stationImages = MutableLiveData<ArrayList<ArrayList<StationImage>>>()
 
     private val repository: AutotrolejRepository
 
@@ -29,29 +34,28 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
     fun getFavoriteStationsAndImages() {
         viewModelScope.launch {
             val stations = ArrayList<FavoriteStation>()
-            val sortedStations = repository.getFavoriteStations().sortedBy { it.position }
+            val sortedStations = repository.getFavoriteStationsAsync().sortedBy { it.position }
             sortedStations.forEach {
                 stations.add(it)
             }
-            /*
+
             val asyncTasks = stations.map { station ->
                 async {
                     try {
-                        Network().getBusService().getPlayerImages(station.id).data
+                        Log.d("novo2", station.id.toString())
+                        ArrayList(Network().getMyApiService().getStationImages(station.id))
                     } catch (e: Exception) {
                         arrayListOf(StationImage(0, "", "", null))
                     }
                 }
             }
             val response = asyncTasks.awaitAll()
-            */
 
             favoriteStations.value = stations
-            /*
             if (response.isNotEmpty()) {
-                playerImages.value = response as ArrayList<ArrayList<PlayerImage>>
+                Log.d("novo2", "NIJE PRAZNO")
+                stationImages.value = response as ArrayList<ArrayList<StationImage>>
             }
-            */
         }
     }
 

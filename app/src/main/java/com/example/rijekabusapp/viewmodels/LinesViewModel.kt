@@ -38,7 +38,7 @@ class LinesViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             val response = Network().getBusService().getAllLines()
             val uniqueLines = response.distinctBy {
-                it.name + it.lineNumber + it.direction + it.linVarId + it.variant
+                it.name + it.lineNumber + it.direction + it.linVarId
             }.sortedWith(comparator)
             linesList.value = ArrayList(uniqueLines)
         }

@@ -1,6 +1,7 @@
 package com.example.rijekabusapp.network.models
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Schedule(
     @SerializedName("BrojLinije")
@@ -31,4 +32,16 @@ data class Schedule(
     val stationId: Int,
     @SerializedName("Varijanta")
     val variant: String
-)
+) : Serializable {
+    fun asLine(): Line {
+        return Line(
+            lineNumber,
+            linVarId,
+            variantLineName,
+            stationOrdial,
+            direction,
+            stationId,
+            variant
+        )
+    }
+}

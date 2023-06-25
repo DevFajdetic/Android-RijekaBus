@@ -3,6 +3,7 @@ package com.example.rijekabusapp.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.example.rijekabusapp.R
 import com.example.rijekabusapp.database.models.FavoriteLine
 import com.example.rijekabusapp.databinding.BusLineItemViewBinding
 import com.example.rijekabusapp.helpers.ItemMoveCallback
+import com.example.rijekabusapp.helpers.generateUniqueColor
 
 class FavoriteLineRecyclerAdapter(
     private val context: Context,
@@ -42,6 +44,9 @@ class FavoriteLineRecyclerAdapter(
         }
 
         holder.binding.ivLineNumber.text = line.lineNumber[0].toString()
+        holder.binding.ivLineNumber
+            .setBackgroundColor(Color.parseColor(generateUniqueColor(line.lineNumber)))
+
         holder.binding.tvLineName.text = line.name
         holder.binding.tvDirection.text = line.direction
 

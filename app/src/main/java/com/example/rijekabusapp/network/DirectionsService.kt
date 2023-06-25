@@ -1,6 +1,6 @@
 package com.example.rijekabusapp.network
 
-import com.example.rijekabusapp.network.response.WeatherResponse
+import com.example.rijekabusapp.network.response.DirectionsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

@@ -3,13 +3,13 @@ package com.example.rijekabusapp.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.rijekabusapp.R
 import com.example.rijekabusapp.StationActivity
 import com.example.rijekabusapp.databinding.BusStationItemViewBinding
@@ -40,8 +40,16 @@ class StationRecyclerAdapter(
 
     override fun onBindViewHolder(holder: StationViewHolder, position: Int) {
         val station = filterList[position]
-        Log.d("rap", station.gpsX.toString())
         holder.binding.tvStationName.text = station.longName
+        var imagePlaceholder = R.drawable.ic_bus_stop_one
+        if (position % 2 == 0) {
+            imagePlaceholder = R.drawable.ic_bus_stop_two
+        }
+
+        holder.binding.ivStationImage.load(imagePlaceholder) {
+            placeholder(R.drawable.ic_bus_stop_two)
+        }
+
         val exists = isStationFavorite(station.id)
 
         if (usedForFavorites) {

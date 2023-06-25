@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.rijekabusapp.adapters.EXTRA_STATION
 import com.example.rijekabusapp.adapters.viewpager.ViewPagerAdapter
-import com.example.rijekabusapp.databinding.ActivityLineBinding
+import com.example.rijekabusapp.databinding.ActivityStationBinding
 import com.example.rijekabusapp.fragments.StationLinesFragment
 import com.example.rijekabusapp.fragments.StationLinesListFragment
 import com.example.rijekabusapp.network.models.Station
@@ -15,12 +15,12 @@ import com.google.android.material.tabs.TabLayout
 class StationActivity : AppCompatActivity() {
 
     lateinit var scheduleViewModel: ScheduleViewModel
-    private lateinit var binding: ActivityLineBinding
+    private lateinit var binding: ActivityStationBinding
     private lateinit var stationItem: Station
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLineBinding.inflate(layoutInflater)
+        binding = ActivityStationBinding.inflate(layoutInflater)
         stationItem = (intent.getSerializableExtra(EXTRA_STATION) as? Station)!!
 
         scheduleViewModel = MainActivity.ViewModelHolder.getScheduleViewModel(this, application)
@@ -31,7 +31,7 @@ class StationActivity : AppCompatActivity() {
 
     private fun setupViewPagerAndTabs() {
         binding.tvIcon.text = stationItem.shortName[0].toString()
-        binding.tvLineName.text = stationItem.shortName
+        binding.tvStationName.text = stationItem.shortName
         binding.ivBack.setOnClickListener {
             onBackPressed()
         }

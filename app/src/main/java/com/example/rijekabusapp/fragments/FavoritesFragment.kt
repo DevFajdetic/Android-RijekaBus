@@ -67,22 +67,22 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     private fun loadFavoriteStations() {
         viewModel.favoriteStations.observe(viewLifecycleOwner) { stationList ->
-            // viewModel.stationImages.observe(viewLifecycleOwner) { imagesList ->
-            binding.progressStations.visibility = ProgressBar.VISIBLE
+            viewModel.stationImages.observe(viewLifecycleOwner) { imagesList ->
+                binding.progressStations.visibility = ProgressBar.VISIBLE
 
-            favoriteStationAdapter = FavoriteStationRecyclerAdapter(
-                requireContext(), stationList, isEditModeEnabled,
-                // imagesList
-            ) { station ->
-                viewModel.deleteFavoriteStation(station.convertToStation())
+                favoriteStationAdapter = FavoriteStationRecyclerAdapter(
+                    requireContext(), stationList, imagesList, isEditModeEnabled,
+                ) { station ->
+                    viewModel.deleteFavoriteStation(station.convertToStation())
+                }
+                val itemMoveCallback =
+                    ItemMoveCallback(favoriteStationAdapter) { isEditModeEnabled }
+                val itemTouchHelper = ItemTouchHelper(itemMoveCallback)
+                itemTouchHelper.attachToRecyclerView(binding.rvFavoriteStations)
+                binding.rvFavoriteStations.adapter = favoriteStationAdapter
+
+                binding.progressStations.visibility = ProgressBar.GONE
             }
-            val itemMoveCallback = ItemMoveCallback(favoriteStationAdapter) { isEditModeEnabled }
-            val itemTouchHelper = ItemTouchHelper(itemMoveCallback)
-            itemTouchHelper.attachToRecyclerView(binding.rvFavoriteStations)
-            binding.rvFavoriteStations.adapter = favoriteStationAdapter
-
-            binding.progressStations.visibility = ProgressBar.GONE
-            // }
             binding.emptyStateStations.setupEmptyStateView(getString(R.string.favorites_error_desc))
             setEmptyState(binding.emptyStateStations, stationList.isNotEmpty())
         }

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ProgressBar
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -20,6 +21,8 @@ import com.example.rijekabusapp.helpers.showCustomDialog
 import com.example.rijekabusapp.network.models.Station
 import com.example.rijekabusapp.viewmodels.ScheduleViewModel
 import com.example.rijekabusapp.viewmodels.StationsViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.chip.Chip
 
 class StationsFragment : Fragment() {
 
@@ -37,6 +40,21 @@ class StationsFragment : Fragment() {
         binding = FragmentStationsBinding.inflate(inflater, container, false)
         binding.rvStations.layoutManager = LinearLayoutManager(requireContext())
 
+        binding.filter.setOnClickListener {
+            val bsDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
+            val bsView = LayoutInflater.from(binding.root.context)
+                .inflate(
+                    R.layout.bottom_sheet_filter,
+                    binding.root.findViewById(R.id.bs_container)
+                )
+
+            bsView.findViewById<Button>(R.id.b_apply).setOnClickListener {
+                bsDialog.dismiss()
+            }
+            bsDialog.setContentView(bsView)
+            bsDialog.show()
+        }
+
         setupSpinner()
 
         return binding.root
@@ -45,7 +63,7 @@ class StationsFragment : Fragment() {
     private fun setupSpinner() {
         val directions = resources.getStringArray(R.array.SpinnerDirectionsItems)
         val spinnerAdapter = ArrayAdapter(
-            requireContext(), R.layout.drop_down_item, directions
+            requireContext(), R.layout.drop_down_toolbar_item, directions
         )
 
         binding.spinner.adapter = spinnerAdapter
@@ -60,8 +78,8 @@ class StationsFragment : Fragment() {
             ) {
                 when (position) {
                     0 -> selectedDirection = "" // All lines
-                    1 -> selectedDirection = "A"
-                    2 -> selectedDirection = "B"
+                    1 -> selectedDirection = "B"
+                    2 -> selectedDirection = "A"
                 }
                 getStationsList(selectedDirection)
             }
@@ -125,5 +143,17 @@ class StationsFragment : Fragment() {
                 return false
             }
         })
+    }
+
+    fun applyFilter(filter: String) {
+        val chip = Chip(requireContext())
+        chip.text = filter
+        chip.isCloseIconVisible = true
+        chip.setOnCloseIconClickListener {
+            // Remove the chip when the close icon is clicked
+            binding.cgFilters.removeView(chip)
+            // Perform any necessary action related to removing the filter
+        }
+        binding.cgFilters.addView(chip)
     }
 }

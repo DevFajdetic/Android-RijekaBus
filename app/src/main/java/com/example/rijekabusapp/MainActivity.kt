@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
+        // Add rounded corners to bottom navigation
         val bottomBarBackground = binding.mainAppBar.background as MaterialShapeDrawable
         bottomBarBackground.shapeAppearanceModel =
             bottomBarBackground.shapeAppearanceModel.toBuilder()

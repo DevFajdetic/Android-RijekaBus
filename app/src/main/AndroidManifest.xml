@@ -11,6 +11,7 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:hardwareAccelerated="true"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:screenOrientation="portrait"
@@ -34,10 +35,6 @@
             android:theme="@style/Theme.RijekaBusApp" />
         <activity
             android:name=".MapsActivity"
-            android:exported="false"
-            android:theme="@style/Theme.RijekaBusApp" />
-        <activity
-            android:name=".NavigationActivity"
             android:exported="false"
             android:theme="@style/Theme.RijekaBusApp" />
         <activity

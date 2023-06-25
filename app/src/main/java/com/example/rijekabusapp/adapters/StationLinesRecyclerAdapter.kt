@@ -2,12 +2,16 @@ package com.example.rijekabusapp.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rijekabusapp.LineActivity
 import com.example.rijekabusapp.R
 import com.example.rijekabusapp.databinding.StationLineItemBinding
+import com.example.rijekabusapp.helpers.generateUniqueColor
 import com.example.rijekabusapp.network.models.Schedule
 import java.util.*
 
@@ -33,9 +37,19 @@ class StationLinesRecyclerAdapter(
         val item = stationLinesList[position]
 
         holder.binding.tvTime.text = if (shouldBindTime) item.startTime.substring(0, 5) else ""
+        if (!shouldBindTime) holder.binding.notify.visibility = View.GONE
         holder.binding.tvLineName.text = item.variantLineName
         holder.binding.tvDirection.text = item.direction
         holder.binding.ivLineNumber.text = item.lineNumber
+        holder.binding.ivLineNumber
+            .setBackgroundColor(Color.parseColor(generateUniqueColor(item.lineNumber)))
+
+        holder.binding.root.setOnClickListener {
+            val intent = Intent(context, LineActivity::class.java).apply {
+                putExtra(EXTRA_LINE, item.asLine())
+            }
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {

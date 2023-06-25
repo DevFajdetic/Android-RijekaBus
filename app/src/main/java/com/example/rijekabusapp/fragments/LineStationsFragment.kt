@@ -13,6 +13,7 @@ import com.example.rijekabusapp.R
 import com.example.rijekabusapp.adapters.EXTRA_LINE
 import com.example.rijekabusapp.adapters.LineStationsRecyclerAdapter
 import com.example.rijekabusapp.databinding.FragmentLineStationsBinding
+import com.example.rijekabusapp.helpers.getPreferantTimeFormat
 import com.example.rijekabusapp.network.models.Line
 import com.example.rijekabusapp.viewmodels.BusLocationViewModel
 import com.example.rijekabusapp.viewmodels.ScheduleViewModel
@@ -67,7 +68,8 @@ class LineStationsFragment : Fragment(), OnMapReadyCallback {
                         }
 
                         val adapter = LineStationsRecyclerAdapter(
-                            requireContext(), filteredSchedules, stationsList, nextStation
+                            requireContext(), filteredSchedules, stationsList, nextStation,
+                            getPreferantTimeFormat(requireContext())
                         )
                         binding.rvLineStations.adapter = adapter
 

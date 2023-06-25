@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="SpinnerDirectionsItems" >
-        <item>Svi smjerovi</item>
-        <item>Smjer Istok</item>
-        <item>Smjer Zapad</item>
+        <item>@string/all_directions</item>
+        <item>@string/east_direction</item>
+        <item>@string/west_direction</item>
     </string-array>
+    <string name="all_directions">All directions</string>
+    <string name="east_direction">East direction (B)</string>
+    <string name="west_direction">West direction (A)</string>
 </resources>

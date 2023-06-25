@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
+    android:layout_height="86dp"
     android:orientation="horizontal"
     android:weightSum="1">
 
@@ -15,9 +15,9 @@
         android:layout_marginHorizontal="8dp"
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
-        app:cardCornerRadius="28dp"
+        app:cardCornerRadius="16dp"
         android:background="@color/white"
-        app:cardElevation="4dp"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toStartOf="@id/iv_move"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -25,25 +25,41 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/ivLineNumber"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/lineNumberContainer"
                 android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:gravity="center"
-                android:text="Z"
-                android:textAppearance="@style/HeadlineLargeNLv1Center"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="4dp"
+                android:layout_marginStart="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/ivLineNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Z"
+                    android:textAppearance="@style/HeadlineLargeNLv1Center" />
+
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/tvLineName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:theme="@style/BodyLargeNLv1Left"
-                app:layout_constraintStart_toEndOf="@+id/ivLineNumber"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_time"
+                app:layout_constraintStart_toEndOf="@+id/lineNumberContainer"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.4"
                 tools:text="LeBron James" />
 
@@ -51,10 +67,11 @@
                 android:id="@+id/tvDirection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:theme="@style/BodyMediumNLv2Left"
-                app:layout_constraintStart_toEndOf="@+id/ivLineNumber"
-                app:layout_constraintTop_toBottomOf="@id/tvLineName"
                 app:flow_verticalBias="1"
+                app:layout_constraintStart_toEndOf="@+id/lineNumberContainer"
+                app:layout_constraintTop_toBottomOf="@id/tvLineName"
                 tools:text="LAL" />
 
             <TextView
@@ -62,11 +79,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
+                android:layout_marginTop="8dp"
                 android:text="10:35 h"
                 android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/notify"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/notify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_primary"
+                android:text="NOTIFY"
+                android:padding="8dp"
+                android:textAppearance="@style/HeadlineSmallNLv1Left"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_time"
+                app:layout_constraintEnd_toEndOf="@id/tv_time"
+                app:layout_constraintTop_toBottomOf="@id/tv_time"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
