@@ -1,4 +1,2 @@
-- name: main
-  # You may pin to the exact commit or the version.
-  # uses: lucasnlm/ktlint-action@6d01bcc1303a3bb6ce1c47b5bec1cd352f039989
-  uses: lucasnlm/ktlint-action@v1.0.1
+- name: Run ktlint with reviewdog
+  uses: ScaCap/action-ktlint@v1.7.1
