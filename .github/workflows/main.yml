@@ -1,0 +1,27 @@
+name: Kotlin Lint
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint:
+    name: Run ktlint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          
+      - name: Run ktlint with reviewdog
+        run: |
+          ./gradlew ktlint
+          ./gradlew ktlintCheck --daemon --parallel --stacktrace
+          curl -sL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b $HOME/.local/bin/
+          export PATH="$HOME/.local/bin:$PATH"
+          reviewdog -conf=reviewdog.yml
