@@ -242,15 +242,6 @@ fun convertDistance(distance: Float, fromUnit: String, toUnit: String): Float {
         else -> distance // Return the distance as is if the units are the same or unknown
     }
 }
-fun getPreferantLanguage(ctx: Context): String {
-    return getStringFromPreferences(
-        PREF_SELECTED_LANGUAGE, "English", ctx
-    )
-}
-
-fun getPreferantUnit(ctx: Context): Boolean {
-    return getBoolFromPreferences(PREF_METRIC, true, ctx)
-}
 
 fun getPreferantTimeFormat(ctx: Context): Boolean {
     return getBoolFromPreferences(PREF_HOUR, true, ctx)

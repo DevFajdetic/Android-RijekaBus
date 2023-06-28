@@ -31,7 +31,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="16dp"
-                    android:src="@drawable/logo"
+                    android:src="@drawable/ic_back"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -88,26 +88,29 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/cg_filters"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
     <TextView
         android:id="@+id/tvAll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="14dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/all_bus_lines_rijeka"
+        android:text="@string/all_bus_stations_rijeka"
         android:theme="@style/HeadlineSmallNLv2Left"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cg_filters" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <com.example.rijekabusapp.views.EmptyStateView
+        android:id="@+id/empty_state"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="8dp"
+        android:paddingBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAll" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -118,12 +121,12 @@
         android:scaleY="3"
         android:translationZ="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/rvLines"
-        app:layout_constraintStart_toStartOf="@id/rvLines"
+        app:layout_constraintEnd_toEndOf="@id/rv"
+        app:layout_constraintStart_toStartOf="@id/rv"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvLines"
+        android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"

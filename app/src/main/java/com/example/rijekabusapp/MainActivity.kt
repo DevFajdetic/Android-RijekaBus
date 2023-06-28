@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         scheduleViewModel = ViewModelHolder.getScheduleViewModel(this, application)
         if (this.isOnline()) {
-            scheduleViewModel.getScheduleList()
+            scheduleViewModel.getScheduleList(null)
         } else {
             showCustomDialog(getString(R.string.no_internet_connection), this)
         }

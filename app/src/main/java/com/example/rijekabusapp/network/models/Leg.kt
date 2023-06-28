@@ -3,6 +3,10 @@ package com.example.rijekabusapp.network.models
 import com.google.gson.annotations.SerializedName
 
 data class Leg(
+    @SerializedName("arrival_time")
+    val arrivalTime: MapTime,
+    @SerializedName("departure_time")
+    val depTime: MapTime,
     @SerializedName("distance")
     val distance: Distance,
     @SerializedName("duration")

@@ -1,6 +1,7 @@
 package com.example.rijekabusapp.database
 
 import com.example.rijekabusapp.database.models.FavoriteLine
+import com.example.rijekabusapp.database.models.FavoriteRoute
 import com.example.rijekabusapp.database.models.FavoriteStation
 
 class AutotrolejRepository(private val autotrolejDao: AutotrolejDao) {
@@ -69,5 +70,38 @@ class AutotrolejRepository(private val autotrolejDao: AutotrolejDao) {
 
     fun deleteFavoriteStations() {
         autotrolejDao.deleteFavoriteStations()
+    }
+
+    // Favorite Routes
+    fun getFavoriteRoutes(): List<FavoriteRoute> {
+        return autotrolejDao.getFavoriteRoutes()
+    }
+
+    fun updateFavoriteRoute(route: FavoriteRoute) {
+        return autotrolejDao.updateFavoriteRoute(route)
+    }
+
+    fun countFavoriteRoutes(): Int {
+        return autotrolejDao.countFavoriteRoutes()
+    }
+
+    suspend fun getFavoriteRoutesAsync(): List<FavoriteRoute> {
+        return autotrolejDao.getFavoriteRoutesAsync()
+    }
+
+    fun isRouteFavorite(id: Int): Boolean {
+        return autotrolejDao.isRouteFavorite(id)
+    }
+
+    fun insertFavoriteRoute(route: FavoriteRoute) {
+        autotrolejDao.insertFavoriteRoute(route)
+    }
+
+    fun deleteFavoriteRoute(route: FavoriteRoute) {
+        autotrolejDao.deleteFavoriteRoute(route)
+    }
+
+    fun deleteFavoriteRoutes() {
+        autotrolejDao.deleteFavoriteRoutes()
     }
 }

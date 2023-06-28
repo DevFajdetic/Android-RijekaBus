@@ -15,13 +15,21 @@ class ScheduleViewModel(
 ) : ViewModel() {
     val scheduleList = MutableLiveData<ArrayList<Schedule>>()
 
-    fun getScheduleList() {
+    fun getScheduleList(s: String?) {
         viewModelScope.launch {
             val dayOfTheWeek = getDayOfWeek()
-            when (dayOfTheWeek) {
-                "tjedan" -> scheduleList.value = Network().getBusService().getWeekSchedule()
-                "subota" -> scheduleList.value = Network().getBusService().getSaturdaySchedule()
-                "nedjelja" -> scheduleList.value = Network().getBusService().getSundaySchedule()
+            if (s == null) {
+                when (dayOfTheWeek) {
+                    "tjedan" -> scheduleList.value = Network().getBusService().getWeekSchedule()
+                    "subota" -> scheduleList.value = Network().getBusService().getSaturdaySchedule()
+                    "nedjelja" -> scheduleList.value = Network().getBusService().getSundaySchedule()
+                }
+            } else {
+                when (s) {
+                    "tjedan" -> scheduleList.value = Network().getBusService().getWeekSchedule()
+                    "subota" -> scheduleList.value = Network().getBusService().getSaturdaySchedule()
+                    "nedjelja" -> scheduleList.value = Network().getBusService().getSundaySchedule()
+                }
             }
         }
     }

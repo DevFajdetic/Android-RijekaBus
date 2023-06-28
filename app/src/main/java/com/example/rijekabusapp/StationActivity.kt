@@ -1,5 +1,7 @@
 package com.example.rijekabusapp
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
@@ -8,6 +10,7 @@ import com.example.rijekabusapp.adapters.viewpager.ViewPagerAdapter
 import com.example.rijekabusapp.databinding.ActivityStationBinding
 import com.example.rijekabusapp.fragments.StationLinesFragment
 import com.example.rijekabusapp.fragments.StationLinesListFragment
+import com.example.rijekabusapp.helpers.NOTIFICATION_CHANNEL_ID
 import com.example.rijekabusapp.network.models.Station
 import com.example.rijekabusapp.viewmodels.ScheduleViewModel
 import com.google.android.material.tabs.TabLayout
@@ -25,10 +28,18 @@ class StationActivity : AppCompatActivity() {
 
         scheduleViewModel = MainActivity.ViewModelHolder.getScheduleViewModel(this, application)
         setupViewPagerAndTabs()
-
+        createNotificationChannel()
         setContentView(binding.root)
     }
-
+    private fun createNotificationChannel() {
+        val channel = NotificationChannel(
+            NOTIFICATION_CHANNEL_ID,
+            "My Notification Channel",
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        val notificationManager = getSystemService(NotificationManager::class.java)
+        notificationManager.createNotificationChannel(channel)
+    }
     private fun setupViewPagerAndTabs() {
         binding.tvIcon.text = stationItem.shortName[0].toString()
         binding.tvStationName.text = stationItem.shortName

@@ -100,5 +100,12 @@
     <string name="editbutton">Edit button</string>
     <string name="manage_photos">Manage photos</string>
     <string name="error_deleting_image">Error deleting image</string>
+    <string name="search">Search</string>
+    <string name="alaram">Alarm</string>
+    <string name="alaram_ringing">Your alarm is ringing!</string>
+    <string name="alaram_set">Alarm Set</string>
+    <string name="alaram_at">Alarm will go off at</string>
+    <string name="distance">Distance</string>
+    <string name="time">Time</string>
 </resources>
 

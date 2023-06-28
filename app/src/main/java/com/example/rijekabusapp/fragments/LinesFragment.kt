@@ -1,6 +1,7 @@
 package com.example.rijekabusapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.example.rijekabusapp.helpers.showCustomDialog
 import com.example.rijekabusapp.network.models.Line
 import com.example.rijekabusapp.viewmodels.LinesViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.chip.Chip
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputLayout
 
@@ -25,6 +27,7 @@ class LinesFragment : Fragment() {
     private val viewModel: LinesViewModel by activityViewModels()
     private lateinit var binding: FragmentLinesBinding
     private var selectedDirection: String = ""
+    private var varijanta: String = "40"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,6 +54,52 @@ class LinesFragment : Fragment() {
                 )
 
             bsView.findViewById<Button>(R.id.b_apply).setOnClickListener {
+                if (bsView.findViewById<Chip>(R.id.c_gradski).isChecked ||
+                    bsView.findViewById<Chip>(R.id.c_gradski).isSelected ||
+                    bsView.findViewById<Chip>(R.id.c_gradski).isActivated
+                ) {
+                    varijanta = "0"
+                    val cg = Chip(
+                        requireContext(),
+                        null,
+                        com.google.android.material.R.style.Widget_MaterialComponents_Chip_Filter
+                    )
+                    cg.isSelected = true
+                    cg.isActivated = true
+                    cg.isChecked = true
+                    cg.setOnClickListener {
+                        cg.visibility = View.GONE
+                    }
+                    cg.text = "City Bus"
+                    val layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                    cg.layoutParams = layoutParams
+                    Log.d("bla", "ajdee")
+                    binding.cgFilters.addView(cg)
+                } else if (bsView.findViewById<Chip>(R.id.c_prigradski).isSelected) {
+                    varijanta = "40"
+                    val cg = Chip(
+                        requireContext(),
+                        null,
+                        com.google.android.material.R.style.Widget_MaterialComponents_Chip_Filter
+                    )
+                    cg.isSelected = true
+                    cg.isActivated = true
+                    cg.isChecked = true
+                    cg.setOnClickListener {
+                        cg.visibility = View.GONE
+                    }
+                    cg.text = "Suburan Bus"
+                    val layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                    cg.layoutParams = layoutParams
+                    Log.d("bla", "ajdee")
+                }
+
                 bsDialog.dismiss()
             }
             bsView.findViewById<Button>(R.id.b_reset).setOnClickListener {
@@ -109,7 +158,7 @@ class LinesFragment : Fragment() {
                 (
                     (
                         if (direction != "") {
-                            lines.filter { it.direction == direction }
+                            lines.filter { it.direction == direction && varijanta >= it.variant }
                         } else lines
                         ) as ArrayList<Line>
                     ),

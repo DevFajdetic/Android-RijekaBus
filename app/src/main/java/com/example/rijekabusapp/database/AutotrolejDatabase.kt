@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.rijekabusapp.database.models.FavoriteLine
+import com.example.rijekabusapp.database.models.FavoriteRoute
 import com.example.rijekabusapp.database.models.FavoriteStation
 
 @Database(
-    entities = [FavoriteLine::class, FavoriteStation::class],
+    entities = [FavoriteLine::class, FavoriteStation::class, FavoriteRoute::class],
     version = 1
 )
 

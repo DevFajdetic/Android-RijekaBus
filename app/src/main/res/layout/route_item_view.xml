@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingBottom="8dp"
+    android:background="@drawable/background_rounded"
+    android:backgroundTint="@color/surface_surface_0"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="8dp"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/matchItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/homeImageContainer"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:backgroundTint="@color/color_tertiary">
+
+            <ImageView
+                android:id="@+id/ivHomeTeamImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_bus_stop_one"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tvMatchDate"
+            android:layout_width="152dp"
+            android:layout_height="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:theme="@style/DescriptionNLv2Center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="TUESDAY, 19 OCT 2021" />
+
+        <ImageView
+            android:id="@+id/scoreDivider"
+            android:layout_width="24dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="36dp"
+            android:src="@drawable/ic_bus"
+            app:layout_constraintBottom_toTopOf="@id/tvMatchStatus"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMatchDate" />
+
+        <TextView
+            android:id="@+id/tvHomeTeamPoints"
+            android:layout_width="56dp"
+            android:layout_height="32dp"
+            android:textColor="@color/color_primary"
+            android:theme="@style/DisplayLargeNLv1Center"
+            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/scoreDivider"
+            app:layout_constraintStart_toEndOf="@+id/homeImageContainer"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="122" />
+
+        <TextView
+            android:id="@+id/tvAwayTeamPoints"
+            android:layout_width="56dp"
+            android:layout_height="32dp"
+            android:textColor="@color/color_primary"
+            android:theme="@style/DisplayLargeNLv1Center"
+            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/awayImageContainer"
+            app:layout_constraintStart_toEndOf="@id/scoreDivider"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="116444" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/awayImageContainer"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:backgroundTint="@color/greenish">
+
+            <ImageView
+                android:id="@+id/ivAwayTeamImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_bus_stop_two" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tvHomeTeamAbbreviation"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="6dp"
+            android:theme="@style/AssistiveNLv1Center"
+            app:layout_constraintStart_toStartOf="@+id/homeImageContainer"
+            app:layout_constraintEnd_toEndOf="@id/homeImageContainer"
+            app:layout_constraintTop_toBottomOf="@id/homeImageContainer"
+            tools:text="LALAAAAAAAAAAA" />
+
+        <TextView
+            android:id="@+id/tvAwayTeamAbbreviation"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="8dp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:theme="@style/AssistiveNLv1Center"
+            app:layout_constraintEnd_toEndOf="@id/awayImageContainer"
+            app:layout_constraintTop_toBottomOf="@id/awayImageContainer"
+            app:layout_constraintStart_toStartOf="@id/awayImageContainer"
+            tools:text="BOSAAAAAAAAAA" />
+
+        <LinearLayout
+            android:id="@+id/tvMatchStatus"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scoreDivider"
+             >
+
+            <TextView
+                android:id="@+id/dur_label"
+                android:textAllCaps="true"
+                android:theme="@style/DescriptionNLv2Center"
+                android:text="DURATION"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/duration"
+                android:textAllCaps="true"
+                android:gravity="center"
+                android:theme="@style/DescriptionNLv1Center"
+                tools:text="DURATION"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tvMatchStatus2"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvMatchStatus"
+            app:layout_constraintBottom_toBottomOf="parent" >
+
+            <TextView
+                android:id="@+id/dis_label"
+                android:textAllCaps="true"
+                android:theme="@style/DescriptionNLv2Center"
+                android:text="DISTANCE"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/distance"
+                android:textAllCaps="true"
+                android:gravity="center"
+                android:theme="@style/DescriptionNLv1Center"
+                tools:text="DURATION"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

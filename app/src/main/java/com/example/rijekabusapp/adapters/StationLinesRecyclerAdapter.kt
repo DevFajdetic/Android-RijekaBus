@@ -8,12 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rijekabusapp.LineActivity
 import com.example.rijekabusapp.R
+import com.example.rijekabusapp.ScheduleActivity
 import com.example.rijekabusapp.databinding.StationLineItemBinding
 import com.example.rijekabusapp.helpers.generateUniqueColor
+import com.example.rijekabusapp.helpers.showTimePickerDialog
 import com.example.rijekabusapp.network.models.Schedule
-import java.util.*
 
 class StationLinesRecyclerAdapter(
     private val context: Context,
@@ -36,6 +36,10 @@ class StationLinesRecyclerAdapter(
     override fun onBindViewHolder(holder: StationLinesViewHolder, position: Int) {
         val item = stationLinesList[position]
 
+        holder.binding.notify.setOnClickListener {
+            showTimePickerDialog(context, item)
+        }
+
         holder.binding.tvTime.text = if (shouldBindTime) item.startTime.substring(0, 5) else ""
         if (!shouldBindTime) holder.binding.notify.visibility = View.GONE
         holder.binding.tvLineName.text = item.variantLineName
@@ -45,7 +49,7 @@ class StationLinesRecyclerAdapter(
             .setBackgroundColor(Color.parseColor(generateUniqueColor(item.lineNumber)))
 
         holder.binding.root.setOnClickListener {
-            val intent = Intent(context, LineActivity::class.java).apply {
+            val intent = Intent(context, ScheduleActivity::class.java).apply {
                 putExtra(EXTRA_LINE, item.asLine())
             }
             context.startActivity(intent)

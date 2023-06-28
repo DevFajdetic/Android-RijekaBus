@@ -9,9 +9,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rijekabusapp.R
 import com.example.rijekabusapp.databinding.LineStationsScheduleItemBinding
-import com.example.rijekabusapp.helpers.convertTimeTo12HourFormat
+import com.example.rijekabusapp.helpers.*
 import com.example.rijekabusapp.network.models.Schedule
-import com.example.rijekabusapp.network.models.Station
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
@@ -21,7 +20,6 @@ import java.util.*
 class LineStationsRecyclerAdapter(
     private val context: Context,
     private val lineStationsItems: List<Schedule>,
-    private val stationsList: ArrayList<Station>,
     private val nextStation: Schedule?,
     private val hourFormat: Boolean
 ) : RecyclerView.Adapter<LineStationsRecyclerAdapter.LineStationsViewHolder>() {
@@ -40,6 +38,10 @@ class LineStationsRecyclerAdapter(
     @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: LineStationsViewHolder, position: Int) {
         val item = lineStationsItems[position]
+
+        holder.binding.ivNotification.setOnClickListener {
+            showTimePickerDialog(context, item)
+        }
 
         holder.binding.tvArriveTime.text =
             if (hourFormat) item.startTime.substring(0, 5)

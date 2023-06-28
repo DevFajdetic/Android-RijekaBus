@@ -6,9 +6,9 @@ data class Step(
     @SerializedName("distance")
     val distance: Distance,
     @SerializedName("duration")
-    val duration: Double,
+    val duration: Duration,
     @SerializedName("end_location")
-    val endLocation: Double,
+    val endLocation: Location,
     @SerializedName("html_instructions")
     val htmlInstructions: String,
     @SerializedName("maneuver")
@@ -16,7 +16,9 @@ data class Step(
     @SerializedName("polyline")
     val polyline: Polyline,
     @SerializedName("start_location")
-    val startLocation: Double,
+    val startLocation: Location,
     @SerializedName("travel_mode")
-    val travelMode: String
+    val travelMode: String,
+    @SerializedName("transit_details")
+    val transitDetails: TransitDetails?,
 )

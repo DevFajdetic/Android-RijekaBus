@@ -7,8 +7,7 @@ import android.graphics.Paint
 import androidx.core.content.ContextCompat
 import com.example.rijekabusapp.R
 
-val USER_LOCATION_MARKER_TITLE = "My Location"
-val LOCATION_PERMISSION_REQUEST_CODE = 1
+const val USER_LOCATION_MARKER_TITLE = "My Location"
 
 // Create a circular marker with the line number inside
 fun createLineMarkerIcon(

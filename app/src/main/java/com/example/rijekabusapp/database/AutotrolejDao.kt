@@ -2,6 +2,7 @@ package com.example.rijekabusapp.database
 
 import androidx.room.*
 import com.example.rijekabusapp.database.models.FavoriteLine
+import com.example.rijekabusapp.database.models.FavoriteRoute
 import com.example.rijekabusapp.database.models.FavoriteStation
 
 @Dao
@@ -56,4 +57,29 @@ interface AutotrolejDao {
 
     @Query("SELECT COUNT(*) FROM favoriteStations")
     fun countFavoriteStations(): Int
+
+    // Favorite Route
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertFavoriteRoute(route: FavoriteRoute)
+
+    @Update
+    fun updateFavoriteRoute(route: FavoriteRoute)
+
+    @Query("SELECT * FROM favoriteRoutes")
+    fun getFavoriteRoutes(): List<FavoriteRoute>
+
+    @Query("SELECT * FROM favoriteRoutes")
+    suspend fun getFavoriteRoutesAsync(): List<FavoriteRoute>
+
+    @Query("SELECT * FROM favoriteRoutes WHERE id = :id")
+    fun isRouteFavorite(id: Int): Boolean
+
+    @Delete
+    fun deleteFavoriteRoute(route: FavoriteRoute)
+
+    @Query("DELETE FROM favoriteRoutes")
+    fun deleteFavoriteRoutes()
+
+    @Query("SELECT COUNT(*) FROM favoriteRoutes")
+    fun countFavoriteRoutes(): Int
 }

@@ -19,10 +19,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.example.rijekabusapp.LoginActivity
-import com.example.rijekabusapp.R
-import com.example.rijekabusapp.SavedPreference
-import com.example.rijekabusapp.ScheduleActivity
+import com.example.rijekabusapp.*
 import com.example.rijekabusapp.databinding.FragmentExploreBinding
 import com.example.rijekabusapp.helpers.*
 import com.example.rijekabusapp.network.response.WeatherResponse
@@ -141,7 +138,12 @@ class ExploreFragment : Fragment() {
         }
 
         binding.schedules.setOnClickListener {
-            val intent = Intent(requireContext(), ScheduleActivity::class.java)
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.action_exploreFragment_to_schedulerItemPickerFragment)
+        }
+
+        binding.myRoutes.setOnClickListener {
+            val intent = Intent(requireContext(), MyRoutesActivity::class.java)
             startActivity(intent)
         }
 

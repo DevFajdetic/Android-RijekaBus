@@ -68,7 +68,7 @@ class LineStationsFragment : Fragment(), OnMapReadyCallback {
                         }
 
                         val adapter = LineStationsRecyclerAdapter(
-                            requireContext(), filteredSchedules, stationsList, nextStation,
+                            requireContext(), filteredSchedules, nextStation,
                             getPreferantTimeFormat(requireContext())
                         )
                         binding.rvLineStations.adapter = adapter
