@@ -15,6 +15,8 @@ import com.example.rijekabusapp.adapters.FavoriteLineRecyclerAdapter
 import com.example.rijekabusapp.adapters.FavoriteStationRecyclerAdapter
 import com.example.rijekabusapp.databinding.FragmentFavoritesBinding
 import com.example.rijekabusapp.helpers.ItemMoveCallback
+import com.example.rijekabusapp.helpers.isOnline
+import com.example.rijekabusapp.helpers.showCustomDialog
 import com.example.rijekabusapp.viewmodels.FavoritesViewModel
 
 class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
@@ -52,7 +54,6 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         loadFavoriteStations()
 
         try {
-            viewModel.getFavoriteLines()
             viewModel.getFavoriteStationsAndImages()
         } catch (_: Exception) {
         }
@@ -68,8 +69,6 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     private fun loadFavoriteStations() {
         viewModel.favoriteStations.observe(viewLifecycleOwner) { stationList ->
             viewModel.stationImages.observe(viewLifecycleOwner) { imagesList ->
-                binding.progressStations.visibility = ProgressBar.VISIBLE
-
                 favoriteStationAdapter = FavoriteStationRecyclerAdapter(
                     requireContext(), stationList, imagesList, isEditModeEnabled,
                 ) { station ->
@@ -80,18 +79,21 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
                 val itemTouchHelper = ItemTouchHelper(itemMoveCallback)
                 itemTouchHelper.attachToRecyclerView(binding.rvFavoriteStations)
                 binding.rvFavoriteStations.adapter = favoriteStationAdapter
-
                 binding.progressStations.visibility = ProgressBar.GONE
             }
-            binding.emptyStateStations.setupEmptyStateView(getString(R.string.favorites_error_desc))
+            binding.emptyStateStations
+                .setupEmptyStateView(getString(R.string.favorites_error_desc))
             setEmptyState(binding.emptyStateStations, stationList.isNotEmpty())
+        }
+
+        if (requireContext().isOnline()) {
+            binding.progressStations.visibility = ProgressBar.VISIBLE
+            viewModel.getFavoriteStationsAndImages()
         }
     }
 
     private fun loadFavoriteLines() {
         viewModel.favoriteLines.observe(viewLifecycleOwner) { linesList ->
-            binding.progressLines.visibility = ProgressBar.VISIBLE
-
             favoriteLineAdapter = FavoriteLineRecyclerAdapter(
                 requireContext(), linesList, isEditModeEnabled,
             ) { line ->
@@ -101,9 +103,16 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             val itemTouchHelper = ItemTouchHelper(itemMoveCallback)
             itemTouchHelper.attachToRecyclerView(binding.rvFavoriteLines)
             binding.rvFavoriteLines.adapter = favoriteLineAdapter
-            binding.progressLines.visibility = ProgressBar.GONE
             binding.emptyStateLines.setupEmptyStateView(getString(R.string.favorites_error_desc))
             setEmptyState(binding.emptyStateLines, linesList.isNotEmpty())
+            binding.progressLines.visibility = ProgressBar.GONE
+        }
+
+        if (requireContext().isOnline()) {
+            binding.progressLines.visibility = ProgressBar.VISIBLE
+            viewModel.getFavoriteLines()
+        } else {
+            showCustomDialog(getString(R.string.no_internet_connection), requireContext())
         }
     }
 
@@ -117,11 +126,13 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun toggleEditMode(isEditModeEnabled: Boolean) {
-        favoriteStationAdapter.setEditModeEnabled(isEditModeEnabled)
-        favoriteLineAdapter.setEditModeEnabled(isEditModeEnabled)
-
-        // Update the UI to show/hide the drag icon beside each item in the recycler views
-        favoriteStationAdapter.notifyDataSetChanged()
-        favoriteLineAdapter.notifyDataSetChanged()
+        if (::favoriteStationAdapter.isInitialized) {
+            favoriteStationAdapter.setEditModeEnabled(isEditModeEnabled)
+            favoriteStationAdapter.notifyDataSetChanged()
+        }
+        if (::favoriteLineAdapter.isInitialized) {
+            favoriteLineAdapter.setEditModeEnabled(isEditModeEnabled)
+            favoriteLineAdapter.notifyDataSetChanged()
+        }
     }
 }

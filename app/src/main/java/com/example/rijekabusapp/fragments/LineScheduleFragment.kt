@@ -35,10 +35,10 @@ class LineScheduleFragment(private val s: String) : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         binding = FragmentLineScheduleBinding.inflate(inflater, container, false)
         val lineItem = arguments?.getSerializable(EXTRA_LINE) as? Line
         val stationItem = arguments?.getSerializable(EXTRA_STATION) as? Station
+
         scheduleViewModel = ViewModelProvider(
             this, ScheduleViewModelFactory(requireContext().applicationContext as Application)
         )[ScheduleViewModel::class.java]

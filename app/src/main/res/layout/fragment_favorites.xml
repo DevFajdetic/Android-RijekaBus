@@ -84,7 +84,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFavoriteLines"
@@ -103,6 +103,7 @@
 
             <com.example.rijekabusapp.views.EmptyStateView
                 android:id="@+id/emptyStateLines"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top" />
@@ -132,7 +133,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFavoriteStations"
@@ -152,6 +153,7 @@
             <com.example.rijekabusapp.views.EmptyStateView
                 android:id="@+id/emptyStateStations"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top" />
         </FrameLayout>

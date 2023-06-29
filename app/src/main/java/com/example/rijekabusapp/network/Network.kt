@@ -71,9 +71,9 @@ class Network {
             .addConverterFactory(GsonConverterFactory.create())
             .client(
                 httpClient
-                    .connectTimeout(60, TimeUnit.SECONDS)
-                    .writeTimeout(120, TimeUnit.SECONDS)
-                    .readTimeout(60, TimeUnit.SECONDS)
+                    .connectTimeout(3, TimeUnit.SECONDS)
+                    .writeTimeout(10, TimeUnit.SECONDS)
+                    .readTimeout(10, TimeUnit.SECONDS)
                     .build()
             ).build()
 

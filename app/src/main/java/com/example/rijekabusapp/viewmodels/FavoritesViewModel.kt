@@ -42,7 +42,6 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
             val asyncTasks = stations.map { station ->
                 async {
                     try {
-                        Log.d("novo2", station.id.toString())
                         ArrayList(Network().getMyApiService().getStationImages(station.id))
                     } catch (e: Exception) {
                         arrayListOf(StationImage(0, "", "", null))
