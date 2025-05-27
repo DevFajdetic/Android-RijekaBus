@@ -1,6 +1,6 @@
-<vector android:height="100dp" android:viewportHeight="1000"
-    android:viewportWidth="900" android:width="100dp" xmlns:android="http://schemas.android.com/apk/res/android">
-    <path android:fillColor="#ffffff" android:pathData="M0,0h1000v1000h-1000z"/>
+<vector android:height="100dp" android:viewportHeight="850"
+    android:viewportWidth="730" android:width="100dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/login_background_color" android:pathData="M0,0h1000v1000h-1000z"/>
     <path android:fillAlpha="0.6" android:fillColor="@color/color_secondary"
         android:fillType="nonZero"
         android:pathData="M302.8,-124.1L406.4,-78.3C510,-32.4 717.1,59.4 803.5,151.2C888.7,243 856.3,334.7 700,426.5C545.6,518.3 267.2,610.1 130.3,656L-7.9,701.8L-7.9,701.8L-7.9,656C-7.9,610.1 -7.9,518.3 -7.9,426.5C-7.9,334.7 -7.9,243 -7.9,151.2C-7.9,59.4 -7.9,-32.4 -7.9,-78.3L-7.9,-124.1Z"

@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
@@ -19,6 +20,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
 import com.example.rijekabusapp.R
@@ -46,10 +48,9 @@ fun TextInputEditText.customValidate(context: Context): Boolean {
     when (this.tag) {
         "URL" -> {
             if (!this.text!!
-                .contains
-                (
+                    .contains(
                         "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"
-                            .toRegex()
+                            .toRegex(),
                     )
             ) {
                 this.error = context.getString(R.string.enter_valid_url)
@@ -58,9 +59,9 @@ fun TextInputEditText.customValidate(context: Context): Boolean {
         }
         "YTURL" -> {
             if (!this.text!!
-                .contains(
+                    .contains(
                         "^(https?://)?(www\\.youtube\\.com|youtu\\.be)/.+\$"
-                            .toRegex()
+                            .toRegex(),
                     )
             ) {
                 this.error = context.getString(R.string.youtube_url)
@@ -72,12 +73,13 @@ fun TextInputEditText.customValidate(context: Context): Boolean {
 }
 
 fun showProfileCustomDialog(context: Context) {
-    val dialog = Dialog(context).apply {
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        this.setCancelable(true)
-        this.setContentView(R.layout.custom_dialog_profile)
-        this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-    }
+    val dialog =
+        Dialog(context).apply {
+            this.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            this.setCancelable(true)
+            this.setContentView(R.layout.custom_dialog_profile)
+            this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        }
 
     val btnOk = dialog.findViewById<Button>(R.id.btnDialogOk)
     val edit = dialog.findViewById<TextInputEditText>(R.id.nameEditText)
@@ -92,13 +94,17 @@ fun showProfileCustomDialog(context: Context) {
     dialog.show()
 }
 
-fun showCustomDialog(title: String, context: Context) {
-    val dialog = Dialog(context).apply {
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        this.setCancelable(true)
-        this.setContentView(R.layout.custom_dialog)
-        this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-    }
+fun showCustomDialog(
+    title: String,
+    context: Context,
+) {
+    val dialog =
+        Dialog(context).apply {
+            this.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            this.setCancelable(true)
+            this.setContentView(R.layout.custom_dialog)
+            this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        }
 
     val tvTitle = dialog.findViewById<TextView>(R.id.tvDialogTitle)
     val btnOk = dialog.findViewById<Button>(R.id.btnDialogOk)
@@ -121,7 +127,7 @@ fun Context.isOnline(): Boolean {
         connectivityManager.getNetworkCapabilities(network)?.let { networkCapabilities ->
             return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
                 networkCapabilities.hasTransport(
-                    NetworkCapabilities.TRANSPORT_WIFI
+                    NetworkCapabilities.TRANSPORT_WIFI,
                 )
         }
     }
@@ -132,62 +138,89 @@ inline fun <reified T : Activity> Context.startActivity() =
     startActivity(
         Intent(this, T::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
+        },
     )
 
-inline fun <reified T : Activity> Context.startActivity(key: String, value: ArrayList<Station>) =
-    startActivity(
-        Intent(this, T::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            putExtra(key, value)
-        }
-    )
+inline fun <reified T : Activity> Context.startActivity(
+    key: String,
+    value: ArrayList<Station>,
+) = startActivity(
+    Intent(this, T::class.java).apply {
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        putExtra(key, value)
+    },
+)
 
-inline fun <reified T : BroadcastReceiver> Context.sendBroadcast() =
-    sendBroadcast(Intent(this, T::class.java))
+inline fun <reified T : BroadcastReceiver> Context.sendBroadcast() = sendBroadcast(Intent(this, T::class.java))
 
-fun Context.setBooleanPreference(key: String, value: Boolean) =
-    PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(key, value).apply()
+fun Context.setBooleanPreference(
+    key: String,
+    value: Boolean,
+) = PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(key, value).apply()
 
-fun Context.getBooleanPreference(key: String) =
-    PreferenceManager.getDefaultSharedPreferences(this).getBoolean(key, false)
+fun Context.getBooleanPreference(key: String) = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(key, false)
 
-fun View.startAnimation(animationId: Int) =
-    startAnimation(AnimationUtils.loadAnimation(context, animationId))
+fun View.startAnimation(animationId: Int) = startAnimation(AnimationUtils.loadAnimation(context, animationId))
 
-fun callDelayed(delay: Long, function: Runnable) {
+fun callDelayed(
+    delay: Long,
+    function: Runnable,
+) {
     Handler(Looper.getMainLooper()).postDelayed(
-        function, delay
+        function,
+        delay,
     )
 }
 
-fun getBoolFromPreferences(key: String, default: Boolean, context: Context): Boolean {
+fun getBoolFromPreferences(
+    key: String,
+    default: Boolean,
+    context: Context,
+): Boolean {
     val sharedPreferences = context.getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
     return sharedPreferences.getBoolean(key, default) ?: default
 }
 
-fun getStringFromPreferences(key: String, default: String, context: Context): String {
+fun getStringFromPreferences(
+    key: String,
+    default: String,
+    context: Context,
+): String {
     val sharedPreferences = context.getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
     return sharedPreferences.getString(key, default) ?: default
 }
 
-fun savePreferenceBool(key: String, value: Boolean, context: Context) {
-    val sharedPreferences = context
-        .getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
+fun savePreferenceBool(
+    key: String,
+    value: Boolean,
+    context: Context,
+) {
+    val sharedPreferences =
+        context
+            .getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
     val editor = sharedPreferences.edit()
     editor.putBoolean(key, value)
     editor.apply()
 }
 
-fun savePreferenceString(key: String, value: String, context: Context) {
-    val sharedPreferences = context
-        .getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
+fun savePreferenceString(
+    key: String,
+    value: String,
+    context: Context,
+) {
+    val sharedPreferences =
+        context
+            .getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE)
     val editor = sharedPreferences.edit()
     editor.putString(key, value)
     editor.apply()
 }
 
-fun showCustomSnackbar(ctx: Context, view: View, message: String) {
+fun showCustomSnackbar(
+    ctx: Context,
+    view: View,
+    message: String,
+) {
     val snackbar = Snackbar.make(view, "", Snackbar.LENGTH_SHORT)
     snackbar.view.setBackgroundColor(Color.TRANSPARENT)
     val snl = snackbar.view as SnackbarLayout
@@ -229,11 +262,16 @@ fun appendTemperatureMetric(ctx: Context): String {
 fun appendWindMetric(ctx: Context): String {
     return if (getBoolFromPreferences(PREF_METRIC, true, ctx)) " m/s" else " mph"
 }
+
 fun appendSightMetric(ctx: Context): String {
     return if (getBoolFromPreferences(PREF_METRIC, true, ctx)) " m" else " mi"
 }
 
-fun convertDistance(distance: Float, fromUnit: String, toUnit: String): Float {
+fun convertDistance(
+    distance: Float,
+    fromUnit: String,
+    toUnit: String,
+): Float {
     return when {
         fromUnit.equals("meters", ignoreCase = true) &&
             toUnit.equals("miles", ignoreCase = true) -> distance * 0.000621371f
@@ -250,4 +288,25 @@ fun getPreferantTimeFormat(ctx: Context): Boolean {
 fun generateUniqueColor(input: String): String {
     val hashCode = (input + "Hello").hashCode()
     return String.format("#66%06X", (hashCode and 0xFFFFFF))
+}
+
+fun Context.applyTheme(isDarkMode: Boolean) {
+    val mode =
+        if (isDarkMode) {
+            AppCompatDelegate.MODE_NIGHT_YES
+        } else {
+            AppCompatDelegate.MODE_NIGHT_NO
+        }
+    AppCompatDelegate.setDefaultNightMode(mode)
+}
+
+fun Context.isDarkThemeEnabled(): Boolean {
+    return when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+        Configuration.UI_MODE_NIGHT_YES -> true
+        else -> false
+    }
+}
+
+fun Context.getCurrentThemeMode(): Int {
+    return resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
 }

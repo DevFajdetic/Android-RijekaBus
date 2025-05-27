@@ -10,5 +10,5 @@ data class GeocodedWaypoint(
     @SerializedName("place_id")
     val placeId: String,
     @SerializedName("types")
-    val types: List<String>
+    val types: List<String>,
 )

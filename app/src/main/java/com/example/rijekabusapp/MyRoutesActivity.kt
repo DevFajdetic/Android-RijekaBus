@@ -10,7 +10,6 @@ import com.example.rijekabusapp.databinding.ActivityMyRoutesBinding
 import com.example.rijekabusapp.viewmodels.DirectionsViewModel
 
 class MyRoutesActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMyRoutesBinding
     private val viewModel: DirectionsViewModel by viewModels()
     private lateinit var adapter: FavoriteRouteRecyclerAdapter
@@ -29,7 +28,7 @@ class MyRoutesActivity : AppCompatActivity() {
         }
 
         binding.profilePic.load(
-            SavedPreference.getPictureUrl(this)
+            SavedPreference.getPictureUrl(this),
         ) {
             crossfade(true)
             placeholder(R.drawable.ic_person)

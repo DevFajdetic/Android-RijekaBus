@@ -23,7 +23,7 @@ class StationRecyclerAdapter(
     private val favoriteStations: ArrayList<Station>?,
     private val usedForFavorites: Boolean,
     private val insertCallback: ((Station) -> Unit)?,
-    private val deleteCallback: ((Station) -> Unit)?
+    private val deleteCallback: ((Station) -> Unit)?,
 ) : RecyclerView.Adapter<StationRecyclerAdapter.StationViewHolder>(), Filterable {
     private var filterList = stationsList
 
@@ -31,14 +31,21 @@ class StationRecyclerAdapter(
         val binding = BusStationItemViewBinding.bind(view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StationViewHolder {
-        val view = LayoutInflater
-            .from(context)
-            .inflate(R.layout.bus_station_item_view, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): StationViewHolder {
+        val view =
+            LayoutInflater
+                .from(context)
+                .inflate(R.layout.bus_station_item_view, parent, false)
         return StationViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: StationViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: StationViewHolder,
+        position: Int,
+    ) {
         val station = filterList[position]
         holder.binding.tvStationName.text = station.longName
         var imagePlaceholder = R.drawable.ic_bus_stop_one
@@ -65,9 +72,10 @@ class StationRecyclerAdapter(
         }
 
         holder.binding.root.setOnClickListener {
-            val intent = Intent(context, StationActivity::class.java).apply {
-                putExtra(EXTRA_STATION, station)
-            }
+            val intent =
+                Intent(context, StationActivity::class.java).apply {
+                    putExtra(EXTRA_STATION, station)
+                }
             context.startActivity(intent)
         }
     }
@@ -94,7 +102,7 @@ class StationRecyclerAdapter(
     private fun onRegularStationButtonClick(
         exists: Boolean,
         holder: StationViewHolder,
-        station: Station
+        station: Station,
     ) {
         if (!exists) {
             holder.binding.btnFavorite.isActivated = true
@@ -130,7 +138,10 @@ class StationRecyclerAdapter(
             }
 
             @SuppressLint("NotifyDataSetChanged")
-            override fun publishResults(p0: CharSequence?, filterResults: FilterResults?) {
+            override fun publishResults(
+                p0: CharSequence?,
+                filterResults: FilterResults?,
+            ) {
                 if (p0.isNullOrEmpty()) filterList = stationsList
                 filterList = filterResults!!.values as ArrayList<Station>
                 notifyDataSetChanged()

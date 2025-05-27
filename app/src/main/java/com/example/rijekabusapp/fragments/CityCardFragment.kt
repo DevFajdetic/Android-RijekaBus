@@ -14,14 +14,13 @@ import com.example.rijekabusapp.R
 import com.example.rijekabusapp.databinding.FragmentCityCardBinding
 
 class CityCardFragment : Fragment() {
-
     private lateinit var binding: FragmentCityCardBinding
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentCityCardBinding.inflate(inflater, container, false)
 
@@ -41,7 +40,7 @@ class CityCardFragment : Fragment() {
         webView.settings.javaScriptEnabled = true
         webView.webViewClient = WebViewClient()
         webView.loadUrl(
-            "https://www.rijekacitycard.hr/hr/kupi-rcc-usluge/autotrolej"
+            "https://www.rijekacitycard.hr/hr/kupi-rcc-usluge/autotrolej",
         )
 
         return binding.root

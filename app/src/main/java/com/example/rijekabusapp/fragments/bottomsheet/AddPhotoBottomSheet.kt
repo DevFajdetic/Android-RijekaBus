@@ -19,16 +19,15 @@ class AddPhotoBottomSheet(
     private val selectedStation: Station,
     private val insertCallback: ((RequestBody) -> Unit)?,
     private val updateImageSlider: ((StationImage) -> Unit)?,
-    private val hideEmptyStateCallback: (() -> Unit)
+    private val hideEmptyStateCallback: (() -> Unit),
 ) : BottomSheetDialogFragment() {
-
     private lateinit var binding: BottomsheetAddPhotoBinding
     private var validationFields = ArrayList<TextInputEditText>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = BottomsheetAddPhotoBinding.inflate(inflater, container, false)
 
@@ -36,19 +35,24 @@ class AddPhotoBottomSheet(
 
         binding.btnAdd.setOnClickListener {
             if (formValid()) {
-                val stationImage = StationImage(
-                    selectedStation.id, binding.etUrl.text.toString(),
-                    binding.etTitle.text.toString(), null
-                )
-
+                val stationImage =
+                    StationImage(
+                        selectedStation.id,
+                        binding.etUrl.text.toString(),
+                        binding.etTitle.text.toString(),
+                        null,
+                    )
+                // TODO USERID
                 val jsonObject = JSONObject()
+                jsonObject.put("userId", null)
                 jsonObject.put("stationId", stationImage.stationId)
                 jsonObject.put("imageUrl", stationImage.imageUrl)
                 jsonObject.put("imageCaption", stationImage.imageCaption)
 
                 val jsonObjectString = jsonObject.toString()
-                val requestBody = jsonObjectString
-                    .toRequestBody("application/json".toMediaTypeOrNull())
+                val requestBody =
+                    jsonObjectString
+                        .toRequestBody("application/json".toMediaTypeOrNull())
 
                 insertCallback?.invoke(requestBody)
                 updateImageSlider?.invoke(stationImage)

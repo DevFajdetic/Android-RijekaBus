@@ -31,7 +31,7 @@ data class Schedule(
     @SerializedName("StanicaId")
     val stationId: Int,
     @SerializedName("Varijanta")
-    val variant: String
+    val variant: String,
 ) : Serializable {
     fun asLine(): Line {
         return Line(
@@ -41,7 +41,7 @@ data class Schedule(
             stationOrdial,
             direction,
             stationId,
-            variant
+            variant,
         )
     }
 }

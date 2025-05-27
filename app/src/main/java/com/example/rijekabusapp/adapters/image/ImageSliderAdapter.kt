@@ -14,9 +14,8 @@ import com.example.rijekabusapp.network.models.StationImage
 
 class ImageSliderAdapter(
     private val context: Context,
-    private val imageList: ArrayList<StationImage>
+    private val imageList: ArrayList<StationImage>,
 ) : PagerAdapter() {
-
     fun setImageList(newImageList: ArrayList<StationImage>) {
         imageList.clear()
         imageList.addAll(newImageList)
@@ -37,12 +36,18 @@ class ImageSliderAdapter(
         return imageList.size
     }
 
-    override fun isViewFromObject(view: View, `object`: Any): Boolean {
+    override fun isViewFromObject(
+        view: View,
+        `object`: Any,
+    ): Boolean {
         return view === `object`
     }
 
     @SuppressLint("InflateParams")
-    override fun instantiateItem(container: ViewGroup, position: Int): Any {
+    override fun instantiateItem(
+        container: ViewGroup,
+        position: Int,
+    ): Any {
         val view = LayoutInflater.from(context).inflate(R.layout.station_image_slider_item, null)
         val ivImages = view.findViewById<ImageView>(R.id.ivImages)
 
@@ -55,7 +60,11 @@ class ImageSliderAdapter(
         return view
     }
 
-    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+    override fun destroyItem(
+        container: ViewGroup,
+        position: Int,
+        `object`: Any,
+    ) {
         val vp = container as ViewPager
         val view = `object` as View
         vp.removeView(view)

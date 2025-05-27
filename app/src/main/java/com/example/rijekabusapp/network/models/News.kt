@@ -6,5 +6,5 @@ data class News(
     val title: String?,
     val body: String?,
     val category: String?,
-    val date: String?
+    val date: String?,
 ) : Serializable

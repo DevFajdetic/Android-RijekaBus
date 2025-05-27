@@ -34,9 +34,15 @@ class DirectionsViewModel(application: Application) : AndroidViewModel(applicati
         units: String,
     ) {
         viewModelScope.launch {
-            val response = Network().getDirectionsService().getDirection(
-                destination, origin, apiKey, language, mode, units
-            )
+            val response =
+                Network().getDirectionsService().getDirection(
+                    destination,
+                    origin,
+                    apiKey,
+                    language,
+                    mode,
+                    units,
+                )
             directionsLiveData.value = response
         }
     }

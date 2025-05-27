@@ -16,7 +16,7 @@ import com.example.rijekabusapp.databinding.BusLineItemViewBinding
 import com.example.rijekabusapp.helpers.ItemMoveCallback
 import com.example.rijekabusapp.helpers.generateUniqueColor
 import com.example.rijekabusapp.network.models.Line
-import java.util.*
+import java.util.Collections
 
 const val EXTRA_LINE = "com.example.rijekabusapp.extraLine"
 
@@ -26,7 +26,7 @@ class LineRecyclerAdapter(
     private val favoriteLines: ArrayList<Line>?,
     private val usedForFavorites: Boolean,
     private val insertCallback: ((Line) -> Unit)?,
-    private val deleteCallback: ((Line) -> Unit)?
+    private val deleteCallback: ((Line) -> Unit)?,
 ) : RecyclerView.Adapter<LineRecyclerAdapter.LineViewHolder>(),
     ItemMoveCallback.ItemTouchHelperAdapter,
     Filterable {
@@ -37,14 +37,21 @@ class LineRecyclerAdapter(
         val binding = BusLineItemViewBinding.bind(view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LineViewHolder {
-        val view = LayoutInflater
-            .from(context)
-            .inflate(R.layout.bus_line_item_view, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): LineViewHolder {
+        val view =
+            LayoutInflater
+                .from(context)
+                .inflate(R.layout.bus_line_item_view, parent, false)
         return LineViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: LineViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: LineViewHolder,
+        position: Int,
+    ) {
         val line = filterList[position]
 
         holder.binding.ivLineNumber.text = line.lineNumber
@@ -67,9 +74,10 @@ class LineRecyclerAdapter(
         }
 
         holder.binding.root.setOnClickListener {
-            val intent = Intent(context, LineActivity::class.java).apply {
-                putExtra(EXTRA_LINE, line)
-            }
+            val intent =
+                Intent(context, LineActivity::class.java).apply {
+                    putExtra(EXTRA_LINE, line)
+                }
             context.startActivity(intent)
         }
     }
@@ -96,7 +104,7 @@ class LineRecyclerAdapter(
     private fun onRegularLineButtonClick(
         exists: Boolean,
         holder: LineViewHolder,
-        line: Line
+        line: Line,
     ) {
         if (!exists) {
             holder.binding.btnFavorite.isActivated = true
@@ -132,7 +140,10 @@ class LineRecyclerAdapter(
             }
 
             @SuppressLint("NotifyDataSetChanged")
-            override fun publishResults(p0: CharSequence?, filterResults: FilterResults?) {
+            override fun publishResults(
+                p0: CharSequence?,
+                filterResults: FilterResults?,
+            ) {
                 if (p0.isNullOrEmpty()) filterList = linesList
                 filterList = filterResults!!.values as ArrayList<Line>
                 notifyDataSetChanged()
@@ -147,7 +158,11 @@ class LineRecyclerAdapter(
     fun setSavedPositions(positions: List<Int>) {
         savedPositions = positions
     }
-    override fun onItemMove(sourcePosition: Int, targetPosition: Int) {
+
+    override fun onItemMove(
+        sourcePosition: Int,
+        targetPosition: Int,
+    ) {
         // Update the positions in the adapter, but don't save them yet
         if (sourcePosition < targetPosition) {
             for (i in sourcePosition until targetPosition) {

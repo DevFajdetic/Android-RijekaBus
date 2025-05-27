@@ -19,22 +19,28 @@ class FavoriteLineRecyclerAdapter(
     private val context: Context,
     private val favoritesList: ArrayList<FavoriteLine>,
     private var isEditModeEnabled: Boolean,
-    private val deleteCallback: (FavoriteLine) -> Unit
+    private val deleteCallback: (FavoriteLine) -> Unit,
 ) : RecyclerView.Adapter<FavoriteLineRecyclerAdapter.FavoriteLineViewHolder>(),
     ItemMoveCallback.ItemTouchHelperAdapter {
-
     class FavoriteLineViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = BusLineItemViewBinding.bind(view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteLineViewHolder {
-        val view = LayoutInflater.from(context)
-            .inflate(R.layout.bus_line_item_view, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): FavoriteLineViewHolder {
+        val view =
+            LayoutInflater.from(context)
+                .inflate(R.layout.bus_line_item_view, parent, false)
         return FavoriteLineViewHolder(view)
     }
 
     @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
-    override fun onBindViewHolder(holder: FavoriteLineViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: FavoriteLineViewHolder,
+        position: Int,
+    ) {
         val line = favoritesList[position]
 
         if (isEditModeEnabled) {
@@ -61,9 +67,10 @@ class FavoriteLineRecyclerAdapter(
 
         holder.binding.root.setOnClickListener {
             if (!isEditModeEnabled) {
-                val intent = Intent(context, LineActivity::class.java).apply {
-                    putExtra(EXTRA_LINE, line.convertToLine())
-                }
+                val intent =
+                    Intent(context, LineActivity::class.java).apply {
+                        putExtra(EXTRA_LINE, line.convertToLine())
+                    }
                 context.startActivity(intent)
             }
         }
@@ -77,7 +84,10 @@ class FavoriteLineRecyclerAdapter(
         this.isEditModeEnabled = isEditModeEnabled
     }
 
-    override fun onItemMove(sourcePosition: Int, targetPosition: Int) {
+    override fun onItemMove(
+        sourcePosition: Int,
+        targetPosition: Int,
+    ) {
         if (isEditModeEnabled) {
             val movedItem = favoritesList.removeAt(sourcePosition)
             favoritesList.add(targetPosition, movedItem)

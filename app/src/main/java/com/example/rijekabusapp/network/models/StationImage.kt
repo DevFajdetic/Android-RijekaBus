@@ -6,5 +6,5 @@ data class StationImage(
     val stationId: Int,
     val imageUrl: String,
     val imageCaption: String,
-    val id: Int?
+    val id: Int?,
 ) : Serializable

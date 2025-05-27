@@ -19,9 +19,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.example.rijekabusapp.*
+import com.example.rijekabusapp.LoginActivity
+import com.example.rijekabusapp.MyRoutesActivity
+import com.example.rijekabusapp.R
+import com.example.rijekabusapp.SavedPreference
 import com.example.rijekabusapp.databinding.FragmentExploreBinding
-import com.example.rijekabusapp.helpers.*
+import com.example.rijekabusapp.getPreferantLanguage
+import com.example.rijekabusapp.getPreferantUnit
+import com.example.rijekabusapp.helpers.appendTemperatureMetric
+import com.example.rijekabusapp.helpers.appendWindMetric
+import com.example.rijekabusapp.helpers.convertDistance
+import com.example.rijekabusapp.helpers.isOnline
+import com.example.rijekabusapp.helpers.showCustomDialog
+import com.example.rijekabusapp.helpers.showProfileCustomDialog
+import com.example.rijekabusapp.helpers.titleCase
 import com.example.rijekabusapp.network.response.WeatherResponse
 import com.example.rijekabusapp.viewmodels.WeatherViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -29,7 +40,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 class ExploreFragment : Fragment() {
-
     private lateinit var binding: FragmentExploreBinding
     private lateinit var viewModel: WeatherViewModel
     private lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -37,7 +47,7 @@ class ExploreFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentExploreBinding.inflate(inflater, container, false)
 
@@ -78,14 +88,27 @@ class ExploreFragment : Fragment() {
         binding.navView.bringToFront()
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.settings -> Navigation.findNavController(binding.root)
-                    .navigate(R.id.action_exploreFragment_to_settingsFragment)
-                R.id.about -> Navigation.findNavController(binding.root)
-                    .navigate(R.id.action_exploreFragment_to_aboutActivity)
-                R.id.rate -> Toast.makeText(
-                    context,
-                    getString(R.string.not_implemented), Toast.LENGTH_SHORT
-                ).show()
+                R.id.favorites ->
+                    Navigation.findNavController(binding.root)
+                        .navigate(R.id.action_exploreFragment_to_favoritesFragment)
+                R.id.lines ->
+                    Navigation.findNavController(binding.root)
+                        .navigate(R.id.action_exploreFragment_to_linesFragment)
+                R.id.stations ->
+                    Navigation.findNavController(binding.root)
+                        .navigate(R.id.action_exploreFragment_to_stationsFragment)
+                R.id.settings ->
+                    Navigation.findNavController(binding.root)
+                        .navigate(R.id.action_exploreFragment_to_settingsFragment)
+                R.id.about ->
+                    Navigation.findNavController(binding.root)
+                        .navigate(R.id.action_exploreFragment_to_aboutActivity)
+                R.id.rate ->
+                    Toast.makeText(
+                        context,
+                        getString(R.string.not_implemented),
+                        Toast.LENGTH_SHORT,
+                    ).show()
                 R.id.logout -> signOut()
                 R.id.login -> {
                     val intent = Intent(requireContext(), LoginActivity::class.java)
@@ -125,9 +148,10 @@ class ExploreFragment : Fragment() {
 
         binding.mail.setOnClickListener {
             val receiverEmail = "autotrolej@autotrolej.hr"
-            val intent = Intent(Intent.ACTION_SENDTO).apply {
-                data = Uri.parse("mailto:$receiverEmail")
-            }
+            val intent =
+                Intent(Intent.ACTION_SENDTO).apply {
+                    data = Uri.parse("mailto:$receiverEmail")
+                }
 
             try {
                 startActivity(intent)
@@ -153,9 +177,9 @@ class ExploreFragment : Fragment() {
                     Intent.ACTION_VIEW,
                     Uri.parse(
                         "https://www.autotrolej.hr/wp-content/" +
-                            "uploads/2020/02/autotrolej_mreza_prigradskih_linija.pdf"
-                    )
-                )
+                            "uploads/2020/02/autotrolej_mreza_prigradskih_linija.pdf",
+                    ),
+                ),
             )
         }
 
@@ -165,19 +189,20 @@ class ExploreFragment : Fragment() {
                     Intent.ACTION_VIEW,
                     Uri.parse(
                         "https://www.autotrolej.hr/wp-content" +
-                            "/uploads/2023/01/autotrolej-mreza-linija-2022.png"
-                    )
-                )
+                            "/uploads/2023/01/autotrolej-mreza-linija-2022.png",
+                    ),
+                ),
             )
         }
     }
 
     private fun setupUIBasedOnLogin() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.web_client_id))
-            .requestEmail()
-            .requestProfile()
-            .build()
+        val gso =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.web_client_id))
+                .requestEmail()
+                .requestProfile()
+                .build()
 
         mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
 
@@ -207,12 +232,15 @@ class ExploreFragment : Fragment() {
             weatherResponse.wind.speed.toString() + appendWindMetric(requireContext())
         binding.tvPressure.text = weatherResponse.main.pressure.toString() + " hPa"
         binding.tvSight.text =
-            if (getPreferantUnit(requireContext())) weatherResponse.visibility.toString() + " m"
-            else convertDistance(
-                weatherResponse.visibility,
-                "meters",
-                "miles"
-            ).toString() + " mi"
+            if (getPreferantUnit(requireContext())) {
+                weatherResponse.visibility.toString() + " m"
+            } else {
+                convertDistance(
+                    weatherResponse.visibility,
+                    "meters",
+                    "miles",
+                ).toString() + " mi"
+            }
         val iconCode = weatherResponse.weather[0].icon
         Log.d("tag", "https://openweathermap.org/img/w/$iconCode.png")
         binding.ivWeather.load("https://openweathermap.org/img/w/$iconCode.png") {
@@ -238,19 +266,20 @@ class ExploreFragment : Fragment() {
     }
 
     private fun isLocationOn() {
-        val locationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE)
-            as LocationManager
+        val locationManager =
+            requireActivity().getSystemService(Context.LOCATION_SERVICE)
+                as LocationManager
         val isLocationEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
 
         if (isLocationEnabled) {
             binding.location.append(" " + getString(R.string.on))
             binding.location.setTextColor(
-                ContextCompat.getColor(requireContext(), R.color.greenish)
+                ContextCompat.getColor(requireContext(), R.color.greenish),
             )
         } else {
             binding.location.append(" " + getString(R.string.off))
             binding.location.setTextColor(
-                ContextCompat.getColor(requireContext(), R.color.redish)
+                ContextCompat.getColor(requireContext(), R.color.redish),
             )
         }
     }

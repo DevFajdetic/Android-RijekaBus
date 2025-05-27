@@ -12,9 +12,8 @@ import com.example.rijekabusapp.network.models.Step
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class RoutesListBottomSheet(
-    private val stepList: ArrayList<Step>
+    private val stepList: ArrayList<Step>,
 ) : BottomSheetDialogFragment() {
-
     private var _binding: BottomsheetTripBinding? = null
     private val binding get() = _binding!!
     private val adapter by lazy { RouteRecyclerAdapter(requireContext(), arrayListOf()) }
@@ -23,7 +22,7 @@ class RoutesListBottomSheet(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = BottomsheetTripBinding.inflate(inflater, container, false)
         val view = binding.root
@@ -31,16 +30,8 @@ class RoutesListBottomSheet(
         binding.rvRoutes.layoutManager = LinearLayoutManager(requireContext())
         adapter.setStepList(stepList)
         binding.rvRoutes.adapter = adapter
-        /*
-        binding.go.setOnClickListener {
 
-        } */
-
-        /*
-        binding.addToRoutes.setOnClickListener {
-
-        } */
-
+        // TODO: Implement click listeners for go and addToRoutes buttons
         return view
     }
 }

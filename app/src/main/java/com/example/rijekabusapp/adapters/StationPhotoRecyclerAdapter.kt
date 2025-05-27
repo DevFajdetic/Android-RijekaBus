@@ -15,9 +15,8 @@ import com.example.rijekabusapp.network.models.StationImage
 
 class StationPhotoRecyclerAdapter(
     private val context: Context,
-    private val imageList: ArrayList<StationImage>
+    private val imageList: ArrayList<StationImage>,
 ) : RecyclerView.Adapter<StationPhotoRecyclerAdapter.StationPhotoViewHolder>() {
-
     var editSwitch = false
     var deleteCallback: ((StationImage) -> Unit)? = null
     var updateSliderCallback: ((ArrayList<StationImage>) -> Unit)? = null
@@ -40,14 +39,21 @@ class StationPhotoRecyclerAdapter(
         val binding = StationPhotoItemViewBinding.bind(view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StationPhotoViewHolder {
-        val view = LayoutInflater.from(context)
-            .inflate(R.layout.station_photo_item_view, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): StationPhotoViewHolder {
+        val view =
+            LayoutInflater.from(context)
+                .inflate(R.layout.station_photo_item_view, parent, false)
         return StationPhotoViewHolder(view)
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun onBindViewHolder(holder: StationPhotoViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: StationPhotoViewHolder,
+        position: Int,
+    ) {
         val playerImage = imageList[position]
 
         holder.binding.tvImageTitle.text = playerImage.imageCaption
@@ -64,7 +70,7 @@ class StationPhotoRecyclerAdapter(
                     notifyDataSetChanged()
                 } catch (e: Exception) {
                     showErrorMessageCallback?.invoke(
-                        context.getString(R.string.error_deleting_image)
+                        context.getString(R.string.error_deleting_image),
                     )
                 }
             }
@@ -74,12 +80,16 @@ class StationPhotoRecyclerAdapter(
         }
     }
 
-    private fun setViewMargin(holder: StationPhotoViewHolder, value: Float) {
-        val px = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            value,
-            context.resources.displayMetrics
-        )
+    private fun setViewMargin(
+        holder: StationPhotoViewHolder,
+        value: Float,
+    ) {
+        val px =
+            TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                value,
+                context.resources.displayMetrics,
+            )
         val param = holder.binding.photoItemContainer.layoutParams as ConstraintLayout.LayoutParams
         param.setMargins(0, 0, px.toInt(), 0)
         holder.binding.photoItemContainer.layoutParams = param

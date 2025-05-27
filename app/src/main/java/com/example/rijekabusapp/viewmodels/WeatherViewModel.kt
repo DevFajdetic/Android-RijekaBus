@@ -13,14 +13,18 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
     private val apiKey = "5fccc012ba66eed8f23349a033b2377f"
     private val cityName = "Rijeka"
 
-    fun getCurrentWeather(metric: String, lang: String) {
+    fun getCurrentWeather(
+        metric: String,
+        lang: String,
+    ) {
         viewModelScope.launch {
-            currentWeather.value = Network().getWeatherService().getCurrentWeather(
-                cityName,
-                apiKey,
-                metric,
-                lang
-            )
+            currentWeather.value =
+                Network().getWeatherService().getCurrentWeather(
+                    cityName,
+                    apiKey,
+                    metric,
+                    lang,
+                )
         }
     }
 }

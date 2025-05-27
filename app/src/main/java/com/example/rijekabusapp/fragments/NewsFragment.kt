@@ -13,7 +13,10 @@ import com.example.rijekabusapp.adapters.NewsRecyclerAdapter
 import com.example.rijekabusapp.databinding.FragmentNewsBinding
 import com.example.rijekabusapp.network.models.News
 import com.example.rijekabusapp.network.webscraping.NewsScraper
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class NewsFragment : Fragment() {
     private lateinit var binding: FragmentNewsBinding
@@ -23,7 +26,7 @@ class NewsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentNewsBinding.inflate(inflater, container, false)
         binding.rvNews.layoutManager = LinearLayoutManager(requireContext())
@@ -44,11 +47,12 @@ class NewsFragment : Fragment() {
         Log.d("uso", "uso")
         binding.progressBar.visibility = View.VISIBLE
 
-        MainScope().launch {
+        CoroutineScope(Dispatchers.IO).launch {
             Log.d("uso", "startam rutine")
-            val newNewsItems = withContext(Dispatchers.IO) {
-                NewsScraper.scrapeNews()
-            }
+            val newNewsItems =
+                withContext(Dispatchers.IO) {
+                    NewsScraper.scrapeNews()
+                }
             Log.d("uso", "szavrsio rutine")
             newsItems.clear()
             newsItems.addAll(newNewsItems)

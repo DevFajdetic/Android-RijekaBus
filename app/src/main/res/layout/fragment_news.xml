@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:text="News"
+            android:text="@string/news"
             android:textAppearance="@style/HeadlineMediumNLv1Center"
             android:textColor="@color/white" />
 
@@ -41,11 +41,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="14dp"
-        android:theme="@style/HeadlineSmallNLv2Left"
         app:layout_constraintStart_toStartOf="parent"
-        android:textColor="@color/black"
+        android:theme="@style/HeadlineSmallNLv2Left"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        android:text="Obavijesti" />
+        android:text="@string/news" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -68,8 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/transparent_background"
-            android:scaleX="3"
-            android:scaleY="3"
+            android:scaleX="2"
+            android:scaleY="2"
             android:translationZ="2dp" />
 
     </FrameLayout>

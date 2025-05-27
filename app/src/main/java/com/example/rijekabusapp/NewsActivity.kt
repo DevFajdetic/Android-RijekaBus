@@ -7,7 +7,6 @@ import com.example.rijekabusapp.databinding.ActivityNewsBinding
 import com.example.rijekabusapp.network.models.News
 
 class NewsActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityNewsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -13,7 +13,7 @@ const val USER_LOCATION_MARKER_TITLE = "My Location"
 fun createLineMarkerIcon(
     context: Context,
     lineNumber: String,
-    lineDirection: String
+    lineDirection: String,
 ): Bitmap {
     val markerSize = context.resources.getDimensionPixelSize(R.dimen.marker_size)
     val bitmap = Bitmap.createBitmap(markerSize, markerSize, Bitmap.Config.ARGB_8888)
@@ -43,7 +43,7 @@ fun createLineMarkerIcon(
 // Create a circular marker for station
 fun createStationMarkerIcon(
     context: Context,
-    stationDirection: String
+    stationDirection: String,
 ): Bitmap {
     val markerSize = context.resources.getDimensionPixelSize(R.dimen.marker_station_size)
     val bitmap = Bitmap.createBitmap(markerSize, markerSize, Bitmap.Config.ARGB_8888)
@@ -61,8 +61,9 @@ fun createStationMarkerIcon(
 
     // Draw line number
     paint.color = ContextCompat.getColor(context, R.color.black)
-    paint.textSize = context.resources
-        .getDimensionPixelSize(R.dimen.marker_station_text_size).toFloat()
+    paint.textSize =
+        context.resources
+            .getDimensionPixelSize(R.dimen.marker_station_text_size).toFloat()
     paint.textAlign = Paint.Align.CENTER
     val x = markerSize / 2f
     val y = markerSize / 2f - (paint.descent() + paint.ascent()) / 2f

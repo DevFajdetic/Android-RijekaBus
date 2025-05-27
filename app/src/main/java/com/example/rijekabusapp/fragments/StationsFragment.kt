@@ -25,7 +25,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.chip.Chip
 
 class StationsFragment : Fragment() {
-
     private val viewModel: StationsViewModel by activityViewModels()
     private lateinit var scheduleViewModel: ScheduleViewModel
     private lateinit var binding: FragmentStationsBinding
@@ -34,7 +33,7 @@ class StationsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentStationsBinding.inflate(inflater, container, false)
@@ -42,11 +41,12 @@ class StationsFragment : Fragment() {
 
         binding.filter.setOnClickListener {
             val bsDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
-            val bsView = LayoutInflater.from(binding.root.context)
-                .inflate(
-                    R.layout.bottom_sheet_filter,
-                    binding.root.findViewById(R.id.bs_container)
-                )
+            val bsView =
+                LayoutInflater.from(binding.root.context)
+                    .inflate(
+                        R.layout.bottom_sheet_filter,
+                        binding.root.findViewById(R.id.bs_container),
+                    )
 
             bsView.findViewById<Button>(R.id.b_apply).setOnClickListener {
                 bsDialog.dismiss()
@@ -62,35 +62,43 @@ class StationsFragment : Fragment() {
 
     private fun setupSpinner() {
         val directions = resources.getStringArray(R.array.SpinnerDirectionsItems)
-        val spinnerAdapter = ArrayAdapter(
-            requireContext(), R.layout.drop_down_toolbar_item, directions
-        )
+        val spinnerAdapter =
+            ArrayAdapter(
+                requireContext(),
+                R.layout.drop_down_toolbar_item,
+                directions,
+            )
 
         binding.spinner.adapter = spinnerAdapter
         scheduleViewModel = (requireActivity() as MainActivity).scheduleViewModel
 
-        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                when (position) {
-                    0 -> selectedDirection = "" // All lines
-                    1 -> selectedDirection = "B"
-                    2 -> selectedDirection = "A"
+        binding.spinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    when (position) {
+                        0 -> selectedDirection = "" // All lines
+                        1 -> selectedDirection = "B"
+                        2 -> selectedDirection = "A"
+                    }
+                    getStationsList(selectedDirection)
                 }
-                getStationsList(selectedDirection)
-            }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
             }
-        }
     }
 
-    private var insertFavoriteStation = fun(it: Station) { viewModel.insertFavoriteStation(it) }
-    private var deleteFavoriteStation = fun(it: Station) { viewModel.deleteFavoriteStation(it) }
+    private var insertFavoriteStation = fun(it: Station) {
+        viewModel.insertFavoriteStation(it)
+    }
+    private var deleteFavoriteStation = fun(it: Station) {
+        viewModel.deleteFavoriteStation(it)
+    }
 
     fun getStationsList(direction: String) {
         viewModel.getFavoriteStations()
@@ -100,24 +108,27 @@ class StationsFragment : Fragment() {
 
         viewModel.stationsList.observe(viewLifecycleOwner) { stations ->
             scheduleViewModel.scheduleList.observe(viewLifecycleOwner) { scheduleList ->
-                val adapter = StationRecyclerAdapter(
-                    requireContext(),
-                    (
+                val adapter =
+                    StationRecyclerAdapter(
+                        requireContext(),
                         (
-                            if (direction != "") {
-                                stations.filter { st ->
-                                    scheduleList.any { sch ->
-                                        sch.stationId == st.id && sch.direction == direction
+                            (
+                                if (direction != "") {
+                                    stations.filter { st ->
+                                        scheduleList.any { sch ->
+                                            sch.stationId == st.id && sch.direction == direction
+                                        }
                                     }
+                                } else {
+                                    stations
                                 }
-                            } else stations
                             ) as ArrayList<Station>
                         ),
-                    favoriteStations,
-                    false,
-                    insertFavoriteStation,
-                    deleteFavoriteStation
-                )
+                        favoriteStations,
+                        false,
+                        insertFavoriteStation,
+                        deleteFavoriteStation,
+                    )
                 binding.rvStations.adapter = adapter
                 binding.progressBar.visibility = ProgressBar.GONE
 
@@ -133,16 +144,18 @@ class StationsFragment : Fragment() {
     }
 
     private fun setTeamSearchListener(adapter: StationRecyclerAdapter) {
-        binding.SVLines.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                return false
-            }
+        binding.SVLines.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    return false
+                }
 
-            override fun onQueryTextChange(text: String?): Boolean {
-                adapter.filter.filter(text)
-                return false
-            }
-        })
+                override fun onQueryTextChange(text: String?): Boolean {
+                    adapter.filter.filter(text)
+                    return false
+                }
+            },
+        )
     }
 
     fun applyFilter(filter: String) {

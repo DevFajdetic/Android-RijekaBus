@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rijekabusapp.network.Network
 import com.example.rijekabusapp.network.models.Schedule
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlinx.coroutines.launch
 
 class ScheduleViewModel(
     application: Application,
@@ -43,17 +43,20 @@ class ScheduleViewModel(
         val calendar = Calendar.getInstance()
         calendar.time = today
 
-        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
             dayOfWeek = "nedjelja"
-        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
+        }
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
             dayOfWeek = "subota"
+        }
 
         // TODO Better handle this
-        val praznici = arrayOf(
-            "2023-04-10", "2023-05-01",
-            "2023-05-30", "2023-06-08", "2023-06-22", "2023-08-05", "2023-08-15", "2023-11-01",
-            "2023-11-18", "2023-12-25", "2023-12-26"
-        )
+        val praznici =
+            arrayOf(
+                "2023-04-10", "2023-05-01",
+                "2023-05-30", "2023-06-08", "2023-06-22", "2023-08-05", "2023-08-15", "2023-11-01",
+                "2023-11-18", "2023-12-25", "2023-12-26",
+            )
 
         praznici.forEach { date ->
             if (date == todayStr) {

@@ -12,9 +12,8 @@ import com.example.rijekabusapp.network.models.Station
 class ViewPagerAdapter(
     fragmentActivity: FragmentActivity,
     private val fragments: List<Fragment>,
-    private val item: Any
+    private val item: Any,
 ) : FragmentStateAdapter(fragmentActivity) {
-
     override fun getItemCount(): Int {
         return fragments.size
     }

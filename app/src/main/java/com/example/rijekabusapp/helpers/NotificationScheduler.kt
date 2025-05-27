@@ -1,6 +1,10 @@
 package com.example.rijekabusapp.helpers
 
-import android.app.*
+import android.app.AlarmManager
+import android.app.Notification
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
@@ -9,22 +13,27 @@ import com.example.rijekabusapp.R
 import com.example.rijekabusapp.adapters.EXTRA_LINE
 import com.example.rijekabusapp.network.models.Schedule
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 const val NOTIFICATION_CHANNEL_ID = "my_notification_channel"
 
 // Method for setting the alarm
-private fun setAlarm(context: Context, calendar: Calendar) {
+private fun setAlarm(
+    context: Context,
+    calendar: Calendar,
+) {
     val selectedTimeInMillis = calendar.timeInMillis
 
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val alarmIntent = Intent(context, MyAlarmReceiver::class.java)
-    val pendingIntent = PendingIntent.getBroadcast(
-        context,
-        0,
-        alarmIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    )
+    val pendingIntent =
+        PendingIntent.getBroadcast(
+            context,
+            0,
+            alarmIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
     alarmManager.set(AlarmManager.RTC_WAKEUP, selectedTimeInMillis, pendingIntent)
 }
 
@@ -32,25 +41,28 @@ private fun setAlarm(context: Context, calendar: Calendar) {
 private fun createNotification(
     context: Context,
     selectedTime: String,
-    item: Schedule
+    item: Schedule,
 ): Notification {
-    val notificationIntent = Intent(context, LineActivity::class.java).apply {
-        putExtra(EXTRA_LINE, item.asLine())
-    }
-    val pendingNotificationIntent = PendingIntent.getActivity(
-        context,
-        0,
-        notificationIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    )
+    val notificationIntent =
+        Intent(context, LineActivity::class.java).apply {
+            putExtra(EXTRA_LINE, item.asLine())
+        }
+    val pendingNotificationIntent =
+        PendingIntent.getActivity(
+            context,
+            0,
+            notificationIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
 
     val dismissIntent = Intent(context, MyNotificationDismissReceiver::class.java)
-    val pendingDismissIntent = PendingIntent.getBroadcast(
-        context,
-        0,
-        dismissIntent,
-        PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    )
+    val pendingDismissIntent =
+        PendingIntent.getBroadcast(
+            context,
+            0,
+            dismissIntent,
+            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
 
     return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
         .setContentTitle(context.getString(R.string.alaram_set))
@@ -64,30 +76,34 @@ private fun createNotification(
 }
 
 // Method for handling the time picker dialog
-fun showTimePickerDialog(context: Context, item: Schedule) {
+fun showTimePickerDialog(
+    context: Context,
+    item: Schedule,
+) {
     val calendar = Calendar.getInstance()
 
-    val timePickerDialog = TimePickerDialog(
-        context,
-        { _, hourOfDay, minute ->
-            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-            calendar.set(Calendar.MINUTE, minute)
+    val timePickerDialog =
+        TimePickerDialog(
+            context,
+            { _, hourOfDay, minute ->
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                calendar.set(Calendar.MINUTE, minute)
 
-            val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-            val selectedTime = dateFormat.format(calendar.time)
+                val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+                val selectedTime = dateFormat.format(calendar.time)
 
-            setAlarm(context, calendar)
+                setAlarm(context, calendar)
 
-            val notification = createNotification(context, selectedTime, item)
+                val notification = createNotification(context, selectedTime, item)
 
-            val notificationManager =
-                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.notify(1, notification)
-        },
-        calendar.get(Calendar.HOUR_OF_DAY),
-        calendar.get(Calendar.MINUTE),
-        getBoolFromPreferences(PREF_HOUR, true, context)
-    )
+                val notificationManager =
+                    context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                notificationManager.notify(1, notification)
+            },
+            calendar.get(Calendar.HOUR_OF_DAY),
+            calendar.get(Calendar.MINUTE),
+            getBoolFromPreferences(PREF_HOUR, true, context),
+        )
 
     timePickerDialog.show()
 }

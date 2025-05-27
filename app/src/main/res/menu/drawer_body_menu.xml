@@ -4,39 +4,39 @@
 
         <item
             android:id="@+id/favorites"
-            android:title="Favorites"
+            android:title="@string/menu_favorites_title"
             android:icon="@drawable/ic_star_full" />
 
         <item
             android:id="@+id/lines"
-            android:title="Lines"
+            android:title="@string/menu_bus_lines_title"
             android:icon="@drawable/ic_bus" />
 
         <item
             android:id="@+id/stations"
-            android:title="Stations"
+            android:title="@string/stations"
             android:icon="@drawable/ic_bus_stop" />
 
     </group>
 
     <group android:checkableBehavior="single">
         <item
-            android:title="Communication">
+            android:title="@string/communication">
 
             <menu>
                 <item
                     android:id="@+id/settings"
-                    android:title="Settings"
+                    android:title="@string/settings"
                     android:icon="@drawable/ic_settings" />
 
                 <item
                     android:id="@+id/about"
-                    android:title="About us"
+                    android:title="@string/about"
                     android:icon="@drawable/ic_about" />
 
                 <item
                     android:id="@+id/rate"
-                    android:title="Rate us"
+                    android:title="@string/rate_us"
                     android:icon="@drawable/ic_rate" />
             </menu>
         </item>
@@ -44,24 +44,24 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:title="Profile">
+            android:title="@string/profile">
 
             <menu>
                 <item
                     android:id="@+id/profile"
-                    android:title="Profile"
+                    android:title="@string/profile"
                     android:visible="false"
                     android:icon="@drawable/ic_person" />
 
                 <item
                     android:id="@+id/logout"
-                    android:title="Logout"
+                    android:title="@string/logout"
                     android:visible="false"
                     android:icon="@drawable/ic_logout" />
 
                 <item
                     android:id="@+id/login"
-                    android:title="Login"
+                    android:title="@string/login"
                     android:icon="@drawable/ic_login" />
             </menu>
         </item>

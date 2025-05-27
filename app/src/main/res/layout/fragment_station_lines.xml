@@ -27,6 +27,8 @@
                     android:id="@+id/imageProgressBar"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:scaleX="2"
+                    android:scaleY="2"
                     android:layout_gravity="center"
                     android:translationZ="4dp" />
 
@@ -140,6 +142,7 @@
 
             <ProgressBar
                 android:id="@+id/progress_bar"
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="visible" />
@@ -148,7 +151,7 @@
                 android:id="@+id/empty_state"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="top"
                 android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView

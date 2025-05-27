@@ -20,20 +20,26 @@ class StationLinesRecyclerAdapter(
     private val stationLinesList: List<Schedule>,
     private val shouldBindTime: Boolean,
 ) : RecyclerView.Adapter<StationLinesRecyclerAdapter.StationLinesViewHolder>() {
-
     class StationLinesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = StationLineItemBinding.bind(view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StationLinesViewHolder {
-        val view = LayoutInflater
-            .from(context)
-            .inflate(R.layout.station_line_item, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): StationLinesViewHolder {
+        val view =
+            LayoutInflater
+                .from(context)
+                .inflate(R.layout.station_line_item, parent, false)
         return StationLinesViewHolder(view)
     }
 
     @SuppressLint("SimpleDateFormat")
-    override fun onBindViewHolder(holder: StationLinesViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: StationLinesViewHolder,
+        position: Int,
+    ) {
         val item = stationLinesList[position]
 
         holder.binding.notify.setOnClickListener {
@@ -49,9 +55,10 @@ class StationLinesRecyclerAdapter(
             .setBackgroundColor(Color.parseColor(generateUniqueColor(item.lineNumber)))
 
         holder.binding.root.setOnClickListener {
-            val intent = Intent(context, ScheduleActivity::class.java).apply {
-                putExtra(EXTRA_LINE, item.asLine())
-            }
+            val intent =
+                Intent(context, ScheduleActivity::class.java).apply {
+                    putExtra(EXTRA_LINE, item.asLine())
+                }
             context.startActivity(intent)
         }
     }

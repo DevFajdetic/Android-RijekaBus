@@ -25,6 +25,15 @@
         <action
             android:id="@+id/action_exploreFragment_to_schedulerItemPickerFragment"
             app:destination="@id/schedulerItemPickerFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_stationsFragment"
+            app:destination="@id/stationsFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_linesFragment"
+            app:destination="@id/linesFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </fragment>
     <fragment
         android:id="@+id/linesFragment"

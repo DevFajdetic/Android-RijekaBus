@@ -10,9 +10,8 @@ import com.example.rijekabusapp.database.models.FavoriteStation
 
 @Database(
     entities = [FavoriteLine::class, FavoriteStation::class, FavoriteRoute::class],
-    version = 1
+    version = 1,
 )
-
 abstract class AutotrolejDatabase : RoomDatabase() {
     abstract fun autotrolejDao(): AutotrolejDao
 

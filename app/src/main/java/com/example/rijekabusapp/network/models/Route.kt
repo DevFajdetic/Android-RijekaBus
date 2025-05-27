@@ -16,5 +16,5 @@ data class Route(
     @SerializedName("warnings")
     val warnings: List<Any>,
     @SerializedName("waypoint_order")
-    val waypointOrder: List<Any>
+    val waypointOrder: List<Any>,
 )

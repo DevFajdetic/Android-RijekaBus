@@ -20,7 +20,6 @@ import com.example.rijekabusapp.helpers.showCustomDialog
 import com.example.rijekabusapp.viewmodels.FavoritesViewModel
 
 class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
-
     private lateinit var binding: FragmentFavoritesBinding
 
     private lateinit var favoriteStationAdapter: FavoriteStationRecyclerAdapter
@@ -33,7 +32,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
@@ -69,18 +68,19 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     private fun loadFavoriteStations() {
         viewModel.favoriteStations.observe(viewLifecycleOwner) { stationList ->
             viewModel.stationImages.observe(viewLifecycleOwner) { imagesList ->
-                favoriteStationAdapter = FavoriteStationRecyclerAdapter(
-                    requireContext(), stationList, imagesList, isEditModeEnabled,
-                ) { station ->
-                    viewModel.deleteFavoriteStation(station.convertToStation())
-                }
+                favoriteStationAdapter =
+                    FavoriteStationRecyclerAdapter(
+                        requireContext(), stationList, imagesList, isEditModeEnabled,
+                    ) { station ->
+                        viewModel.deleteFavoriteStation(station.convertToStation())
+                    }
                 val itemMoveCallback =
                     ItemMoveCallback(favoriteStationAdapter) { isEditModeEnabled }
                 val itemTouchHelper = ItemTouchHelper(itemMoveCallback)
                 itemTouchHelper.attachToRecyclerView(binding.rvFavoriteStations)
                 binding.rvFavoriteStations.adapter = favoriteStationAdapter
-                binding.progressStations.visibility = ProgressBar.GONE
             }
+            binding.progressStations.visibility = ProgressBar.GONE
             binding.emptyStateStations
                 .setupEmptyStateView(getString(R.string.favorites_error_desc))
             setEmptyState(binding.emptyStateStations, stationList.isNotEmpty())
@@ -89,16 +89,19 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         if (requireContext().isOnline()) {
             binding.progressStations.visibility = ProgressBar.VISIBLE
             viewModel.getFavoriteStationsAndImages()
+        } else {
+            showCustomDialog(getString(R.string.no_internet_connection), requireContext())
         }
     }
 
     private fun loadFavoriteLines() {
         viewModel.favoriteLines.observe(viewLifecycleOwner) { linesList ->
-            favoriteLineAdapter = FavoriteLineRecyclerAdapter(
-                requireContext(), linesList, isEditModeEnabled,
-            ) { line ->
-                viewModel.deleteFavoriteLine(line.convertToLine())
-            }
+            favoriteLineAdapter =
+                FavoriteLineRecyclerAdapter(
+                    requireContext(), linesList, isEditModeEnabled,
+                ) { line ->
+                    viewModel.deleteFavoriteLine(line.convertToLine())
+                }
             val itemMoveCallback = ItemMoveCallback(favoriteLineAdapter) { isEditModeEnabled }
             val itemTouchHelper = ItemTouchHelper(itemMoveCallback)
             itemTouchHelper.attachToRecyclerView(binding.rvFavoriteLines)
@@ -116,7 +119,10 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         }
     }
 
-    private fun setEmptyState(view: View, isNotEmpty: Boolean) {
+    private fun setEmptyState(
+        view: View,
+        isNotEmpty: Boolean,
+    ) {
         if (isNotEmpty) {
             view.visibility = View.GONE
         } else {

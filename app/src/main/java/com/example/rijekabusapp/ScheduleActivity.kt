@@ -12,7 +12,6 @@ import com.example.rijekabusapp.network.models.Station
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ScheduleActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityScheduleBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,11 +22,12 @@ class ScheduleActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        val fragments = listOf(
-            LineScheduleFragment("tjedan"),
-            LineScheduleFragment("subota"),
-            LineScheduleFragment("nedjelja")
-        )
+        val fragments =
+            listOf(
+                LineScheduleFragment("tjedan"),
+                LineScheduleFragment("subota"),
+                LineScheduleFragment("nedjelja"),
+            )
 
         if (item1 != null) {
             binding.viewPager.adapter = ViewPagerAdapter(this, fragments, item1)

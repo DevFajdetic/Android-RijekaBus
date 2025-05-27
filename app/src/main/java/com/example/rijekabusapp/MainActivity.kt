@@ -18,7 +18,6 @@ import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     lateinit var scheduleViewModel: ScheduleViewModel
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         binding.mainNavView.setupWithNavController(navController)
 
         binding.mainFAB.setOnClickListener {
-            val intent = Intent(this, MapsActivity::class.java)
+            val intent = Intent(this, MapsActivity2::class.java)
             startActivity(intent)
         }
     }
@@ -62,12 +61,13 @@ class MainActivity : AppCompatActivity() {
 
         fun getScheduleViewModel(
             activity: FragmentActivity,
-            applicationContext: Application
+            applicationContext: Application,
         ): ScheduleViewModel {
             if (scheduleViewModel == null) {
-                scheduleViewModel = ViewModelProvider(
-                    activity, ScheduleViewModelFactory(applicationContext)
-                )[ScheduleViewModel::class.java]
+                scheduleViewModel =
+                    ViewModelProvider(
+                        activity, ScheduleViewModelFactory(applicationContext),
+                    )[ScheduleViewModel::class.java]
             }
             return scheduleViewModel!!
         }

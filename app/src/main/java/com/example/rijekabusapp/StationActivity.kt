@@ -16,7 +16,6 @@ import com.example.rijekabusapp.viewmodels.ScheduleViewModel
 import com.google.android.material.tabs.TabLayout
 
 class StationActivity : AppCompatActivity() {
-
     lateinit var scheduleViewModel: ScheduleViewModel
     private lateinit var binding: ActivityStationBinding
     private lateinit var stationItem: Station
@@ -31,15 +30,18 @@ class StationActivity : AppCompatActivity() {
         createNotificationChannel()
         setContentView(binding.root)
     }
+
     private fun createNotificationChannel() {
-        val channel = NotificationChannel(
-            NOTIFICATION_CHANNEL_ID,
-            "My Notification Channel",
-            NotificationManager.IMPORTANCE_DEFAULT
-        )
+        val channel =
+            NotificationChannel(
+                NOTIFICATION_CHANNEL_ID,
+                "My Notification Channel",
+                NotificationManager.IMPORTANCE_DEFAULT,
+            )
         val notificationManager = getSystemService(NotificationManager::class.java)
         notificationManager.createNotificationChannel(channel)
     }
+
     private fun setupViewPagerAndTabs() {
         binding.tvIcon.text = stationItem.shortName[0].toString()
         binding.tvStationName.text = stationItem.shortName
@@ -56,25 +58,29 @@ class StationActivity : AppCompatActivity() {
         val pagerAdapter = ViewPagerAdapter(this, fragments, stationItem)
         binding.viewPager.adapter = pagerAdapter
 
-        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(position))
-            }
-        })
+        binding.viewPager.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(position))
+                }
+            },
+        )
 
-        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                binding.viewPager.setCurrentItem(tab.position, true)
-            }
+        binding.tabLayout.addOnTabSelectedListener(
+            object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    binding.viewPager.setCurrentItem(tab.position, true)
+                }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-                // No action needed
-            }
+                override fun onTabUnselected(tab: TabLayout.Tab) {
+                    // No action needed
+                }
 
-            override fun onTabReselected(tab: TabLayout.Tab) {
-                // No action needed
-            }
-        })
+                override fun onTabReselected(tab: TabLayout.Tab) {
+                    // No action needed
+                }
+            },
+        )
     }
 }

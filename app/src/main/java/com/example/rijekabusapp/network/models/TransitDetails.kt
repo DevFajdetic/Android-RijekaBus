@@ -9,5 +9,5 @@ data class TransitDetails(
     @SerializedName("arrival_stop") val arrivalStop: BusStop,
     @SerializedName("arrival_time") val arrivalTime: MapTime,
     @SerializedName("departure_time") val departureTime: MapTime,
-    @SerializedName("num_stops") val stops: Int
+    @SerializedName("num_stops") val stops: Int,
 )

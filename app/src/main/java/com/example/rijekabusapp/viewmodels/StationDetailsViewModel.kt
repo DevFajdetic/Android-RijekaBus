@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 import okhttp3.RequestBody
 
 class StationDetailsViewModel(application: Application) : AndroidViewModel(application) {
-
     val imagesList = MutableLiveData<ArrayList<StationImage>>()
     private val repository: AutotrolejRepository
 
@@ -29,7 +28,7 @@ class StationDetailsViewModel(application: Application) : AndroidViewModel(appli
 
     fun insertFavoriteStation(station: Station) {
         repository.insertFavoriteStation(
-            station.convertToFavoriteStation(repository.countFavoriteStations() + 1)
+            station.convertToFavoriteStation(repository.countFavoriteStations() + 1),
         )
     }
 

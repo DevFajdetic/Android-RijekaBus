@@ -17,47 +17,57 @@ const val EXTRA_NEWS = "com.example.rijekabusapp.extraNews"
 
 class NewsRecyclerAdapter(
     private val context: Context,
-    private val newsList: List<News>
+    private val newsList: List<News>,
 ) : RecyclerView.Adapter<NewsRecyclerAdapter.NewsViewHolder>() {
-
     class NewsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = NewsItemViewBinding.bind(view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        val view = LayoutInflater
-            .from(context)
-            .inflate(R.layout.news_item_view, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): NewsViewHolder {
+        val view =
+            LayoutInflater
+                .from(context)
+                .inflate(R.layout.news_item_view, parent, false)
         return NewsViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: NewsViewHolder,
+        position: Int,
+    ) {
         val newsItem = newsList[position]
 
         holder.binding.tvDate.text = newsItem.date
         holder.binding.tvTitle.text = newsItem.title
         when (newsItem.category) {
             "Promjene i preregulacija" -> {
-                holder.binding.tvIcon.backgroundTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(holder.itemView.context, R.color.bluish)
-                )
+                holder.binding.tvIcon.backgroundTintList =
+                    ColorStateList.valueOf(
+                        ContextCompat.getColor(holder.itemView.context, R.color.bluish),
+                    )
             }
             "Vozni red i linije" -> {
-                holder.binding.tvIcon.backgroundTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(holder.itemView.context, R.color.color_secondary)
-                )
+                holder.binding.tvIcon.backgroundTintList =
+                    ColorStateList.valueOf(
+                        ContextCompat.getColor(holder.itemView.context, R.color.color_secondary),
+                    )
             }
             "Obavijesti" -> {
-                holder.binding.tvIcon.backgroundTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(holder.itemView.context, R.color.team_pacers_primary)
-                )
+                holder.binding.tvIcon.backgroundTintList =
+                    ColorStateList.valueOf(
+                        ContextCompat.getColor(holder.itemView.context, R.color.team_pacers_primary),
+                    )
             }
         }
 
         holder.binding.root.setOnClickListener {
-            val intent = Intent(context, NewsActivity::class.java).apply {
-                putExtra(EXTRA_NEWS, newsItem)
-            }
+            val intent =
+                Intent(context, NewsActivity::class.java).apply {
+                    putExtra(EXTRA_NEWS, newsItem)
+                }
             context.startActivity(intent)
         }
     }

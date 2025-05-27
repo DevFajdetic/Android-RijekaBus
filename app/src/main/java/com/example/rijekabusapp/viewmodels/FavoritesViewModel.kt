@@ -18,7 +18,6 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 class FavoritesViewModel(application: Application) : AndroidViewModel(application) {
-
     val favoriteLines = MutableLiveData<ArrayList<FavoriteLine>>()
     val favoriteStations = MutableLiveData<ArrayList<FavoriteStation>>()
 
@@ -39,15 +38,16 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
                 stations.add(it)
             }
 
-            val asyncTasks = stations.map { station ->
-                async {
-                    try {
-                        ArrayList(Network().getMyApiService().getStationImages(station.id))
-                    } catch (e: Exception) {
-                        arrayListOf(StationImage(0, "", "", null))
+            val asyncTasks =
+                stations.map { station ->
+                    async {
+                        try {
+                            ArrayList(Network().getMyApiService().getStationImages(station.id))
+                        } catch (e: Exception) {
+                            arrayListOf(StationImage(0, "", "", null))
+                        }
                     }
                 }
-            }
             val response = asyncTasks.awaitAll()
 
             favoriteStations.value = stations
@@ -62,7 +62,10 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
         repository.deleteFavoriteStation(station.convertToFavoriteStation(null))
     }
 
-    fun updateFavoriteStation(station: Station, position: Int) {
+    fun updateFavoriteStation(
+        station: Station,
+        position: Int,
+    ) {
         viewModelScope.launch {
             repository.updateFavoriteStation(station.convertToFavoriteStation(position))
         }
@@ -91,7 +94,7 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun favoriteStationsUpdate() {
-        favoriteStations.value?.forEachIndexed() { index, station ->
+        favoriteStations.value?.forEachIndexed { index, station ->
             station.position = index
             repository.updateFavoriteStation(station)
         }

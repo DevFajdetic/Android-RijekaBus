@@ -18,7 +18,11 @@ import com.example.rijekabusapp.adapters.image.ImageSliderAdapter
 import com.example.rijekabusapp.databinding.FragmentStationLinesBinding
 import com.example.rijekabusapp.fragments.bottomsheet.AddPhotoBottomSheet
 import com.example.rijekabusapp.fragments.bottomsheet.EditPhotosBottomSheet
-import com.example.rijekabusapp.helpers.*
+import com.example.rijekabusapp.helpers.compareWithCurrentTime
+import com.example.rijekabusapp.helpers.isOnline
+import com.example.rijekabusapp.helpers.showCustomDialog
+import com.example.rijekabusapp.helpers.showCustomSnackbar
+import com.example.rijekabusapp.helpers.stringToTime
 import com.example.rijekabusapp.network.models.Station
 import com.example.rijekabusapp.network.models.StationImage
 import com.example.rijekabusapp.viewmodels.ScheduleViewModel
@@ -31,7 +35,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 class StationLinesFragment : Fragment(), OnMapReadyCallback {
-
     private lateinit var binding: FragmentStationLinesBinding
     private lateinit var scheduleViewModel: ScheduleViewModel
     private val viewModel: StationDetailsViewModel by activityViewModels()
@@ -44,7 +47,7 @@ class StationLinesFragment : Fragment(), OnMapReadyCallback {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentStationLinesBinding.inflate(inflater, container, false)
         stationItem = (arguments?.getSerializable(EXTRA_STATION) as? Station)!!
@@ -58,7 +61,10 @@ class StationLinesFragment : Fragment(), OnMapReadyCallback {
         return binding.root
     }
 
-    private fun setupCurrentSchedule(stationItem: Station?, savedInstanceState: Bundle?) {
+    private fun setupCurrentSchedule(
+        stationItem: Station?,
+        savedInstanceState: Bundle?,
+    ) {
         binding.progressBar.visibility = ProgressBar.VISIBLE
         binding.imageProgressBar.visibility = View.VISIBLE
 
@@ -93,16 +99,18 @@ class StationLinesFragment : Fragment(), OnMapReadyCallback {
         }
 
         scheduleViewModel.scheduleList.observe(viewLifecycleOwner) { scheduleList ->
-            val filteredStations = scheduleList.filter {
-                it.stationId == stationItem?.id &&
-                    compareWithCurrentTime(stringToTime(it.startTime)) >= 0
-            }.sortedBy { it.startTime }
+            val filteredStations =
+                scheduleList.filter {
+                    it.stationId == stationItem?.id &&
+                        compareWithCurrentTime(stringToTime(it.startTime)) >= 0
+                }.sortedBy { it.startTime }
 
-            val adapter = StationLinesRecyclerAdapter(
-                requireContext(),
-                filteredStations,
-                true
-            )
+            val adapter =
+                StationLinesRecyclerAdapter(
+                    requireContext(),
+                    filteredStations,
+                    true,
+                )
             binding.rvStationLines.adapter = adapter
             binding.progressBar.visibility = ProgressBar.GONE
 
@@ -148,54 +156,61 @@ class StationLinesFragment : Fragment(), OnMapReadyCallback {
             return
         }
 
-        val markerOptions = MarkerOptions()
-            .position(LatLng(latitude, longitude))
-            .title(stationItem.longName)
+        val markerOptions =
+            MarkerOptions()
+                .position(LatLng(latitude, longitude))
+                .title(stationItem.longName)
         googleMap.addMarker(markerOptions)
 
-        val cameraPosition = CameraPosition.Builder()
-            .target(LatLng(latitude, longitude))
-            .zoom(16f)
-            .build()
+        val cameraPosition =
+            CameraPosition.Builder()
+                .target(LatLng(latitude, longitude))
+                .zoom(16f)
+                .build()
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
     }
 
     private fun openAddPhotoBottomSheet() {
-        val bottomSheet = AddPhotoBottomSheet(stationItem, {
-            viewModel.addImageForStation(it)
-        }, {
-            imageSliderAdapter.updateImageList(it)
-            playerImageList.add(it)
-            binding.indicator.setViewPager(binding.imageSliderViewPager)
-        }, {
-            binding.ivPlaceholder.visibility = View.GONE
-            binding.imageProgressBar.visibility = View.GONE
-        })
+        val bottomSheet =
+            AddPhotoBottomSheet(stationItem, {
+                viewModel.addImageForStation(it)
+            }, {
+                imageSliderAdapter.updateImageList(it)
+                playerImageList.add(it)
+                binding.indicator.setViewPager(binding.imageSliderViewPager)
+            }, {
+                binding.ivPlaceholder.visibility = View.GONE
+                binding.imageProgressBar.visibility = View.GONE
+            })
         bottomSheet.setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialogTheme)
         bottomSheet.show(requireActivity().supportFragmentManager, "AddPhoto")
     }
 
     private fun openEditPhotoBottomSheet(imageList: ArrayList<StationImage>) {
-        val bottomSheet = EditPhotosBottomSheet(
-            imageList, {
-                viewModel.deleteStationImage(it.id!!)
-                playerImageList.remove(it)
-            }, {
-            imageSliderAdapter.setImageList(it)
-            playerImageList.clear()
-            playerImageList.addAll(it)
-            binding.indicator.setViewPager(binding.imageSliderViewPager)
-        },
-            {
-                viewModel.deleteAllStationImages(it)
-                playerImageList.removeAll(it)
-                imageSliderAdapter.clearImageList(it)
-                if (playerImageList.isEmpty()) binding.ivPlaceholder.visibility = View.VISIBLE
-                binding.indicator.setViewPager(binding.imageSliderViewPager)
-            }, {
-            showCustomSnackbar(requireContext(), binding.root, it)
-        }
-        )
+        val bottomSheet =
+            EditPhotosBottomSheet(
+                imageList,
+                {
+                    viewModel.deleteStationImage(it.id!!)
+                    playerImageList.remove(it)
+                },
+                {
+                    imageSliderAdapter.setImageList(it)
+                    playerImageList.clear()
+                    playerImageList.addAll(it)
+                    binding.indicator.setViewPager(binding.imageSliderViewPager)
+                },
+                {
+                    viewModel.deleteAllStationImages(it)
+                    playerImageList.removeAll(it)
+                    imageSliderAdapter.clearImageList(it)
+                    if (playerImageList.isEmpty()) binding.ivPlaceholder.visibility = View.VISIBLE
+                    binding.indicator.setViewPager(binding.imageSliderViewPager)
+                },
+                {
+                    showCustomSnackbar(requireContext(), binding.root, it)
+                },
+            )
         bottomSheet.setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialogTheme)
         bottomSheet.show(requireActivity().supportFragmentManager, "EditPhoto")
     }

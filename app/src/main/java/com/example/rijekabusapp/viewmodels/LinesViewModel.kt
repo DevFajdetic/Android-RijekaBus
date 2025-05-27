@@ -13,19 +13,21 @@ import kotlinx.coroutines.launch
 
 class LinesViewModel(application: Application) : AndroidViewModel(application) {
     val linesList = MutableLiveData<ArrayList<Line>>()
+    val fullLinesList = MutableLiveData<ArrayList<Line>>()
     private val _favoriteLines = MutableLiveData<ArrayList<Line>>()
     val favoriteLines: LiveData<ArrayList<Line>> = _favoriteLines
-    val comparator = Comparator<Line> { line1, line2 ->
-        val isStr1Numeric = line1.lineNumber.length == 1 && line1.lineNumber[0].isDigit()
-        val isStr2Numeric = line2.lineNumber.length == 1 && line2.lineNumber[0].isDigit()
+    val comparator =
+        Comparator<Line> { line1, line2 ->
+            val isStr1Numeric = line1.lineNumber.length == 1 && line1.lineNumber[0].isDigit()
+            val isStr2Numeric = line2.lineNumber.length == 1 && line2.lineNumber[0].isDigit()
 
-        when {
-            isStr1Numeric && isStr2Numeric -> line1.lineNumber.compareTo(line2.lineNumber)
-            isStr1Numeric -> -1
-            isStr2Numeric -> 1
-            else -> line1.lineNumber.compareTo(line2.lineNumber)
+            when {
+                isStr1Numeric && isStr2Numeric -> line1.lineNumber.compareTo(line2.lineNumber)
+                isStr1Numeric -> -1
+                isStr2Numeric -> 1
+                else -> line1.lineNumber.compareTo(line2.lineNumber)
+            }
         }
-    }
 
     private val repository: AutotrolejRepository
 
@@ -37,16 +39,22 @@ class LinesViewModel(application: Application) : AndroidViewModel(application) {
     fun getLinesList() {
         viewModelScope.launch {
             val response = Network().getBusService().getAllLines()
-            val uniqueLines = response.distinctBy {
+            fullLinesList.value = ArrayList(response)
+            linesList.value = getDistinctedBusLines(response)
+        }
+    }
+
+    fun getDistinctedBusLines(lines: List<Line>): ArrayList<Line> {
+        val uniqueLines =
+            lines.distinctBy {
                 it.name + it.lineNumber + it.direction + it.linVarId
             }.sortedWith(comparator)
-            linesList.value = ArrayList(uniqueLines)
-        }
+        return ArrayList(uniqueLines)
     }
 
     fun insertFavoriteLine(line: Line) {
         repository.insertFavoriteLine(
-            line.convertToFavoriteLine(repository.countFavoriteLines() + 1)
+            line.convertToFavoriteLine(repository.countFavoriteLines() + 1),
         )
     }
 

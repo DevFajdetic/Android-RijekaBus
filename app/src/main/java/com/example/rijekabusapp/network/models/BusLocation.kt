@@ -14,5 +14,5 @@ data class BusLocation(
     @SerializedName("StanicaId")
     val nextStationId: Int,
     @SerializedName("Vrijeme")
-    val provideTime: String
+    val provideTime: String,
 )

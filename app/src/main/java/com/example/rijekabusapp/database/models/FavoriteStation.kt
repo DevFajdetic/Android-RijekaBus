@@ -13,16 +13,15 @@ data class FavoriteStation(
     val longName: String,
     @PrimaryKey
     val id: Int,
-    var position: Int?
+    var position: Int?,
 ) : Serializable {
-
     fun convertToStation(): Station {
         return Station(
             this.gpsX,
             this.gpsY,
             this.shortName,
             this.longName,
-            this.id
+            this.id,
         )
     }
 }

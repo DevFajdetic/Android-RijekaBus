@@ -11,18 +11,18 @@ class MapViewInScroll : MapView {
 
     constructor(
         context: Context,
-        attributeSet: AttributeSet
+        attributeSet: AttributeSet,
     ) : super(context, attributeSet)
 
     constructor(
         context: Context,
         attributeSet: AttributeSet,
-        i: Int
+        i: Int,
     ) : super(context, attributeSet, i)
 
     constructor(
         context: Context,
-        googleMapOptions: GoogleMapOptions
+        googleMapOptions: GoogleMapOptions,
     ) : super(context, googleMapOptions)
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {

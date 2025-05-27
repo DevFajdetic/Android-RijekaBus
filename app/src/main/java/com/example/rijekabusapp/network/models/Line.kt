@@ -18,7 +18,7 @@ data class Line(
     @SerializedName("StanicaId")
     val currentStationId: Int,
     @SerializedName("Varijanta")
-    val variant: String
+    val variant: String,
 ) : Serializable {
     fun convertToFavoriteLine(position: Int?): FavoriteLine {
         return FavoriteLine(
@@ -29,7 +29,7 @@ data class Line(
             this.direction,
             this.currentStationId,
             this.variant,
-            position
+            position,
         )
     }
 }

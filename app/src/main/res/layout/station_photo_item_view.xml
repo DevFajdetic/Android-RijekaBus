@@ -53,14 +53,15 @@
 
         <TextView
             android:id="@+id/tvImageTitle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="136dp"
+            android:layout_marginStart="10dp"
             android:layout_marginEnd="16dp"
             android:theme="@style/BodyMediumNLv1Left"
+            app:layout_constraintStart_toEndOf="@id/imageContainer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="LeBron James in game" />
+            tools:text="Some station name" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

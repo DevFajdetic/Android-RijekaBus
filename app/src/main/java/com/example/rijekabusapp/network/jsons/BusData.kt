@@ -1,7 +1,8 @@
 package com.example.rijekabusapp.network.jsons
 
 object BusData {
-    val buseviJson = """
+    val buseviJson =
+        """
         [
             {
                 "Id": 1,
@@ -2664,5 +2665,5 @@ object BusData {
                 "Varijanta": "20"
             }
         ]
-    """.trimIndent()
+        """.trimIndent()
 }

@@ -10,6 +10,6 @@ interface WeatherService {
         @Query("q") location: String,
         @Query("appid") apiKey: String,
         @Query("units") units: String,
-        @Query("lang") lang: String
+        @Query("lang") lang: String,
     ): WeatherResponse
 }

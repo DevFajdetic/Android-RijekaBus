@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="40dp"
-    android:background="@color/white"
     android:orientation="vertical"
     android:theme="@style/Theme.RijekaBusApp"
     android:weightSum="1">
@@ -29,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:text="Settings"
+            android:text="@string/settings"
             android:textAppearance="@style/HeadlineMediumNLv1Center"
             android:textColor="@color/white" />
 
@@ -52,14 +51,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/BodyLargeNLv1Left"
-                android:text="Dark theme" />
+                android:text="@string/string_dark_theme" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilLang"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Select Language"
+                android:hint="@string/string_language_select"
                 android:textColorHint="@color/color_primary"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidth="2dp"
@@ -67,11 +66,12 @@
                 app:hintTextAppearance="@style/HeadlineSmallNLv2Left">
 
                 <AutoCompleteTextView
+                    android:labelFor="@id/tilLang"
                     android:id="@+id/actv_Languages"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:text="English" />
+                    android:text="@string/string_default_language" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Date Time Format"
+                android:hint="@string/date_time_format"
                 android:textColorHint="@color/color_primary"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidth="2dp"
@@ -164,7 +164,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Time format"
+                        android:text="@string/time_format"
                         android:textAllCaps="true"
                         android:textAppearance="@style/AssistiveNLv2Left"
                         android:textColor="@color/neutrals_n_lv_2" />
@@ -180,14 +180,14 @@
                             android:layout_height="wrap_content"
                             android:buttonTint="@color/color_primary"
                             android:checked="true"
-                            android:text="24 hour clock" />
+                            android:text="@string/_24_hour_clock" />
 
                         <RadioButton
                             android:id="@+id/hours12"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:buttonTint="@color/color_primary"
-                            android:text="12 hour clock" />
+                            android:text="@string/_12_hour_clock" />
 
                     </RadioGroup>
                 </LinearLayout>

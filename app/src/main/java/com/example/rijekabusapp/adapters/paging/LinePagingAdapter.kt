@@ -18,20 +18,25 @@ class LinePagingAdapter(
     private val favouriteLines: ArrayList<Line>?,
     diffCallback: DiffUtil.ItemCallback<Line>,
     private val insertCallback: (Line) -> Unit,
-    private val deleteCallback: (Line) -> Unit
+    private val deleteCallback: (Line) -> Unit,
 ) :
     PagingDataAdapter<Line, LinePagingAdapter.LineViewHolder>(diffCallback) {
-
     class LineViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = BusLineItemViewBinding.bind(itemView)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LineViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): LineViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.bus_line_item_view, parent, false)
         return LineViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: LineViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: LineViewHolder,
+        position: Int,
+    ) {
         val line = getItem(position)
 
         holder.binding.ivLineNumber.text = line?.lineNumber?.get(0).toString()

@@ -25,7 +25,6 @@ import com.example.rijekabusapp.viewmodels.ScheduleViewModel
 import com.example.rijekabusapp.viewmodels.factory.ScheduleViewModelFactory
 
 class LineScheduleFragment(private val s: String) : Fragment() {
-
     private lateinit var binding: FragmentLineScheduleBinding
     private lateinit var scheduleViewModel: ScheduleViewModel
     private val busLocViewModel: BusLocationViewModel by activityViewModels()
@@ -33,15 +32,16 @@ class LineScheduleFragment(private val s: String) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentLineScheduleBinding.inflate(inflater, container, false)
         val lineItem = arguments?.getSerializable(EXTRA_LINE) as? Line
         val stationItem = arguments?.getSerializable(EXTRA_STATION) as? Station
 
-        scheduleViewModel = ViewModelProvider(
-            this, ScheduleViewModelFactory(requireContext().applicationContext as Application)
-        )[ScheduleViewModel::class.java]
+        scheduleViewModel =
+            ViewModelProvider(
+                this, ScheduleViewModelFactory(requireContext().applicationContext as Application),
+            )[ScheduleViewModel::class.java]
         if (lineItem != null) {
             fillScheduleLine(lineItem)
         } else if (stationItem != null) {
@@ -55,12 +55,13 @@ class LineScheduleFragment(private val s: String) : Fragment() {
         val minItemWidth = resources.getDimensionPixelSize(R.dimen.schedule_item_min_width)
         val spanCount = calculateSpanCount(requireContext(), minItemWidth)
 
-        binding.rvSchedule.layoutManager = GridLayoutManager(
-            requireContext(),
-            spanCount,
-            GridLayoutManager.VERTICAL,
-            false
-        )
+        binding.rvSchedule.layoutManager =
+            GridLayoutManager(
+                requireContext(),
+                spanCount,
+                GridLayoutManager.VERTICAL,
+                false,
+            )
 
         binding.rvSchedule.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
             updateSpanCount(requireContext())
@@ -72,23 +73,25 @@ class LineScheduleFragment(private val s: String) : Fragment() {
         binding.progressBar.visibility = ProgressBar.VISIBLE
         scheduleViewModel.scheduleList.observe(viewLifecycleOwner) { scheduleList ->
             busLocViewModel.busLocationsLiveData.observe(viewLifecycleOwner) { locationsList ->
-                val filteredList = scheduleList.filter {
-                    it.variantLineName == lineItem.name &&
-                        it.lineNumber == lineItem.lineNumber &&
-                        it.direction == lineItem.direction &&
-                        it.linVarId == lineItem.linVarId &&
-                        it.variant == lineItem.variant &&
-                        it.stationOrdial == 1
-                }.sortedBy { it.startTime }
-                val adapter = GridAdapter(
-                    requireContext(),
-                    filteredList,
-                    filteredList.filter { schedule ->
-                        locationsList.any { location ->
-                            location.startId.toString() == schedule.startId
-                        }
-                    }
-                )
+                val filteredList =
+                    scheduleList.filter {
+                        it.variantLineName == lineItem.name &&
+                            it.lineNumber == lineItem.lineNumber &&
+                            it.direction == lineItem.direction &&
+                            it.linVarId == lineItem.linVarId &&
+                            it.variant == lineItem.variant &&
+                            it.stationOrdial == 1
+                    }.sortedBy { it.startTime }
+                val adapter =
+                    GridAdapter(
+                        requireContext(),
+                        filteredList,
+                        filteredList.filter { schedule ->
+                            locationsList.any { location ->
+                                location.startId.toString() == schedule.startId
+                            }
+                        },
+                    )
 
                 binding.rvSchedule.adapter = adapter
                 binding.progressBar.visibility = ProgressBar.GONE
@@ -107,12 +110,13 @@ class LineScheduleFragment(private val s: String) : Fragment() {
         val minItemWidth = resources.getDimensionPixelSize(R.dimen.schedule_item_min_width)
         val spanCount = calculateSpanCount(requireContext(), minItemWidth)
 
-        binding.rvSchedule.layoutManager = GridLayoutManager(
-            requireContext(),
-            spanCount,
-            GridLayoutManager.VERTICAL,
-            false
-        )
+        binding.rvSchedule.layoutManager =
+            GridLayoutManager(
+                requireContext(),
+                spanCount,
+                GridLayoutManager.VERTICAL,
+                false,
+            )
 
         binding.rvSchedule.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
             updateSpanCount(requireContext())
@@ -124,18 +128,20 @@ class LineScheduleFragment(private val s: String) : Fragment() {
         binding.progressBar.visibility = ProgressBar.VISIBLE
         scheduleViewModel.scheduleList.observe(viewLifecycleOwner) { scheduleList ->
             busLocViewModel.busLocationsLiveData.observe(viewLifecycleOwner) { locationsList ->
-                val filteredList = scheduleList.filter {
-                    it.stationId == stationItem.id
-                }.sortedBy { it.startTime }
-                val adapter = GridAdapter(
-                    requireContext(),
-                    filteredList,
-                    filteredList.filter { schedule ->
-                        locationsList.any { location ->
-                            location.startId.toString() == schedule.startId
-                        }
-                    }
-                )
+                val filteredList =
+                    scheduleList.filter {
+                        it.stationId == stationItem.id
+                    }.sortedBy { it.startTime }
+                val adapter =
+                    GridAdapter(
+                        requireContext(),
+                        filteredList,
+                        filteredList.filter { schedule ->
+                            locationsList.any { location ->
+                                location.startId.toString() == schedule.startId
+                            }
+                        },
+                    )
 
                 binding.rvSchedule.adapter = adapter
                 binding.progressBar.visibility = ProgressBar.GONE
@@ -150,9 +156,7 @@ class LineScheduleFragment(private val s: String) : Fragment() {
         }
     }
 
-    private fun updateSpanCount(
-        context: Context,
-    ) {
+    private fun updateSpanCount(context: Context) {
         val gridLayoutManager = binding.rvSchedule.layoutManager as GridLayoutManager
         val minItemWidth = resources.getDimensionPixelSize(R.dimen.schedule_item_min_width)
         val newSpanCount = calculateSpanCount(context, minItemWidth)
@@ -163,7 +167,10 @@ class LineScheduleFragment(private val s: String) : Fragment() {
         }
     }
 
-    private fun calculateSpanCount(context: Context, minItemWidth: Int): Int {
+    private fun calculateSpanCount(
+        context: Context,
+        minItemWidth: Int,
+    ): Int {
         val displayMetrics = context.resources.displayMetrics
         val screenWidth = displayMetrics.widthPixels
         return screenWidth / minItemWidth

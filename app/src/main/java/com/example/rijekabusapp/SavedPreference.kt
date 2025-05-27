@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 
 object SavedPreference {
-
     private const val EMAIL = "email"
     private const val USERNAME = "username"
     private const val PICTURE_URL = "picture_url"
@@ -16,59 +15,93 @@ object SavedPreference {
         return ctx?.let { PreferenceManager.getDefaultSharedPreferences(it) }
     }
 
-    private fun editor(context: Context, const: String, string: String) {
+    private fun editor(
+        context: Context,
+        const: String,
+        string: String,
+    ) {
         getSharedPreference(
-            context
+            context,
         )?.edit()?.putString(const, string)?.apply()
     }
 
-    fun getEmail(context: Context) = getSharedPreference(
-        context
-    )?.getString(EMAIL, "")
+    fun getEmail(context: Context) =
+        getSharedPreference(
+            context,
+        )?.getString(EMAIL, "")
 
-    fun setEmail(context: Context, email: String) {
+    fun setEmail(
+        context: Context,
+        email: String,
+    ) {
         editor(
-            context, EMAIL, email
+            context,
+            EMAIL,
+            email,
         )
     }
 
-    fun setUsername(context: Context, username: String) {
+    fun setUsername(
+        context: Context,
+        username: String,
+    ) {
         editor(
-            context, USERNAME, username
+            context,
+            USERNAME,
+            username,
         )
     }
 
-    fun getUsername(context: Context) = getSharedPreference(
-        context
-    )?.getString(USERNAME, "")
+    fun getUsername(context: Context) =
+        getSharedPreference(
+            context,
+        )?.getString(USERNAME, "")
 
-    fun getPictureUrl(context: Context) = getSharedPreference(
-        context
-    )?.getString(PICTURE_URL, "")
+    fun getPictureUrl(context: Context) =
+        getSharedPreference(
+            context,
+        )?.getString(PICTURE_URL, "")
 
-    fun setPictureUrl(context: Context, pictureUrl: String) {
+    fun setPictureUrl(
+        context: Context,
+        pictureUrl: String,
+    ) {
         editor(
-            context, PICTURE_URL, pictureUrl
+            context,
+            PICTURE_URL,
+            pictureUrl,
         )
     }
 
-    fun getGivenName(context: Context) = getSharedPreference(
-        context
-    )?.getString(GIVEN_NAME, "")
+    fun getGivenName(context: Context) =
+        getSharedPreference(
+            context,
+        )?.getString(GIVEN_NAME, "")
 
-    fun setGivenName(context: Context, givenName: String) {
+    fun setGivenName(
+        context: Context,
+        givenName: String,
+    ) {
         editor(
-            context, GIVEN_NAME, givenName
+            context,
+            GIVEN_NAME,
+            givenName,
         )
     }
 
-    fun getFamilyName(context: Context) = getSharedPreference(
-        context
-    )?.getString(FAMILY_NAME, "")
+    fun getFamilyName(context: Context) =
+        getSharedPreference(
+            context,
+        )?.getString(FAMILY_NAME, "")
 
-    fun setFamilyName(context: Context, familyName: String) {
+    fun setFamilyName(
+        context: Context,
+        familyName: String,
+    ) {
         editor(
-            context, FAMILY_NAME, familyName
+            context,
+            FAMILY_NAME,
+            familyName,
         )
     }
 

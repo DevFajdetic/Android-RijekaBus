@@ -13,18 +13,24 @@ class FavoriteRouteRecyclerAdapter(
     private val context: Context,
     private val favoritesList: ArrayList<FavoriteRoute>,
 ) : RecyclerView.Adapter<FavoriteRouteRecyclerAdapter.FavoriteRouteViewHolder>() {
-
     class FavoriteRouteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = RouteItemViewBinding.bind(view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteRouteViewHolder {
-        val view = LayoutInflater.from(context)
-            .inflate(R.layout.route_item_view, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): FavoriteRouteViewHolder {
+        val view =
+            LayoutInflater.from(context)
+                .inflate(R.layout.route_item_view, parent, false)
         return FavoriteRouteViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: FavoriteRouteViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: FavoriteRouteViewHolder,
+        position: Int,
+    ) {
         val item = favoritesList[position]
 
         holder.binding.tvMatchDate.text = item.date

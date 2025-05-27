@@ -20,20 +20,26 @@ class StationsScheduleRecyclerAdapter(
     private val stationScheduleList: List<Schedule>,
     private val stations: List<Station>,
 ) : RecyclerView.Adapter<StationsScheduleRecyclerAdapter.StationViewHolder>() {
-
     class StationViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = BusStationItemViewBinding.bind(view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StationViewHolder {
-        val view = LayoutInflater
-            .from(context)
-            .inflate(R.layout.bus_station_item_view, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): StationViewHolder {
+        val view =
+            LayoutInflater
+                .from(context)
+                .inflate(R.layout.bus_station_item_view, parent, false)
         return StationViewHolder(view)
     }
 
     @SuppressLint("SimpleDateFormat")
-    override fun onBindViewHolder(holder: StationViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: StationViewHolder,
+        position: Int,
+    ) {
         val item = stationScheduleList[position]
 
         holder.binding.btnFavorite.visibility = View.GONE
@@ -42,9 +48,10 @@ class StationsScheduleRecyclerAdapter(
         holder.binding.ivStationImage.load(R.drawable.ic_bus_stop_two)
 
         holder.binding.root.setOnClickListener {
-            val intent = Intent(context, ScheduleActivity::class.java).apply {
-                putExtra(EXTRA_STATION, stations.first { it.id == item.stationId })
-            }
+            val intent =
+                Intent(context, ScheduleActivity::class.java).apply {
+                    putExtra(EXTRA_STATION, stations.first { it.id == item.stationId })
+                }
             context.startActivity(intent)
         }
     }

@@ -14,7 +14,7 @@ data class Station(
     @SerializedName("Naziv")
     val longName: String,
     @SerializedName("StanicaId")
-    val id: Int
+    val id: Int,
 ) : Serializable {
     fun convertToFavoriteStation(position: Int?): FavoriteStation {
         return FavoriteStation(
@@ -23,7 +23,7 @@ data class Station(
             this.shortName,
             this.longName,
             this.id,
-            position
+            position,
         )
     }
 }

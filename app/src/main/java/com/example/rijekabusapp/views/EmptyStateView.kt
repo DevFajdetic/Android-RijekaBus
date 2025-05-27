@@ -7,9 +7,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.rijekabusapp.databinding.EmptyStateViewBinding
 
 class EmptyStateView(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
-
-    private val binding = EmptyStateViewBinding
-        .inflate(LayoutInflater.from(context), this, true)
+    private val binding =
+        EmptyStateViewBinding
+            .inflate(LayoutInflater.from(context), this, true)
 
     fun setupEmptyStateView(description: String) {
         binding.tvDescription.text = description

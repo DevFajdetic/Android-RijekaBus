@@ -24,5 +24,5 @@ data class Leg(
     @SerializedName("traffic_speed_entry")
     val trafficSpeedEntry: List<Any>,
     @SerializedName("via_waypoint")
-    val viaWaypoint: List<Any>
+    val viaWaypoint: List<Any>,
 )

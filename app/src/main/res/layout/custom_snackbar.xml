@@ -14,7 +14,7 @@
         android:layout_width="0dp"
         android:layout_weight="0.9"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="@color/surface_surface_0"
         android:textAppearance="@style/HeadlineMediumNLv1Left"
         android:text="Snackbar Text" />
 

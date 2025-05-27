@@ -6,5 +6,5 @@ data class EndLocation(
     @SerializedName("lat")
     val lat: Double,
     @SerializedName("lng")
-    val lng: Double
+    val lng: Double,
 )

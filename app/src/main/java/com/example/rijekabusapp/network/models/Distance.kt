@@ -6,5 +6,5 @@ data class Distance(
     @SerializedName("text")
     val text: String,
     @SerializedName("value")
-    val value: Int
+    val value: Int,
 )

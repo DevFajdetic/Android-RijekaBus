@@ -13,7 +13,6 @@ import com.example.rijekabusapp.viewmodels.ScheduleViewModel
 import com.google.android.material.tabs.TabLayout
 
 class LineActivity : AppCompatActivity() {
-
     lateinit var scheduleViewModel: ScheduleViewModel
     private lateinit var binding: ActivityLineBinding
     private lateinit var lineItem: Line
@@ -47,25 +46,29 @@ class LineActivity : AppCompatActivity() {
         val pagerAdapter = ViewPagerAdapter(this, fragments, lineItem)
         binding.viewPager.adapter = pagerAdapter
 
-        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(position))
-            }
-        })
+        binding.viewPager.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    binding.tabLayout.selectTab(binding.tabLayout.getTabAt(position))
+                }
+            },
+        )
 
-        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                binding.viewPager.setCurrentItem(tab.position, true)
-            }
+        binding.tabLayout.addOnTabSelectedListener(
+            object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    binding.viewPager.setCurrentItem(tab.position, true)
+                }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-                // No action needed
-            }
+                override fun onTabUnselected(tab: TabLayout.Tab) {
+                    // No action needed
+                }
 
-            override fun onTabReselected(tab: TabLayout.Tab) {
-                // No action needed
-            }
-        })
+                override fun onTabReselected(tab: TabLayout.Tab) {
+                    // No action needed
+                }
+            },
+        )
     }
 }

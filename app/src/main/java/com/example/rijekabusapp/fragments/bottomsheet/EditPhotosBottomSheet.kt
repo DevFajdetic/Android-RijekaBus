@@ -23,9 +23,8 @@ class EditPhotosBottomSheet(
     private val deleteCallback: ((StationImage) -> Unit)?,
     private val updateSliderCallback: ((ArrayList<StationImage>) -> Unit),
     private val deleteAllCallback: ((ArrayList<StationImage>) -> Unit),
-    private val showErrorMessageCallback: ((String) -> Unit)
+    private val showErrorMessageCallback: ((String) -> Unit),
 ) : BottomSheetDialogFragment() {
-
     private lateinit var binding: BottomsheetEditPhotosBinding
     private val adapter by lazy { StationPhotoRecyclerAdapter(requireContext(), arrayListOf()) }
 
@@ -33,7 +32,7 @@ class EditPhotosBottomSheet(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = BottomsheetEditPhotosBinding.inflate(inflater, container, false)
 
@@ -69,12 +68,13 @@ class EditPhotosBottomSheet(
     }
 
     private fun showCustomDialog(title: String) {
-        val dialog = Dialog(requireContext()).apply {
-            this.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            this.setCancelable(true)
-            this.setContentView(R.layout.custom_dialog)
-            this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        }
+        val dialog =
+            Dialog(requireContext()).apply {
+                this.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                this.setCancelable(true)
+                this.setContentView(R.layout.custom_dialog)
+                this.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            }
 
         val tvTitle = dialog.findViewById<TextView>(R.id.tvDialogTitle)
         val btnOk = dialog.findViewById<Button>(R.id.btnDialogOk)

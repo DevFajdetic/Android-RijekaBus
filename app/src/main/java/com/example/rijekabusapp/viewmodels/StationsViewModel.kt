@@ -31,7 +31,7 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
 
     fun insertFavoriteStation(station: Station) {
         repository.insertFavoriteStation(
-            station.convertToFavoriteStation(repository.countFavoriteStations() + 1)
+            station.convertToFavoriteStation(repository.countFavoriteStations() + 1),
         )
     }
 

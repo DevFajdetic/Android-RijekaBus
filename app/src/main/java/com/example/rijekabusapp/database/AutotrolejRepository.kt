@@ -5,7 +5,6 @@ import com.example.rijekabusapp.database.models.FavoriteRoute
 import com.example.rijekabusapp.database.models.FavoriteStation
 
 class AutotrolejRepository(private val autotrolejDao: AutotrolejDao) {
-
     // Favorite Line
     fun getFavoriteLines(): List<FavoriteLine> {
         return autotrolejDao.getFavoriteLines()

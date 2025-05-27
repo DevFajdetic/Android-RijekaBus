@@ -11,24 +11,19 @@
     <color name="some">#EC7D2B</color>
     <!-- CUSTOM APP COLORS -->
     <color name="color_primary">#015c92</color>
-    <color name="color_primary_dark">#001544</color>
     <color name="color_primary_variant">#016FAD</color>
-    <color name="color_primary_variant_dark">#002444</color>
     <color name="color_secondary">#2d82b5</color>
-    <color name="color_secondary_dark">#0F285A</color>
     <color name="color_secondary_variant">#2970a1</color>
     <color name="color_tertiary">#53a7d8</color>
-    <color name="color_tertiary_dark">#1B356A</color>
     <color name="color_quaternary">#88cdf6</color>
-    <color name="color_quaternary_dark">#375C83</color>
     <color name="color_quinary">#bce6ff</color>
-    <color name="color_quinary_dark">#224763</color>
     <color name="color_primary_light">#556cb9</color>
     <color name="color_primary_hightlight">#261d4289</color>
     <color name="color_secondary_light">#ff8784</color>
     <color name="color_secondary_highlight">#19ff604b</color>
     <color name="on_color_on_color_primary">#ffffff</color>
-    <color name="dark_white">#BABABA</color>
+    <color name="dark_white">#E0E0E0</color>
+    <color name="drawer_menu_title_color">#333333</color>
     <color name="neutrals_n_lv_1">#1c1f22</color>
     <color name="neutrals_n_lv_2">#801c1f22</color>
     <color name="neutrals_n_lv_3">#331c1f22</color>
@@ -86,6 +81,75 @@
     <color name="clean_blue">#2573FA</color>
     <color name="fade_blue">#82A0AF</color>
     <color name="favorites_background">#0B9CDB</color>
-    <color name="pink_alpha">#7EFF8784</color>
+    <color name="pink_alpha">#FF88B7</color>
     <color name="sub_green">#0DE310</color>
+    <!-- Dark Theme Colors -->
+    <color name="surface_dark">#121212</color>
+    <color name="card_background_dark">#1E1E1E</color>
+    <color name="elevation_dark_1">#1F1F1F</color>
+    <color name="elevation_dark_2">#2D2D2D</color>
+    <color name="elevation_dark_3">#3D3D3D</color>
+    <color name="overlay_dark">#52000000</color>
+
+    <!-- Updated Dark Theme Brand Colors -->
+    <color name="color_primary_dark">#1E88E5</color>
+    <color name="color_primary_variant_dark">#1565C0</color>
+    <color name="color_secondary_dark">#42A5F5</color>
+    <color name="color_tertiary_dark">#64B5F6</color>
+    <color name="color_quaternary_dark">#90CAF9</color>
+    <color name="color_quinary_dark">#BBDEFB</color>
+
+    <!-- Dark Theme Text Colors -->
+    <color name="text_primary_dark">#FFFFFF</color>
+    <color name="text_secondary_dark">#B3FFFFFF</color>
+    <color name="text_disabled_dark">#80FFFFFF</color>
+
+    <!-- Dark Theme Surface Colors -->
+    <color name="surface_dark_primary">#121212</color>
+    <color name="surface_dark_secondary">#1E1E1E</color>
+    <color name="surface_dark_tertiary">#2D2D2D</color>
+
+    <!-- Dark Theme Error and Success Colors -->
+    <color name="error_dark">#CF6679</color>
+    <color name="success_dark">#81C784</color>
+
+    <!-- Dark Theme Accent Colors -->
+    <color name="accent_blue_dark">#64B5F6</color>
+    <color name="accent_green_dark">#81C784</color>
+    <color name="accent_orange_dark">#FFB74D</color>
+    <color name="accent_red_dark">#E57373</color>
+    <color name="accent_purple_dark">#B39DDB</color>
+
+    <!-- Dark Theme Status Colors -->
+    <color name="status_error_dark">#CF6679</color>
+    <color name="status_success_dark">#81C784</color>
+    <color name="status_warning_dark">#FFB74D</color>
+    <color name="status_info_dark">#64B5F6</color>
+
+    <!-- Dark Theme Divider Colors -->
+    <color name="divider_dark">#1FFFFFFF</color>
+    <color name="divider_dark_strong">#33FFFFFF</color>
+
+    <!-- Dark Theme Overlay Colors -->
+    <color name="overlay_dark_light">#1A000000</color>
+    <color name="overlay_dark_medium">#33000000</color>
+    <color name="overlay_dark_strong">#52000000</color>
+
+    <!-- Dark Theme Card Colors -->
+    <color name="card_background_dark_primary">#1E1E1E</color>
+    <color name="card_background_dark_secondary">#2D2D2D</color>
+    <color name="card_background_dark_tertiary">#3D3D3D</color>
+
+    <!-- Dark Theme Button Colors -->
+    <color name="button_primary_dark">#1E88E5</color>
+    <color name="button_secondary_dark">#42A5F5</color>
+    <color name="button_disabled_dark">#80FFFFFF</color>
+
+    <!-- Dark Theme Icon Colors -->
+    <color name="icon_primary_dark">#FFFFFF</color>
+    <color name="icon_secondary_dark">#B3FFFFFF</color>
+    <color name="icon_disabled_dark">#80FFFFFF</color>
+    <color name="login_background_color">#F1E7E7</color>
+    <color name="login_welcome_text_color">#4e4e4e</color>
+    <color name="background_custom_dialog_stroke">#EDEDED</color>
 </resources>

@@ -1,11 +1,16 @@
 package com.example.rijekabusapp.fragments
 
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Button
+import android.widget.ProgressBar
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -16,15 +21,14 @@ import com.example.rijekabusapp.databinding.FragmentLinesBinding
 import com.example.rijekabusapp.helpers.isOnline
 import com.example.rijekabusapp.helpers.showCustomDialog
 import com.example.rijekabusapp.network.models.Line
+import com.example.rijekabusapp.network.models.Station
 import com.example.rijekabusapp.viewmodels.LinesViewModel
+import com.example.rijekabusapp.viewmodels.StationsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.chip.Chip
-import com.google.android.material.switchmaterial.SwitchMaterial
-import com.google.android.material.textfield.TextInputLayout
 
 class LinesFragment : Fragment() {
-
     private val viewModel: LinesViewModel by activityViewModels()
+    private val stationsViewModel: StationsViewModel by activityViewModels()
     private lateinit var binding: FragmentLinesBinding
     private var selectedDirection: String = ""
     private var varijanta: String = "40"
@@ -32,9 +36,8 @@ class LinesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentLinesBinding.inflate(inflater, container, false)
         binding.rvLines.layoutManager = LinearLayoutManager(requireContext())
 
@@ -44,72 +47,96 @@ class LinesFragment : Fragment() {
         return binding.root
     }
 
+    private fun filterBusesByStation(stationId: Int) {
+        viewModel.fullLinesList.observe(viewLifecycleOwner) { lines ->
+            val filteredLines =
+                lines.filter { line ->
+                    line.currentStationId == stationId
+                }
+            val adapter =
+                LineRecyclerAdapter(
+                    requireContext(),
+                    viewModel.getDistinctedBusLines(filteredLines),
+                    viewModel.favoriteLines.value,
+                    false,
+                    insertFavoriteLine,
+                    deleteFavoriteLine,
+                )
+            binding.rvLines.adapter = adapter
+        }
+    }
+
     private fun setupFilters() {
         binding.filter.setOnClickListener {
             val bsDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
-            val bsView = LayoutInflater.from(binding.root.context)
-                .inflate(
-                    R.layout.bottom_sheet_filter,
-                    binding.root.findViewById(R.id.bs_container)
+            val bsView =
+                LayoutInflater.from(binding.root.context)
+                    .inflate(R.layout.bottom_sheet_filter, binding.root.findViewById(R.id.bs_container))
+            val atvNames = bsView.findViewById<AutoCompleteTextView>(R.id.atv_names)
+            val stationAdapter =
+                ArrayAdapter<String>(
+                    requireContext(),
+                    android.R.layout.simple_dropdown_item_1line,
+                    mutableListOf(),
+                )
+            atvNames.setAdapter(stationAdapter)
+
+            stationsViewModel.getStationsList()
+            stationsViewModel.stationsList.observe(viewLifecycleOwner) { stations ->
+                val filteredStations = mutableListOf<Station>()
+                atvNames.addTextChangedListener(
+                    object : TextWatcher {
+                        override fun beforeTextChanged(
+                            s: CharSequence?,
+                            start: Int,
+                            count: Int,
+                            after: Int,
+                        ) {}
+
+                        override fun onTextChanged(
+                            s: CharSequence?,
+                            start: Int,
+                            before: Int,
+                            count: Int,
+                        ) {
+                            if ((s?.length ?: 0) >= 3) {
+                                val query = s.toString().lowercase()
+                                filteredStations.clear()
+                                filteredStations.addAll(
+                                    stations.filter {
+                                        it.shortName.lowercase()
+                                            .contains(query)
+                                    },
+                                )
+                                val filteredStationNames = filteredStations.map { it.shortName }
+                                stationAdapter.clear()
+                                stationAdapter.addAll(filteredStationNames)
+                                stationAdapter.notifyDataSetChanged()
+                            } else {
+                                stationAdapter.clear()
+                                stationAdapter.notifyDataSetChanged()
+                            }
+                        }
+
+                        override fun afterTextChanged(s: Editable?) {}
+                    },
                 )
 
-            bsView.findViewById<Button>(R.id.b_apply).setOnClickListener {
-                if (bsView.findViewById<Chip>(R.id.c_gradski).isChecked ||
-                    bsView.findViewById<Chip>(R.id.c_gradski).isSelected ||
-                    bsView.findViewById<Chip>(R.id.c_gradski).isActivated
-                ) {
-                    varijanta = "0"
-                    val cg = Chip(
-                        requireContext(),
-                        null,
-                        com.google.android.material.R.style.Widget_MaterialComponents_Chip_Filter
-                    )
-                    cg.isSelected = true
-                    cg.isActivated = true
-                    cg.isChecked = true
-                    cg.setOnClickListener {
-                        cg.visibility = View.GONE
+                atvNames.setOnItemClickListener { _, _, position, _ ->
+                    val selectedStation = filteredStations[position]
+                    selectedStation?.let { station ->
+                        filterBusesByStation(station.id)
+                        bsDialog.dismiss()
                     }
-                    cg.text = "City Bus"
-                    val layoutParams = ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT
-                    )
-                    cg.layoutParams = layoutParams
-                    Log.d("bla", "ajdee")
-                    binding.cgFilters.addView(cg)
-                } else if (bsView.findViewById<Chip>(R.id.c_prigradski).isSelected) {
-                    varijanta = "40"
-                    val cg = Chip(
-                        requireContext(),
-                        null,
-                        com.google.android.material.R.style.Widget_MaterialComponents_Chip_Filter
-                    )
-                    cg.isSelected = true
-                    cg.isActivated = true
-                    cg.isChecked = true
-                    cg.setOnClickListener {
-                        cg.visibility = View.GONE
-                    }
-                    cg.text = "Suburan Bus"
-                    val layoutParams = ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT
-                    )
-                    cg.layoutParams = layoutParams
-                    Log.d("bla", "ajdee")
                 }
+            }
 
+            bsView.findViewById<Button>(R.id.b_apply).setOnClickListener {
                 bsDialog.dismiss()
             }
             bsView.findViewById<Button>(R.id.b_reset).setOnClickListener {
                 bsDialog.dismiss()
             }
-            bsView.findViewById<SwitchMaterial>(R.id.s_location).visibility = View.GONE
-            bsView.findViewById<TextView>(R.id.tv_filter_lines).text =
-                getString(R.string.filter_stations)
-            bsView.findViewById<TextInputLayout>(R.id.til_lines).hint = getString(R.string.stations)
-
             bsDialog.setContentView(bsView)
             bsDialog.show()
         }
@@ -117,34 +144,42 @@ class LinesFragment : Fragment() {
 
     private fun setupSpinner() {
         val directions = resources.getStringArray(R.array.SpinnerDirectionsItems)
-        val spinnerAdapter = ArrayAdapter(
-            requireContext(), R.layout.drop_down_toolbar_item, directions
-        )
+        val spinnerAdapter =
+            ArrayAdapter(
+                requireContext(),
+                R.layout.drop_down_toolbar_item,
+                directions,
+            )
 
         binding.spinner.adapter = spinnerAdapter
 
-        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                when (position) {
-                    0 -> selectedDirection = "" // All lines
-                    1 -> selectedDirection = "B"
-                    2 -> selectedDirection = "A"
+        binding.spinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    when (position) {
+                        0 -> selectedDirection = "" // All lines
+                        1 -> selectedDirection = "B"
+                        2 -> selectedDirection = "A"
+                    }
+                    getLinesList(selectedDirection)
                 }
-                getLinesList(selectedDirection)
-            }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
             }
-        }
     }
 
-    private var insertFavoriteLine = fun(it: Line) { viewModel.insertFavoriteLine(it) }
-    private var deleteFavoriteLine = fun(it: Line) { viewModel.deleteFavoriteLine(it) }
+    private var insertFavoriteLine = fun(it: Line) {
+        viewModel.insertFavoriteLine(it)
+    }
+    private var deleteFavoriteLine = fun(it: Line) {
+        viewModel.deleteFavoriteLine(it)
+    }
 
     fun getLinesList(direction: String) {
         viewModel.getFavoriteLines()
@@ -153,20 +188,23 @@ class LinesFragment : Fragment() {
         binding.progressBar.visibility = ProgressBar.VISIBLE
 
         viewModel.linesList.observe(viewLifecycleOwner) { lines ->
-            val adapter = LineRecyclerAdapter(
-                requireContext(),
-                (
+            val adapter =
+                LineRecyclerAdapter(
+                    requireContext(),
                     (
-                        if (direction != "") {
-                            lines.filter { it.direction == direction && varijanta >= it.variant }
-                        } else lines
+                        (
+                            if (direction != "") {
+                                lines.filter { it.direction == direction && varijanta >= it.variant }
+                            } else {
+                                lines
+                            }
                         ) as ArrayList<Line>
                     ),
-                favoriteLines,
-                false,
-                insertFavoriteLine,
-                deleteFavoriteLine
-            )
+                    favoriteLines,
+                    false,
+                    insertFavoriteLine,
+                    deleteFavoriteLine,
+                )
             binding.rvLines.adapter = adapter
             binding.progressBar.visibility = ProgressBar.GONE
 
@@ -181,15 +219,17 @@ class LinesFragment : Fragment() {
     }
 
     private fun setLinesSearchListener(adapter: LineRecyclerAdapter) {
-        binding.SVLines.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                return false
-            }
+        binding.SVLines.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    return false
+                }
 
-            override fun onQueryTextChange(text: String?): Boolean {
-                adapter.filter.filter(text)
-                return false
-            }
-        })
+                override fun onQueryTextChange(text: String?): Boolean {
+                    adapter.filter.filter(text)
+                    return false
+                }
+            },
+        )
     }
 }

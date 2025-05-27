@@ -28,17 +28,28 @@
 
         <View
             android:id="@+id/v_timeline"
-            android:layout_width="18dp"
+            android:layout_width="10dp"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="16dp"
-            android:background="@color/grey" />
-
+            android:background="@color/color_secondary" />
+        <!-- Image view couse we dynamically assign icons to it -->
         <ImageView
             android:id="@+id/iv_done"
-            android:layout_width="40dp"
+            android:layout_width="30dp"
+            android:translationZ="1dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/color_tertiary"
+            android:background="@drawable/background_rounded" />
+
+        <View
+            android:id="@+id/iv_space"
+            android:layout_width="30dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:background="@color/wave" />
+            android:backgroundTint="@color/surface_surface_0"
+            android:background="@drawable/background_rounded" />
+
     </FrameLayout>
 
     <TextView
@@ -63,7 +74,7 @@
         android:layout_marginEnd="16dp"
         android:layout_gravity="center"
         android:src="@drawable/ic_bell"
-        app:tint="@color/wave"
+        app:tint="@color/color_tertiary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_station_name"
         app:layout_constraintTop_toTopOf="parent"

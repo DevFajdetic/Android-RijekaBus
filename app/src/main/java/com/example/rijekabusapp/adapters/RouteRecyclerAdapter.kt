@@ -11,9 +11,8 @@ import com.example.rijekabusapp.network.models.Step
 
 class RouteRecyclerAdapter(
     private val ctx: Context,
-    private val directionSteps: ArrayList<Step>
+    private val directionSteps: ArrayList<Step>,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     @SuppressLint("NotifyDataSetChanged")
     fun setStepList(newList: ArrayList<Step>) {
         directionSteps.clear()
@@ -26,7 +25,10 @@ class RouteRecyclerAdapter(
         private const val VIEW_TYPE_BUS = 2
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             VIEW_TYPE_WALKING -> {
@@ -41,7 +43,10 @@ class RouteRecyclerAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+    ) {
         val directionStep = directionSteps[position]
         when (holder) {
             is WalkingViewHolder -> holder.bind(directionStep)
@@ -63,7 +68,6 @@ class RouteRecyclerAdapter(
 
     inner class WalkingViewHolder(private val binding: RouteWalkItemViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bind(directionStep: Step) {
             binding.distance.text = directionStep.distance.text
             binding.duration.text = directionStep.duration.text
@@ -72,7 +76,6 @@ class RouteRecyclerAdapter(
 
     inner class BusViewHolder(private val binding: RouteBusItemViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         @SuppressLint("SetTextI18n")
         fun bind(directionStep: Step) {
             binding.busTitle.text = directionStep.transitDetails?.line?.name ?: ""

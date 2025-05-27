@@ -8,5 +8,5 @@ data class BusLine(
     @SerializedName("short_name")
     val shortName: String,
     @SerializedName("line")
-    val agencies: List<BusAgency>
+    val agencies: List<BusAgency>,
 )

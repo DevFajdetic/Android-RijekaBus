@@ -16,14 +16,13 @@ import com.example.rijekabusapp.network.models.Station
 import com.example.rijekabusapp.viewmodels.ScheduleViewModel
 
 class StationLinesListFragment : Fragment() {
-
     private lateinit var binding: FragmentStationLinesListBinding
     private lateinit var scheduleViewModel: ScheduleViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentStationLinesListBinding.inflate(inflater, container, false)
         val stationItem = (arguments?.getSerializable(EXTRA_STATION) as? Station)!!
@@ -40,14 +39,16 @@ class StationLinesListFragment : Fragment() {
         binding.rvLines.layoutManager = LinearLayoutManager(requireContext())
 
         scheduleViewModel.scheduleList.observe(viewLifecycleOwner) { scheduleList ->
-            val filteredLines = scheduleList.filter { it.stationId == stationItem.id }
-                .distinctBy { it.lineNumber + it.direction }
+            val filteredLines =
+                scheduleList.filter { it.stationId == stationItem.id }
+                    .distinctBy { it.lineNumber + it.direction }
 
-            val adapter = StationLinesRecyclerAdapter(
-                requireContext(),
-                filteredLines,
-                false
-            )
+            val adapter =
+                StationLinesRecyclerAdapter(
+                    requireContext(),
+                    filteredLines,
+                    false,
+                )
             binding.rvLines.adapter = adapter
             binding.progressBar.visibility = ProgressBar.GONE
 

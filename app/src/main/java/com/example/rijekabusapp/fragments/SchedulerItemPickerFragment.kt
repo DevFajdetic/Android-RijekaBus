@@ -24,7 +24,6 @@ import com.example.rijekabusapp.viewmodels.StationsViewModel
 import kotlinx.coroutines.launch
 
 class SchedulerItemPickerFragment : Fragment(R.layout.fragment_explore) {
-
     private val viewModel: ScheduleViewModel by activityViewModels()
     private val stationsViewModel: StationsViewModel by activityViewModels()
 
@@ -33,7 +32,7 @@ class SchedulerItemPickerFragment : Fragment(R.layout.fragment_explore) {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentSchedulerItemPickerBinding.inflate(inflater, container, false)
 
@@ -48,27 +47,28 @@ class SchedulerItemPickerFragment : Fragment(R.layout.fragment_explore) {
             ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_spinner_dropdown_item,
-                spinnerItems
+                spinnerItems,
             )
         binding.spinner.adapter = spinnerAdapter
 
-        binding.spinner.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                when (position) {
-                    0 -> getBusLines()
-                    1 -> getStations()
+        binding.spinner.onItemSelectedListener =
+            object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    when (position) {
+                        0 -> getBusLines()
+                        1 -> getStations()
+                    }
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
                 }
             }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-        }
 
         return binding.root
     }
@@ -78,15 +78,17 @@ class SchedulerItemPickerFragment : Fragment(R.layout.fragment_explore) {
         binding.tvAll.text = getString(R.string.all_bus_lines_rijeka)
 
         viewModel.scheduleList.observe(viewLifecycleOwner) { scheduleList ->
-            val filteredLines = scheduleList.distinctBy {
-                it.lineNumber + it.direction + it.linVarId + it.variantLineName
-            }.sortedWith(comparator)
+            val filteredLines =
+                scheduleList.distinctBy {
+                    it.lineNumber + it.direction + it.linVarId + it.variantLineName
+                }.sortedWith(comparator)
 
-            val adapter = StationLinesRecyclerAdapter(
-                requireContext(),
-                filteredLines,
-                false
-            )
+            val adapter =
+                StationLinesRecyclerAdapter(
+                    requireContext(),
+                    filteredLines,
+                    false,
+                )
             binding.rv.adapter = adapter
             binding.progressBar.visibility = ProgressBar.GONE
 
@@ -112,9 +114,12 @@ class SchedulerItemPickerFragment : Fragment(R.layout.fragment_explore) {
 
         viewModel.scheduleList.observe(viewLifecycleOwner) { scheduleList ->
             stationsViewModel.stationsList.observe(viewLifecycleOwner) { stationsList ->
-                val adapter = StationsScheduleRecyclerAdapter(
-                    requireContext(), scheduleList, stationsList
-                )
+                val adapter =
+                    StationsScheduleRecyclerAdapter(
+                        requireContext(),
+                        scheduleList,
+                        stationsList,
+                    )
                 binding.rv.adapter = adapter
                 binding.progressBar.visibility = ProgressBar.GONE
             }
@@ -128,15 +133,16 @@ class SchedulerItemPickerFragment : Fragment(R.layout.fragment_explore) {
         }
     }
 
-    val comparator = Comparator<Schedule> { line1, line2 ->
-        val isStr1Numeric = line1.lineNumber.length == 1 && line1.lineNumber[0].isDigit()
-        val isStr2Numeric = line2.lineNumber.length == 1 && line2.lineNumber[0].isDigit()
+    val comparator =
+        Comparator<Schedule> { line1, line2 ->
+            val isStr1Numeric = line1.lineNumber.length == 1 && line1.lineNumber[0].isDigit()
+            val isStr2Numeric = line2.lineNumber.length == 1 && line2.lineNumber[0].isDigit()
 
-        when {
-            isStr1Numeric && isStr2Numeric -> line1.lineNumber.compareTo(line2.lineNumber)
-            isStr1Numeric -> -1
-            isStr2Numeric -> 1
-            else -> line1.lineNumber.compareTo(line2.lineNumber)
+            when {
+                isStr1Numeric && isStr2Numeric -> line1.lineNumber.compareTo(line2.lineNumber)
+                isStr1Numeric -> -1
+                isStr2Numeric -> 1
+                else -> line1.lineNumber.compareTo(line2.lineNumber)
+            }
         }
-    }
 }

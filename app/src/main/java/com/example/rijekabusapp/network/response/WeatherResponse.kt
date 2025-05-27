@@ -4,12 +4,12 @@ data class WeatherResponse(
     val weather: List<Weather>,
     val main: Main,
     val visibility: Float,
-    val wind: Wind
+    val wind: Wind,
 )
 
 data class Weather(
     val description: String,
-    val icon: String
+    val icon: String,
 )
 
 data class Main(
@@ -19,5 +19,5 @@ data class Main(
 )
 
 data class Wind(
-    val speed: Float
+    val speed: Float,
 )

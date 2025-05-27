@@ -1,13 +1,17 @@
 package com.example.rijekabusapp.database
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
 import com.example.rijekabusapp.database.models.FavoriteLine
 import com.example.rijekabusapp.database.models.FavoriteRoute
 import com.example.rijekabusapp.database.models.FavoriteStation
 
 @Dao
 interface AutotrolejDao {
-
     // Favorite Line
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavoriteLine(line: FavoriteLine)

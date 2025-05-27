@@ -39,20 +39,18 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_filter_lines"
             android:layout_marginVertical="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:hint="@string/lines"
             android:textColorHint="@color/color_primary"
             app:boxBackgroundColor="@color/surface_surface_0"
-            app:endIconMode="dropdown_menu" >
+            app:endIconMode="dropdown_menu">
 
             <AutoCompleteTextView
                 android:id="@+id/atv_names"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp" />
+                android:layout_marginStart="8dp"
+                android:inputType="text"
+                android:completionThreshold="3" /> <!-- Require at least 3 characters -->
 
         </com.google.android.material.textfield.TextInputLayout>
 

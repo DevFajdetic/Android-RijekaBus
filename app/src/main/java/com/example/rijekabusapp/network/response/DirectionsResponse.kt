@@ -10,5 +10,5 @@ data class DirectionsResponse(
     @SerializedName("routes")
     val routes: List<Route>,
     @SerializedName("status")
-    val status: String
+    val status: String,
 )

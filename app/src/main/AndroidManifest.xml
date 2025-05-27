@@ -50,6 +50,10 @@
             android:exported="false"
             android:theme="@style/Theme.RijekaBusApp" />
         <activity
+            android:name=".MapsActivity2"
+            android:exported="false"
+            android:theme="@style/Theme.RijekaBusApp" />
+        <activity
             android:name=".NewsActivity"
             android:exported="false"
             android:theme="@style/Theme.RijekaBusApp" />

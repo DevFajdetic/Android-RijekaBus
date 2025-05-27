@@ -8,4 +8,14 @@
     <string name="filters_search_error_desc">Try adjusting your search or filter to find what you are looking for.</string>
     <string name="map">Map</string>
     <string name="api_credits"><![CDATA[Autotrolej, OpenWeather & City Rijeka]]></string>
+    <string name="google_login_failed">Google Sign-In failed</string>
+    <string name="string_dark_theme">Dark themee</string>
+    <string name="string_language_select">Select language</string>
+    <string name="string_default_language">English</string>
+    <string name="date_time_format">Date Time Format</string>
+    <string name="communication">Communication</string>
+    <string name="rate_us">Rate us</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+    <string name="login">Login</string>
 </resources>

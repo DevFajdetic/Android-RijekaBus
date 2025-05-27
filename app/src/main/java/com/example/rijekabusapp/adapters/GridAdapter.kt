@@ -13,28 +13,34 @@ import com.example.rijekabusapp.network.models.Schedule
 class GridAdapter(
     private val context: Context,
     private val itemList: List<Schedule>,
-    private val activeList: List<Schedule>
+    private val activeList: List<Schedule>,
 ) : RecyclerView.Adapter<GridAdapter.GridViewHolder>() {
-
     class GridViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = GridItemViewBinding.bind(view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GridViewHolder {
-        val view = LayoutInflater
-            .from(context)
-            .inflate(R.layout.grid_item_view, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): GridViewHolder {
+        val view =
+            LayoutInflater
+                .from(context)
+                .inflate(R.layout.grid_item_view, parent, false)
         return GridViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: GridViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: GridViewHolder,
+        position: Int,
+    ) {
         val item = itemList[position]
 
         if (activeList.any { it.startId == item.startId }) {
         } else {
             holder.binding.ivIsActive.visibility = View.GONE
             holder.binding.clContainer.setBackgroundColor(
-                ContextCompat.getColor(holder.itemView.context, R.color.surface_surface_2)
+                ContextCompat.getColor(holder.itemView.context, R.color.surface_surface_2),
             )
         }
 

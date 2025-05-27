@@ -20,22 +20,28 @@ class FavoriteStationRecyclerAdapter(
     private val favoritesList: ArrayList<FavoriteStation>,
     private val imagesList: ArrayList<ArrayList<StationImage>>,
     private var isEditModeEnabled: Boolean,
-    private val deleteCallback: (FavoriteStation) -> Unit
+    private val deleteCallback: (FavoriteStation) -> Unit,
 ) : RecyclerView.Adapter<FavoriteStationRecyclerAdapter.FavoriteStationViewHolder>(),
     ItemMoveCallback.ItemTouchHelperAdapter {
-
     class FavoriteStationViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = BusStationItemViewBinding.bind(view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteStationViewHolder {
-        val view = LayoutInflater.from(context)
-            .inflate(R.layout.bus_station_item_view, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): FavoriteStationViewHolder {
+        val view =
+            LayoutInflater.from(context)
+                .inflate(R.layout.bus_station_item_view, parent, false)
         return FavoriteStationViewHolder(view)
     }
 
     @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
-    override fun onBindViewHolder(holder: FavoriteStationViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: FavoriteStationViewHolder,
+        position: Int,
+    ) {
         val station = favoritesList[position]
 
         if (isEditModeEnabled) {
@@ -57,9 +63,10 @@ class FavoriteStationRecyclerAdapter(
 
         holder.binding.root.setOnClickListener {
             if (!isEditModeEnabled) {
-                val intent = Intent(context, StationActivity::class.java).apply {
-                    putExtra(EXTRA_STATION, station.convertToStation())
-                }
+                val intent =
+                    Intent(context, StationActivity::class.java).apply {
+                        putExtra(EXTRA_STATION, station.convertToStation())
+                    }
                 context.startActivity(intent)
             }
         }
@@ -69,10 +76,13 @@ class FavoriteStationRecyclerAdapter(
                 holder.binding.ivStationImage.load(it[0].imageUrl)
                 return
             } else {
-                if (position % 2 == 0) holder.binding.ivStationImage
-                    .load(R.drawable.ic_bus_stop_one)
-                else holder.binding.ivStationImage
-                    .load(R.drawable.ic_bus_stop_two)
+                if (position % 2 == 0) {
+                    holder.binding.ivStationImage
+                        .load(R.drawable.ic_bus_stop_one)
+                } else {
+                    holder.binding.ivStationImage
+                        .load(R.drawable.ic_bus_stop_two)
+                }
             }
         }
     }
@@ -85,7 +95,10 @@ class FavoriteStationRecyclerAdapter(
         this.isEditModeEnabled = isEditModeEnabled
     }
 
-    override fun onItemMove(sourcePosition: Int, targetPosition: Int) {
+    override fun onItemMove(
+        sourcePosition: Int,
+        targetPosition: Int,
+    ) {
         if (isEditModeEnabled) {
             val movedItem = favoritesList.removeAt(sourcePosition)
             favoritesList.add(targetPosition, movedItem)

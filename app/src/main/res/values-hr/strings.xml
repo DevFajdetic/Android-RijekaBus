@@ -107,5 +107,17 @@
     <string name="alaram_at">Alarm will go off at</string>
     <string name="distance">Distance</string>
     <string name="time">Time</string>
+    <string name="google_login_failed">Google Sign-In failed</string>
+    <string name="string_dark_theme">Tamni način rada</string>
+    <string name="string_language_select">Odabir Jezika</string>
+    <string name="string_default_language">Hrvatski</string>
+    <string name="date_time_format">Date Time Format</string>
+    <string name="time_format">Time format</string>
+    <string name="_24_hour_clock">24 hour clock</string>
+    <string name="communication">Communication</string>
+    <string name="rate_us">Rate us</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+    <string name="login">Login</string>
 </resources>
 

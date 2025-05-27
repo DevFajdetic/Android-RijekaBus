@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.rijekabusapp.databinding.ActivityAboutBinding
 
 class AboutActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityAboutBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,17 +20,18 @@ class AboutActivity : AppCompatActivity() {
         }
 
         binding.ivSofa.setOnClickListener {
-            val intent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://www.riteh.uniri.hr/")
-            )
+            val intent =
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://www.riteh.uniri.hr/"),
+                )
             if (intent.resolveActivity(packageManager) != null) {
                 startActivity(intent)
             } else {
                 Toast.makeText(
                     applicationContext,
                     "No web browser app found",
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_SHORT,
                 ).show()
             }
         }
