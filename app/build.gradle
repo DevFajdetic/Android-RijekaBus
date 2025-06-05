@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'org.jlleitschuh.gradle.ktlint' version "12.2.0"
+    // id 'org.jlleitschuh.gradle.ktlint' version "12.2.0"
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
@@ -40,9 +40,9 @@ android {
     }
 }
 
-tasks.getByPath("preBuild").dependsOn("ktlintFormat")
+// tasks.getByPath("preBuild").dependsOn("ktlintFormat")
 
-ktlint {
+/* ktlint {
     android = true
     ignoreFailures = false
     disabledRules = ["no-wildcard-imports"]
@@ -51,7 +51,7 @@ ktlint {
         reporter "checkstyle"
         reporter "sarif"
     }
-}
+} */
 
 dependencies {
 

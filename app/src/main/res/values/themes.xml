@@ -40,7 +40,6 @@
 
     <style name="BottomSheetDialogTheme" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
-        <item name="android:background">@color/surface_surface_1</item>
     </style>
 
     <style name="BottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">

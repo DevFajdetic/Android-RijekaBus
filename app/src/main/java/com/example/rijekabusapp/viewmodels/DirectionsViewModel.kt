@@ -1,6 +1,7 @@
 package com.example.rijekabusapp.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,6 +17,7 @@ class DirectionsViewModel(application: Application) : AndroidViewModel(applicati
     val directionsLiveData = MutableLiveData<DirectionsResponse>()
     private val _favoriteRoutes = MutableLiveData<ArrayList<FavoriteRoute>>()
     val favoriteRoutes: LiveData<ArrayList<FavoriteRoute>> = _favoriteRoutes
+    private val tag = "DirectionsViewModel"
 
     val apiKey = "AIzaSyCYRCaIRT_p72odDx2jgj38Ls4DF-h8ODI"
 
@@ -34,30 +36,53 @@ class DirectionsViewModel(application: Application) : AndroidViewModel(applicati
         units: String,
     ) {
         viewModelScope.launch {
-            val response =
-                Network().getDirectionsService().getDirection(
-                    destination,
-                    origin,
-                    apiKey,
-                    language,
-                    mode,
-                    units,
-                )
-            directionsLiveData.value = response
+            try {
+                val response =
+                    Network().getDirectionsService().getDirection(
+                        destination,
+                        origin,
+                        apiKey,
+                        language,
+                        mode,
+                        units,
+                    )
+                directionsLiveData.value = response
+            } catch (e: Exception) {
+                Log.e(tag, "Error getting directions: ${e.message}", e)
+                // Create an empty response to avoid null issues
+                directionsLiveData.value =
+                    Network().getDirectionsService().getDirection(
+                        destination,
+                        origin,
+                        apiKey,
+                        language,
+                        mode,
+                        units,
+                    )
+            }
         }
     }
 
     fun saveRouteInformation(route: FavoriteRoute) {
         viewModelScope.launch {
-            repository.insertFavoriteRoute(route)
+            try {
+                repository.insertFavoriteRoute(route)
+            } catch (e: Exception) {
+                Log.e(tag, "Error saving route information: ${e.message}", e)
+            }
         }
     }
 
     fun getFavoriteRoutes() {
-        val routes = ArrayList<FavoriteRoute>()
-        repository.getFavoriteRoutes().forEach {
-            routes.add(it)
+        try {
+            val routes = ArrayList<FavoriteRoute>()
+            repository.getFavoriteRoutes().forEach {
+                routes.add(it)
+            }
+            _favoriteRoutes.value = routes
+        } catch (e: Exception) {
+            Log.e(tag, "Error getting favorite routes: ${e.message}", e)
+            _favoriteRoutes.value = ArrayList()
         }
-        _favoriteRoutes.value = routes
     }
 }

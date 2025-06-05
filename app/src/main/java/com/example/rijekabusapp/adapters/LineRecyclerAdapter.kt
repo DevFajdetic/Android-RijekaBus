@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -121,20 +122,29 @@ class LineRecyclerAdapter(
                 val filterResults = FilterResults()
 
                 if (text.isNullOrEmpty()) {
-                    filterResults.values = ArrayList<Line>(linesList)
-                    filterList = linesList
+                    // Return all items when query is empty or less than 3 characters
+                    Log.d("filter", "Empty or less than 3 chars: ${text?.length ?: 0}")
+                    val allLines = ArrayList<Line>(linesList)
+                    filterResults.values = allLines
+                    filterResults.count = allLines.size
                 } else {
                     val searchChar = text.toString().lowercase()
                     val searchItems = ArrayList<Line>()
-                    for (it in filterList) {
+
+                    // Filter when we have at least 3 characters
+                    Log.d("filter", "Filtering with: $searchChar")
+                    for (it in linesList) {
                         if (it.name.lowercase().contains(searchChar) ||
                             it.lineNumber.lowercase().contains(searchChar)
                         ) {
+                            android.util.Log.d("Filter", "Match: ${it.name}")
                             searchItems.add(it)
                         }
                     }
 
                     filterResults.values = searchItems
+                    filterResults.count = searchItems.size
+                    Log.d("filter", "Found ${searchItems.size} matches")
                 }
                 return filterResults
             }
@@ -144,8 +154,8 @@ class LineRecyclerAdapter(
                 p0: CharSequence?,
                 filterResults: FilterResults?,
             ) {
-                if (p0.isNullOrEmpty()) filterList = linesList
-                filterList = filterResults!!.values as ArrayList<Line>
+                filterList = filterResults?.values as ArrayList<Line>
+                Log.d("filter", "Publishing results: ${filterList.size} items")
                 notifyDataSetChanged()
             }
         }

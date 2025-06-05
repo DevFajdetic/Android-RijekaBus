@@ -119,12 +119,16 @@ class StationRecyclerAdapter(
                 val filterResults = FilterResults()
 
                 if (text.isNullOrEmpty()) {
-                    filterResults.values = ArrayList<Station>(stationsList)
-                    filterList = stationsList
+                    // Return all items when query is empty or less than 3 characters
+                    val allStations = ArrayList<Station>(stationsList)
+                    filterResults.values = allStations
+                    filterResults.count = allStations.size
                 } else {
                     val searchChar = text.toString().lowercase()
                     val searchItems = ArrayList<Station>()
-                    for (it in filterList) {
+
+                    // Always filter from the original list, not the already filtered list
+                    for (it in stationsList) {
                         if (it.longName.lowercase().contains(searchChar) ||
                             it.shortName.lowercase().contains(searchChar)
                         ) {
@@ -133,6 +137,7 @@ class StationRecyclerAdapter(
                     }
 
                     filterResults.values = searchItems
+                    filterResults.count = searchItems.size
                 }
                 return filterResults
             }
@@ -142,8 +147,7 @@ class StationRecyclerAdapter(
                 p0: CharSequence?,
                 filterResults: FilterResults?,
             ) {
-                if (p0.isNullOrEmpty()) filterList = stationsList
-                filterList = filterResults!!.values as ArrayList<Station>
+                filterList = filterResults?.values as ArrayList<Station>
                 notifyDataSetChanged()
             }
         }

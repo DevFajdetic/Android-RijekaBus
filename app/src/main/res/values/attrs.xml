@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Theme">
+        <attr name="appCardBackgroundColor" format="color" />
+        <attr name="appCardForegroundColor" format="color" />
+        <attr name="appTextColorPrimary" format="color" />
+        <attr name="appTextColorSecondary" format="color" />
+        <attr name="appSurfaceColor" format="color" />
+        <attr name="appBackgroundColor" format="color" />
+    </declare-styleable>
+</resources> 

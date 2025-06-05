@@ -56,7 +56,8 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="300dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="2.75"
                     android:layout_height="match_parent"
                     android:layout_margin="8dp"
                     app:cardCornerRadius="25dp">
@@ -67,17 +68,19 @@
                         android:layout_height="match_parent"
                         app:hideNavigationIcon="false"
                         app:iconifiedByDefault="false"
-                        app:queryHint="Search"
+                        app:queryHint="@string/search"
                         app:searchIcon="@drawable/ic_search" />
 
                 </androidx.cardview.widget.CardView>
 
                 <ImageView
                     android:id="@+id/filter"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:scaleX="1.5"
                     android:scaleY="1.5"
                     android:src="@drawable/ic_filter_list" />
@@ -119,6 +122,16 @@
         app:layout_constraintEnd_toEndOf="@id/rvStations"
         app:layout_constraintStart_toStartOf="@id/rvStations"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.example.rijekabusapp.views.EmptyStateView
+        android:id="@+id/empty_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAll" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvStations"

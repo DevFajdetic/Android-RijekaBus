@@ -1,6 +1,7 @@
 package com.example.rijekabusapp.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,6 +16,7 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
     val stationsList = MutableLiveData<ArrayList<Station>>()
     private val _favoriteStations = MutableLiveData<ArrayList<Station>>()
     val favoriteStations: LiveData<ArrayList<Station>> = _favoriteStations
+    private val tag = "StationsViewModel"
 
     private val repository: AutotrolejRepository
 
@@ -25,25 +27,44 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
 
     fun getStationsList() {
         viewModelScope.launch {
-            stationsList.value = Network().getBusService().getAllStations()
+            try {
+                stationsList.value = Network().getBusService().getAllStations()
+            } catch (e: Exception) {
+                Log.e(tag, "Error getting stations list: ${e.message}", e)
+                // Return empty list instead of crashing
+                stationsList.value = ArrayList()
+            }
         }
     }
 
     fun insertFavoriteStation(station: Station) {
-        repository.insertFavoriteStation(
-            station.convertToFavoriteStation(repository.countFavoriteStations() + 1),
-        )
+        try {
+            repository.insertFavoriteStation(
+                station.convertToFavoriteStation(repository.countFavoriteStations() + 1),
+            )
+        } catch (e: Exception) {
+            Log.e(tag, "Error inserting favorite station: ${e.message}", e)
+        }
     }
 
     fun deleteFavoriteStation(station: Station) {
-        repository.deleteFavoriteStation(station.convertToFavoriteStation(null))
+        try {
+            repository.deleteFavoriteStation(station.convertToFavoriteStation(null))
+        } catch (e: Exception) {
+            Log.e(tag, "Error deleting favorite station: ${e.message}", e)
+        }
     }
 
     fun getFavoriteStations() {
-        val stations = ArrayList<Station>()
-        repository.getFavoriteStations().forEach {
-            stations.add(it.convertToStation())
+        try {
+            val stations = ArrayList<Station>()
+            repository.getFavoriteStations().forEach {
+                stations.add(it.convertToStation())
+            }
+            _favoriteStations.value = stations
+        } catch (e: Exception) {
+            Log.e(tag, "Error getting favorite stations: ${e.message}", e)
+            _favoriteStations.value = ArrayList()
         }
-        _favoriteStations.value = stations
     }
 }

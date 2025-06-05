@@ -42,7 +42,7 @@ class LineActivity : AppCompatActivity() {
         }
 
         // Initialize ViewPager2
-        val fragments = listOf(LineStationsFragment(), LineScheduleFragment("TJEDAN"))
+        val fragments = listOf(LineStationsFragment(), LineScheduleFragment("tjedan"))
         val pagerAdapter = ViewPagerAdapter(this, fragments, lineItem)
         binding.viewPager.adapter = pagerAdapter
 

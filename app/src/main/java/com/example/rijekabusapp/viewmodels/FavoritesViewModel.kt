@@ -20,8 +20,8 @@ import kotlinx.coroutines.launch
 class FavoritesViewModel(application: Application) : AndroidViewModel(application) {
     val favoriteLines = MutableLiveData<ArrayList<FavoriteLine>>()
     val favoriteStations = MutableLiveData<ArrayList<FavoriteStation>>()
-
     val stationImages = MutableLiveData<ArrayList<ArrayList<StationImage>>>()
+    private val tag = "FavoritesViewModel"
 
     private val repository: AutotrolejRepository
 
@@ -32,34 +32,45 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun getFavoriteStationsAndImages() {
         viewModelScope.launch {
-            val stations = ArrayList<FavoriteStation>()
-            val sortedStations = repository.getFavoriteStationsAsync().sortedBy { it.position }
-            sortedStations.forEach {
-                stations.add(it)
-            }
+            try {
+                val stations = ArrayList<FavoriteStation>()
+                val sortedStations = repository.getFavoriteStationsAsync().sortedBy { it.position }
+                sortedStations.forEach {
+                    stations.add(it)
+                }
 
-            val asyncTasks =
-                stations.map { station ->
-                    async {
-                        try {
-                            ArrayList(Network().getMyApiService().getStationImages(station.id))
-                        } catch (e: Exception) {
-                            arrayListOf(StationImage(0, "", "", null))
+                val asyncTasks =
+                    stations.map { station ->
+                        async {
+                            try {
+                                ArrayList(Network().getMyApiService().getStationImages(station.id))
+                            } catch (e: Exception) {
+                                Log.e(tag, "Error getting station images for station ${station.id}: ${e.message}", e)
+                                arrayListOf(StationImage(0, "", "", null))
+                            }
                         }
                     }
-                }
-            val response = asyncTasks.awaitAll()
+                val response = asyncTasks.awaitAll()
 
-            favoriteStations.value = stations
-            if (response.isNotEmpty()) {
-                Log.d("novo2", "NIJE PRAZNO")
-                stationImages.value = response as ArrayList<ArrayList<StationImage>>
+                favoriteStations.value = stations
+                if (response.isNotEmpty()) {
+                    Log.d("novo2", "NIJE PRAZNO")
+                    stationImages.value = response as ArrayList<ArrayList<StationImage>>
+                }
+            } catch (e: Exception) {
+                Log.e(tag, "Error getting favorite stations and images: ${e.message}", e)
+                favoriteStations.value = ArrayList()
+                stationImages.value = ArrayList()
             }
         }
     }
 
     fun deleteFavoriteStation(station: Station) {
-        repository.deleteFavoriteStation(station.convertToFavoriteStation(null))
+        try {
+            repository.deleteFavoriteStation(station.convertToFavoriteStation(null))
+        } catch (e: Exception) {
+            Log.e(tag, "Error deleting favorite station: ${e.message}", e)
+        }
     }
 
     fun updateFavoriteStation(
@@ -67,36 +78,57 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
         position: Int,
     ) {
         viewModelScope.launch {
-            repository.updateFavoriteStation(station.convertToFavoriteStation(position))
+            try {
+                repository.updateFavoriteStation(station.convertToFavoriteStation(position))
+            } catch (e: Exception) {
+                Log.e(tag, "Error updating favorite station: ${e.message}", e)
+            }
         }
     }
 
     fun getFavoriteLines() {
         viewModelScope.launch {
-            val lines = ArrayList<FavoriteLine>()
-            val sortedLines = repository.getFavoriteLines().sortedBy { it.position }
-            sortedLines.forEach {
-                lines.add(it)
+            try {
+                val lines = ArrayList<FavoriteLine>()
+                val sortedLines = repository.getFavoriteLines().sortedBy { it.position }
+                sortedLines.forEach {
+                    lines.add(it)
+                }
+                favoriteLines.value = lines
+            } catch (e: Exception) {
+                Log.e(tag, "Error getting favorite lines: ${e.message}", e)
+                favoriteLines.value = ArrayList()
             }
-            favoriteLines.value = lines
         }
     }
 
     fun deleteFavoriteLine(line: Line) {
-        repository.deleteFavoriteLine(line.convertToFavoriteLine(null))
+        try {
+            repository.deleteFavoriteLine(line.convertToFavoriteLine(null))
+        } catch (e: Exception) {
+            Log.e(tag, "Error deleting favorite line: ${e.message}", e)
+        }
     }
 
     fun favoriteLinesUpdate() {
-        favoriteLines.value?.forEachIndexed { index, line ->
-            line.position = index
-            repository.updateFavoriteLine(line)
+        try {
+            favoriteLines.value?.forEachIndexed { index, line ->
+                line.position = index
+                repository.updateFavoriteLine(line)
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "Error updating favorite lines: ${e.message}", e)
         }
     }
 
     fun favoriteStationsUpdate() {
-        favoriteStations.value?.forEachIndexed { index, station ->
-            station.position = index
-            repository.updateFavoriteStation(station)
+        try {
+            favoriteStations.value?.forEachIndexed { index, station ->
+                station.position = index
+                repository.updateFavoriteStation(station)
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "Error updating favorite stations: ${e.message}", e)
         }
     }
 }

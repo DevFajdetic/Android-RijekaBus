@@ -9,6 +9,7 @@ import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -41,6 +42,7 @@ class MapsActivity2 : AppCompatActivity() {
 
     private val busLocationViewModel: BusLocationViewModel by viewModels()
     private val stationsViewModel: StationsViewModel by viewModels()
+    private val tag = "MapsActivity2"
 
     private val busMarkers = mutableMapOf<Int, Pair<Marker, Long>>()
     private val stationMarkers = mutableMapOf<Int, Marker>()
@@ -183,7 +185,7 @@ class MapsActivity2 : AppCompatActivity() {
         inactiveMarkers.keys.forEach { gbr ->
             mapView.overlays.remove(busMarkers[gbr]?.first)
             busMarkers.remove(gbr)
-            println("removed: $gbr") // Log removal for debugging
+            Log.d(tag, "Removed inactive marker: $gbr")
         }
         // Refresh the map
         mapView.invalidate()
