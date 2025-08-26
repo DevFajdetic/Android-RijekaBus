@@ -17,7 +17,7 @@ class DirectionsViewModel(application: Application) : AndroidViewModel(applicati
     private val _favoriteRoutes = MutableLiveData<ArrayList<FavoriteRoute>>()
     val favoriteRoutes: LiveData<ArrayList<FavoriteRoute>> = _favoriteRoutes
 
-    val apiKey = "AIzaSyCYRCaIRT_p72odDx2jgj38Ls4DF-h8ODI"
+    val apiKey = "INSERT_KEY_HERE"
 
     private val repository: AutotrolejRepository
 
