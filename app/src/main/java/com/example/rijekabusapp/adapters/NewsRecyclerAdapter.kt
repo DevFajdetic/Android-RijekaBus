@@ -46,19 +46,19 @@ class NewsRecyclerAdapter(
             "Promjene i preregulacija" -> {
                 holder.binding.tvIcon.backgroundTintList =
                     ColorStateList.valueOf(
-                        ContextCompat.getColor(holder.itemView.context, R.color.bluish),
+                        ContextCompat.getColor(holder.itemView.context, R.color.color_traffic_changes),
                     )
             }
             "Vozni red i linije" -> {
                 holder.binding.tvIcon.backgroundTintList =
                     ColorStateList.valueOf(
-                        ContextCompat.getColor(holder.itemView.context, R.color.color_secondary),
+                        ContextCompat.getColor(holder.itemView.context, R.color.color_drive_schedule_and_lines),
                     )
             }
             "Obavijesti" -> {
                 holder.binding.tvIcon.backgroundTintList =
                     ColorStateList.valueOf(
-                        ContextCompat.getColor(holder.itemView.context, R.color.team_pacers_primary),
+                        ContextCompat.getColor(holder.itemView.context, R.color.color_warning_sign),
                     )
             }
         }

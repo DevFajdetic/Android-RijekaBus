@@ -34,6 +34,12 @@
         <action
             android:id="@+id/action_exploreFragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_lostAndFoundFragment"
+            app:destination="@id/lostAndFoundFragment" />
     </fragment>
     <fragment
         android:id="@+id/linesFragment"
@@ -85,6 +91,24 @@
         android:label="SchedulerItemPickerFragment" >
         <action
             android:id="@+id/action_schedulerItemPickerFragment_to_exploreFragment"
+            app:destination="@id/exploreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.rijekabusapp.fragments.ChatFragment"
+        android:label="Chat"
+        tools:layout="@layout/fragment_chat" >
+        <action
+            android:id="@+id/action_chatFragment_to_exploreFragment"
+            app:destination="@id/exploreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/lostAndFoundFragment"
+        android:name="com.example.rijekabusapp.fragments.LostAndFoundFragment"
+        android:label="Lost and Found"
+        tools:layout="@layout/fragment_lost_and_found" >
+        <action
+            android:id="@+id/action_lostAndFoundFragment_to_exploreFragment"
             app:destination="@id/exploreFragment" />
     </fragment>
 </navigation>

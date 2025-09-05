@@ -10,12 +10,11 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="200dp"
         android:layout_marginHorizontal="32dp"
-        android:layout_marginVertical="16dp"
+        android:layout_marginVertical="8dp"
         app:cardCornerRadius="20dp"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="true">
+        app:cardElevation="4dp">
         
         <FrameLayout
             android:layout_width="match_parent"
@@ -25,6 +24,7 @@
                 android:id="@+id/google_map"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+                
             <ImageView
                 android:id="@+id/iv_missing"
                 android:layout_width="match_parent"
@@ -32,8 +32,44 @@
                 android:src="@drawable/ic_missing"
                 android:visibility="gone"
                 android:background="@color/neutrals_n_lv_2" />
+                
+            <ImageButton
+                android:id="@+id/expand_map_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="8dp"
+                android:background="@drawable/circle_shape"
+                android:backgroundTint="@color/white"
+                android:contentDescription="@string/map"
+                android:elevation="4dp"
+                android:padding="12dp"
+                android:src="@drawable/ic_expand_more"
+                app:tint="@color/color_primary" />
         </FrameLayout>
     </com.google.android.material.card.MaterialCardView>
+
+    <!-- Social Features Containers -->
+    <include
+        android:id="@+id/container_rating"
+        layout="@layout/layout_bus_rating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp" />
+
+    <include
+        android:id="@+id/container_comments"
+        layout="@layout/layout_comments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp" />
+
+    <include
+        android:id="@+id/container_chat"
+        layout="@layout/layout_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,7 +80,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -69,5 +106,4 @@
             tools:listitem="@layout/line_stations_schedule_item" />
 
     </FrameLayout>
-
 </LinearLayout>

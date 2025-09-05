@@ -43,7 +43,7 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
                     stations.map { station ->
                         async {
                             try {
-                                ArrayList(Network().getMyApiService().getStationImages(station.id))
+                                ArrayList(Network().getMyApiService().getStationImages(station.id, 0))
                             } catch (e: Exception) {
                                 Log.e(tag, "Error getting station images for station ${station.id}: ${e.message}", e)
                                 arrayListOf(StationImage(0, "", "", null))

@@ -4,14 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.rijekabusapp.database.converters.StepListConverter
 import com.example.rijekabusapp.database.models.FavoriteLine
 import com.example.rijekabusapp.database.models.FavoriteRoute
 import com.example.rijekabusapp.database.models.FavoriteStation
+import com.example.rijekabusapp.database.models.UserStats
 
 @Database(
-    entities = [FavoriteLine::class, FavoriteStation::class, FavoriteRoute::class],
-    version = 1,
+    entities = [FavoriteLine::class, FavoriteStation::class, FavoriteRoute::class, UserStats::class],
+    version = 3,
 )
+@TypeConverters(StepListConverter::class)
 abstract class AutotrolejDatabase : RoomDatabase() {
     abstract fun autotrolejDao(): AutotrolejDao
 
@@ -27,6 +31,8 @@ abstract class AutotrolejDatabase : RoomDatabase() {
 
         private fun buildDatabase(context: Context): AutotrolejDatabase =
             Room.databaseBuilder(context, AutotrolejDatabase::class.java, "AutotrolejDatabase")
-                .allowMainThreadQueries().build()
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration() // Handle version upgrades
+                .build()
     }
 }

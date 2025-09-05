@@ -1,37 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/surface_surface_2"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    tools:context=".fragments.LineScheduleFragment">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_timeline_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Polasci"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:textAppearance="@style/HeadlineSmallNLv2Left" />
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/schedule_timeline"
+        android:textColor="@color/clean_blue"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <FrameLayout
+    <TextView
+        android:id="@+id/tv_active_legend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:drawableStart="@drawable/ic_bus"
+        android:drawablePadding="4dp"
+        android:drawableTint="@color/color_primary"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins"
+        android:text="@string/active_buses"
+        android:textColor="@color/redish"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_schedule"
         android:layout_width="match_parent"
-        android:layout_margin="16dp"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_timeline_title"
+        tools:listitem="@layout/grid_item_view" />
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-s
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_schedule"
-            tools:listitem="@layout/grid_item_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/color_primary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </FrameLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

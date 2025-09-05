@@ -6,9 +6,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieDrawable
+import com.example.rijekabusapp.base.BaseActivity
 import com.example.rijekabusapp.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -18,8 +19,12 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import java.util.*
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
     // View binding
     private lateinit var binding: ActivityLoginBinding
 
@@ -27,8 +32,15 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private val firebaseAuth = FirebaseAuth.getInstance()
 
+    // Firebase Database
+    private val database = FirebaseDatabase.getInstance("https://rijekabusapp-default-rtdb.europe-west1.firebasedatabase.app")
+    private val usersRef = database.getReference("users")
+
     // ActivityResultLauncher for Google Sign-In
     private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
+
+    // Firebase Auth Helper from Application
+    private val firebaseAuthHelper by lazy { (application as RijekaBusApplication).firebaseAuthHelper }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,16 +94,46 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.anonymousSignIn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            // Use our FirebaseAuthHelper for anonymous sign-in
+            lifecycleScope.launch {
+                try {
+                    val success = firebaseAuthHelper.signInAnonymously()
+                    if (success) {
+                        // Successfully signed in anonymously
+                        Log.d("login", "Anonymous sign-in successful")
+
+                        // Save anonymous user to Firebase Database
+                        saveAnonymousUserToDatabase()
+
+                        startMainActivity()
+                    } else {
+                        Toast.makeText(this@LoginActivity, R.string.anonymous_login_failed, Toast.LENGTH_SHORT).show()
+                        // Continue to MainActivity anyway
+                        Log.e("login", "Anonymous sign-in failed")
+                        startMainActivity()
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(this@LoginActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                    // Continue to MainActivity anyway
+                    Log.e("login", "Error: ${e.message}")
+                    startMainActivity()
+                }
+            }
         }
     }
 
     // Check if user is already signed in when the activity starts
     override fun onStart() {
         super.onStart()
+        // Check if user is already signed in with Google
         if (GoogleSignIn.getLastSignedInAccount(this) != null) {
-            startActivity(Intent(this, MainActivity::class.java))
+            Log.d("login", "GoogleSignIn.getLastSignedInAccount(this) != null")
+            startMainActivity()
+        }
+        // Check if user is signed in with Firebase (could be anonymous)
+        else if (firebaseAuthHelper.isUserSignedIn()) {
+            Log.d("login", "firebaseAuthHelper user is signed in")
+            startMainActivity()
         }
     }
 
@@ -122,10 +164,74 @@ class LoginActivity : AppCompatActivity() {
                 SavedPreference.setPictureUrl(this, account.photoUrl.toString())
                 SavedPreference.setGivenName(this, account.givenName.toString())
                 SavedPreference.setFamilyName(this, account.familyName.toString())
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+
+                // Save Google user to Firebase Database
+                lifecycleScope.launch {
+                    saveGoogleUserToDatabase(account)
+                }
+
+                Log.d("login", "Google sign-in successful")
+                startMainActivity()
             }
         }
+    }
+
+    // Save Google user data to Firebase Database
+    private suspend fun saveGoogleUserToDatabase(account: GoogleSignInAccount) {
+        try {
+            val userId = firebaseAuth.currentUser?.uid ?: return
+            val username = "${account.givenName} ${account.familyName}".trim()
+
+            val userMap = hashMapOf(
+                "id" to userId,
+                "username" to username,
+                "email" to (account.email ?: ""),
+                "photoUrl" to (account.photoUrl?.toString() ?: ""),
+                "givenName" to (account.givenName ?: ""),
+                "familyName" to (account.familyName ?: ""),
+                "lastSeen" to Date().time,
+                "isAnonymous" to false,
+                "createdAt" to Date().time
+            )
+
+            usersRef.child(userId).setValue(userMap).await()
+            Log.d("login", "Google user saved to database successfully")
+
+        } catch (e: Exception) {
+            Log.e("login", "Error saving Google user to database", e)
+        }
+    }
+
+    // Save anonymous user data to Firebase Database
+    private suspend fun saveAnonymousUserToDatabase() {
+        try {
+            val userId = firebaseAuth.currentUser?.uid ?: return
+            val username = "Anonymous User ${userId.take(6)}" // Create a simple anonymous username
+
+            val userMap = hashMapOf(
+                "id" to userId,
+                "username" to username,
+                "email" to "",
+                "photoUrl" to "",
+                "givenName" to "",
+                "familyName" to "",
+                "lastSeen" to Date().time,
+                "isAnonymous" to true,
+                "createdAt" to Date().time
+            )
+
+            usersRef.child(userId).setValue(userMap).await()
+            Log.d("login", "Anonymous user saved to database successfully")
+
+        } catch (e: Exception) {
+            Log.e("login", "Error saving anonymous user to database", e)
+        }
+    }
+
+    // Helper method to start MainActivity
+    private fun startMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

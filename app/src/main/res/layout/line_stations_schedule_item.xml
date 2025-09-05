@@ -6,21 +6,35 @@
     <TextView
         android:id="@+id/tv_arrive_time"
         android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.25"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:gravity="center"
-        android:text="91:35"
+        android:text="15:30"
         android:textAppearance="@style/HeadlineMediumNLv1Left"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_early_arrival"
         app:layout_constraintEnd_toStartOf="@id/fl_timeline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+        
+    <TextView
+        android:id="@+id/tv_early_arrival"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Earlier: ~2 min"
+        android:textSize="10sp"
+        android:textColor="@color/greenish"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/tv_arrive_time"
+        app:layout_constraintStart_toStartOf="@id/tv_arrive_time"
+        app:layout_constraintTop_toBottomOf="@id/tv_arrive_time" />
 
     <FrameLayout
         android:id="@+id/fl_timeline"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tv_station_name"
         app:layout_constraintStart_toEndOf="@id/tv_arrive_time"
@@ -55,23 +69,40 @@
     <TextView
         android:id="@+id/tv_station_name"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:layout_height="wrap_content"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="3"
+        android:textAllCaps="true"
         android:text="Kuciceva"
         android:textAppearance="@style/BodyLargeNLv1Left"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/iv_notification"
+        app:layout_constraintBottom_toTopOf="@id/tv_distance"
+        app:layout_constraintEnd_toStartOf="@id/iv_notification"
         app:layout_constraintStart_toEndOf="@id/fl_timeline"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+        
+    <TextView
+        android:id="@+id/tv_distance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="100 m"
+        android:textSize="12sp"
+        android:textColor="@color/greenish"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/tv_station_name"
+        app:layout_constraintStart_toStartOf="@id/tv_station_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_station_name" />
 
     <ImageView
         android:id="@+id/iv_notification"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="24dp"
         android:layout_gravity="center"
         android:src="@drawable/ic_bell"
         app:tint="@color/color_tertiary"

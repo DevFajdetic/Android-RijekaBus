@@ -1,6 +1,7 @@
 package com.example.rijekabusapp.network.models
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Step(
     @SerializedName("distance")
@@ -21,4 +22,4 @@ data class Step(
     val travelMode: String,
     @SerializedName("transit_details")
     val transitDetails: TransitDetails?,
-)
+) : Serializable

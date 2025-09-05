@@ -14,6 +14,8 @@
     <string name="menu_favorites_title">Favorites</string>
     <string name="menu_bus_lines_title">Bus Lines</string>
     <string name="menu_bus_station_title">Bus Station</string>
+    <string name="lost_and_found">Lost &amp; Found</string>
+    <string name="chat">Chat</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="maps_action_button">Maps action button</string>
@@ -58,6 +60,7 @@
     <string name="city_map">City scheme</string>
     <string name="outer_city_map">Suburban scheme</string>
     <string name="my_routes">My Routes</string>
+    <string name="no_favorite_routes">You don\'t have any favorite routes yet</string>
     <string name="schedules">Schedules</string>
     <string name="mail">Mail</string>
     <string name="city_card">City Card</string>
@@ -107,13 +110,14 @@
     <string name="alaram_at">Alarm will go off at</string>
     <string name="distance">Distance</string>
     <string name="time">Time</string>
-    <string name="total_trips" translatable="false">Total trips</string>
+    <string name="total_trips">Total trips</string>
     <string name="google_login_failed">Google Sign-In failed</string>
-    <string name="string_dark_theme">Dark themee</string>
+    <string name="anonymous_login_failed">Anonymous Sign-In failed</string>
+    <string name="string_dark_theme">Dark theme</string>
     <string name="string_language_select">Select language</string>
     <string name="string_default_language">English</string>
-    <string name="date_time_format">Date Time Format</string>
-    <string name="time_format">Time format</string>
+    <string name="date_time_format">Date Format</string>
+    <string name="time_format">Time Format</string>
     <string name="_24_hour_clock">24 hour clock</string>
     <string name="_12_hour_clock">12 hour clock</string>
     <string name="communication">Communication</string>
@@ -121,4 +125,99 @@
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
     <string name="login">Login</string>
+    <string name="schedule_timeline">Schedule Timeline</string>
+    <string name="active_buses">Active buses</string>
+    <string name="station_schedule_for">Schedule for %1$s</string>
+    <string name="bus_schedule_for">Schedule for Line %1$s - %2$s</string>
+    <string name="weekday">Weekday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="bus_line_departures">Bus Line Departures</string>
+    <string name="station_schedule">Station Schedule</string>
+    <!-- Social Features -->
+    <string name="comments">Comments</string>
+    <string name="rate_this_bus">Rate This Bus</string>
+    <string name="average_rating">Average Rating:</string>
+    <string name="your_rating">Your Rating:</string>
+    <string name="submit">Submit</string>
+    <string name="you_already_rated">You have already rated this bus today</string>
+    <string name="like_button">Like</string>
+    <string name="delete_comment">Delete comment</string>
+    <string name="expand_collapse">Expand/Collapse</string>
+    <string name="add_comment">Add comment</string>
+    <string name="add_a_comment">Add a comment</string>
+    <string name="type_a_message">Type a message</string>
+    <string name="send_message">Send message</string>
+    <string name="no_comments_yet">No comments yet</string>
+    <string name="no_ratings_yet">No ratings yet</string>
+    
+    <!-- Lost and Found -->
+    <string name="lost_and_found_service">Lost and Found Service</string>
+    <string name="lost_found_info">Information</string>
+    <string name="lost_found_description">If you\'ve lost an item on a bus in Rijeka, you can contact Autotrolej\'s Lost and Found service. Items found on buses are kept for 30 days before being handed over to the city\'s lost property office.</string>
+    <string name="autotrolej_address">Jelačićev trg 3, 51000 Rijeka, Croatia</string>
+    <string name="view_on_map">View on Map</string>
+    <string name="contact">Contact</string>
+    <string name="phone">Phone</string>
+    <string name="autotrolej_phone">+385 51 311 400</string>
+    <string name="email">Email</string>
+    <string name="autotrolej_email">autotrolej@autotrolej.hr</string>
+    <string name="website">Website</string>
+    <string name="autotrolej_website">www.autotrolej.hr</string>
+    <string name="back">Back</string>
+    <string name="report_lost_item">Report Lost Item</string>
+    <string name="office_hours">Office Hours</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="closed">Closed</string>
+    <string name="faq">Frequently Asked Questions</string>
+    
+    <!-- Chat -->
+    <string name="no_messages_yet">No messages yet. Start the conversation!</string>
+    <string name="public_chat">Public Chat</string>
+    <string name="send">Send</string>
+    <string name="message_hint">Type your message here</string>
+    <string name="login_to_chat">Please login to participate in the chat</string>
+    <string name="chat_description">Chat with other passengers</string>
+    <string name="direct_message">Direct Message</string>
+    <string name="select_user">Select User</string>
+    <string name="chat_history">Chat History</string>
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
+    <string name="last_seen">Last seen: %1$s</string>
+    
+    <!-- Settings -->
+    <string name="settings_saved">Settings saved</string>
+    <string name="favorites_cleared">Favorites list cleared</string>
+    <string name="my_location">My location</string>
+    <string name="Active">Active</string>
+    <string name="Lines">Lines</string>
+    <string name="Schedule">Schedule</string>
+    <string name="Line">Line</string>
+    <string name="filter_by_line">Filter by Line</string>
+    <string name="filter">Filter</string>
+    <string name="origin">Origin</string>
+    <string name="destination">Destination</string>
+    <string name="duration">Duration</string>
+    <string name="departure">Departure</string>
+    <string name="arrival">Arrival</string>
+    <string name="go">Go</string>
+    <string name="notify">Notify</string>
+    <string name="faq_question_1">What should I do if I lost something on a bus?</string>
+    <string name="faq_answer_1">Contact Autotrolej\'s Lost and Found office as soon as possible. Provide details about the item, the bus line, and approximate time when you lost it.</string>
+    <string name="faq_question_2">How long are lost items kept?</string>
+    <string name="faq_answer_2">Lost items are kept for 30 days. After that period, unclaimed items are transferred to the city\'s lost property office.</string>
+    <string name="faq_question_3">What information do I need when reporting a lost item?</string>
+    <string name="faq_answer_3">You should provide a detailed description of the item, the bus line number, date and time of travel, and your contact information.</string>
+    <string name="faq_question_4">Can I check if my item was found online?</string>
+    <string name="faq_answer_4">Currently, you need to contact the Lost and Found office directly by phone or visit in person to check if your item was found.</string>
+    <string name="faq_question_5">What happens if I find someone else\'s item on the bus?</string>
+    <string name="faq_answer_5">Please give it to the bus driver or bring it to the Autotrolej Lost and Found office as soon as possible.</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="route_steps">Route Steps</string>
+    <string name="route_details">Route Details</string>
 </resources>

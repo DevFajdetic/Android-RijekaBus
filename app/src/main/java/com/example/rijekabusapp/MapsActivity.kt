@@ -28,14 +28,18 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rijekabusapp.adapters.LineFilterAdapter
 import com.example.rijekabusapp.database.models.FavoriteRoute
 import com.example.rijekabusapp.databinding.ActivityMapsBinding
 import com.example.rijekabusapp.fragments.bottomsheet.RoutesListBottomSheet
+import com.example.rijekabusapp.helpers.LanguageHelper
 import com.example.rijekabusapp.helpers.PREF_METRIC
 import com.example.rijekabusapp.helpers.PREF_SELECTED_LANGUAGE
 import com.example.rijekabusapp.helpers.getBoolFromPreferences
 import com.example.rijekabusapp.helpers.getStringFromPreferences
 import com.example.rijekabusapp.network.models.BusLocation
+import com.example.rijekabusapp.network.models.Route
 import com.example.rijekabusapp.network.models.Schedule
 import com.example.rijekabusapp.network.models.Station
 import com.example.rijekabusapp.network.models.Step
@@ -62,6 +66,7 @@ import com.google.android.gms.maps.model.Dash
 import com.google.android.gms.maps.model.Gap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
@@ -101,21 +106,78 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var scheduleViewModel: ScheduleViewModel
     private lateinit var directionsViewModel: DirectionsViewModel
 
-    // Threading & updating
-    private val busLocationHandler = Handler()
-    private lateinit var busLocationRunnable: Runnable
-    private val busLocationUpdateInterval = 50000L
+    // WebSocket connection management
+    private var isWebSocketConnected = false
 
     // My Locaton related
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
+    private var userLocation: LatLng? = null
+    
+    // Station filtering
+    private val STATION_FILTER_RADIUS_KM = 2.0 // Show stations within 2km of user
+    private var allStations = ArrayList<Station>()
+    private var allSchedules = ArrayList<Schedule>()
+    
+    // Specific bus tracking
+    private var followSpecificBus = false
+    private var specificBusId: String? = null
+    private var specificBusLatitude = 0.0
+    private var specificBusLongitude = 0.0
+    private var specificLineNumber: String? = null
+    private var specificLineVariantId: Int? = null
+    private var specificLineDirection: String? = null
+    private var specificBusMarker: Marker? = null
+    
+    // Line stations data
+    private var lineStationIds: ArrayList<Int>? = null
+    private var lineStationNames: ArrayList<String>? = null
+    private var lineStationLatitudes: DoubleArray? = null
+    private var lineStationLongitudes: DoubleArray? = null
+    private val lineStationMarkers = mutableListOf<Marker>()
+    private var lineRoutePolyline: com.google.android.gms.maps.model.Polyline? = null
+    
+    // Line filtering
+    private var isFilterContainerVisible = false
+    private lateinit var lineFilterAdapter: LineFilterAdapter
+    private var filteredLines = mutableListOf<Pair<String, String>>()
+    private val allBusLocations = mutableListOf<BusLocation>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Apply language settings
+        LanguageHelper.applyLanguage(this)
+        
         super.onCreate(savedInstanceState)
         binding = ActivityMapsBinding.inflate(layoutInflater)
 
-        Places.initialize(applicationContext, "AIzaSyCYRCaIRT_p72odDx2jgj38Ls4DF-h8ODI")
+        try {
+            Places.initialize(applicationContext, BuildConfig.MAPS_API_KEY)
+            Log.d("MapsActivity", "Places API initialized successfully")
+        } catch (e: Exception) {
+            Log.e("MapsActivity", "Error initializing Places API: ${e.message}", e)
+            showCustomSnackbar(this, binding.root, "Error initializing location search")
+        }
+        
+        // Check for specific bus tracking intent
+        followSpecificBus = intent.getBooleanExtra("FOLLOW_SPECIFIC_BUS", false)
+        if (followSpecificBus) {
+            specificBusId = intent.getStringExtra("BUS_ID")
+            specificBusLatitude = intent.getDoubleExtra("BUS_LATITUDE", 0.0)
+            specificBusLongitude = intent.getDoubleExtra("BUS_LONGITUDE", 0.0)
+            specificLineNumber = intent.getStringExtra("LINE_NUMBER")
+            specificLineVariantId = intent.getIntExtra("LINE_VARIANT_ID", -1)
+            specificLineDirection = intent.getStringExtra("LINE_DIRECTION")
+            
+            // Get line station data if available
+            lineStationIds = intent.getIntegerArrayListExtra("STATION_IDS")
+            lineStationNames = intent.getStringArrayListExtra("STATION_NAMES")
+            lineStationLatitudes = intent.getDoubleArrayExtra("STATION_LATITUDES")
+            lineStationLongitudes = intent.getDoubleArrayExtra("STATION_LONGITUDES")
+            
+            // Set title to indicate tracking mode
+            binding.tvTitle.text = getString(R.string.map) + " - " + getString(R.string.Line) + " ${specificLineNumber ?: ""}"
+        }
 
         setOnClickListeners()
 
@@ -128,7 +190,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         // CURRENT LOCATION LOGIC
-        binding.filter.setOnClickListener {
+        binding.myLocation.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.ACCESS_FINE_LOCATION,
@@ -145,6 +207,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 )
             }
         }
+        
+        // Setup line filter button
+        binding.btnLineFilter.setOnClickListener {
+            toggleFilterContainer()
+        }
+        
+        // Setup filter container buttons
+        binding.btnApplyFilter.setOnClickListener {
+            applyLineFilter()
+        }
+        
+        binding.btnClearFilter.setOnClickListener {
+            clearLineFilter()
+        }
 
         mapFragment = (supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment)!!
         mapFragment.getMapAsync(this)
@@ -156,6 +232,117 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 this, ScheduleViewModelFactory(application),
             )[ScheduleViewModel::class.java]
         directionsViewModel = ViewModelProvider(this)[DirectionsViewModel::class.java]
+        
+        // If following specific bus, hide the search container
+        if (followSpecificBus) {
+            binding.searchViewsContainer.visibility = View.GONE
+            binding.fabMyLocation.visibility = View.GONE
+        }
+        
+        // Setup RecyclerView for line filters
+        setupLineFilterRecyclerView()
+    }
+    
+    private fun setupLineFilterRecyclerView() {
+        binding.rvLineFilters.layoutManager = LinearLayoutManager(this)
+        
+        // Initially set with empty data, will be populated when bus data is available
+        lineFilterAdapter = LineFilterAdapter(this, emptyList(), emptyList())
+        binding.rvLineFilters.adapter = lineFilterAdapter
+    }
+    
+    private fun toggleFilterContainer() {
+        isFilterContainerVisible = !isFilterContainerVisible
+        
+        if (isFilterContainerVisible) {
+            binding.filterContainer.visibility = View.VISIBLE
+            binding.searchViewsContainer.visibility = View.GONE
+            
+            // Update filter adapter with current bus lines
+            updateLineFilterAdapter()
+        } else {
+            binding.filterContainer.visibility = View.GONE
+        }
+    }
+    
+    private fun updateLineFilterAdapter() {
+        if (allBusLocations.isEmpty()) {
+            showCustomSnackbar(this, binding.root, "No bus data available yet")
+            return
+        }
+        
+        // Extract unique line numbers and directions
+        val lineData = allBusLocations.map { 
+            Pair(it.brojLinije ?: "", it.smjer ?: "") 
+        }.distinct().sortedBy { it.first }
+        
+        val lineNumbers = lineData.map { it.first }
+        val lineDirections = lineData.map { it.second }
+        
+        // Create new adapter with the data
+        lineFilterAdapter = LineFilterAdapter(this, lineNumbers, lineDirections)
+        binding.rvLineFilters.adapter = lineFilterAdapter
+        
+        // Set current filter selections
+        if (filteredLines.isNotEmpty()) {
+            lineFilterAdapter.selectLines(filteredLines)
+        }
+    }
+    
+    private fun applyLineFilter() {
+        // Get selected lines from adapter
+        filteredLines = lineFilterAdapter.getSelectedLines().toMutableList()
+        
+        if (filteredLines.isEmpty()) {
+            showCustomSnackbar(this, binding.root, "No lines selected")
+            return
+        }
+        
+        // Hide filter container
+        binding.filterContainer.visibility = View.GONE
+        isFilterContainerVisible = false
+        
+        // Update markers on map
+        updateBusMarkersWithFilter(allBusLocations)
+        
+        // Show message
+        val linesList = filteredLines.joinToString(", ") { "${it.first}${it.second}" }
+        showCustomSnackbar(this, binding.root, "Filtered to lines: $linesList")
+    }
+    
+    private fun clearLineFilter() {
+        // Clear selections in adapter
+        lineFilterAdapter.clearSelections()
+        
+        // Clear filtered lines
+        filteredLines.clear()
+        
+        // Update markers on map with all buses
+        updateBusMarkersWithFilter(allBusLocations)
+        
+        // Show message
+        showCustomSnackbar(this, binding.root, "Filter cleared")
+    }
+    
+    // Override attachBaseContext to apply language settings
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LanguageHelper.createConfigurationContext(newBase))
+    }
+    
+    // Apply language when resuming the activity
+    override fun onResume() {
+        super.onResume()
+        LanguageHelper.applyLanguage(this)
+        mapFragment.onResume()
+        // Only reconnect to WebSocket if it's not already connected
+        if (!isWebSocketConnected) {
+            busLocationViewModel.connectToWebSocket()
+        }
+    }
+    
+    override fun onPause() {
+        super.onPause()
+        mapFragment.onPause()
     }
 
     private fun setOnClickListeners() {
@@ -175,7 +362,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 directionsViewModel.getDirections(
                     destination!!,
                     origin!!,
-                    "en",
+                    "hr",
                     "transit",
                     "metric",
                 )
@@ -188,35 +375,67 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         binding.fakeSearchOrigin.setOnClickListener {
-            val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
-            val bounds =
-                RectangularBounds.newInstance(
-                    LatLng(45.065559878032644, 14.148164040937912),
-                    // Southwest bound
-                    LatLng(45.56482545660713, 14.68100096259229),
-                    // Northeast bound
-                )
-            val intent =
-                Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-                    .setLocationRestriction(bounds)
-                    .build(this)
-            startActivityForResult(intent, AUTOCOMPLETE_ORIG_REQUEST_CODE)
+            try {
+                val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
+                val bounds =
+                    RectangularBounds.newInstance(
+                        LatLng(45.065559878032644, 14.148164040937912),
+                        // Southwest bound
+                        LatLng(45.56482545660713, 14.68100096259229),
+                        // Northeast bound
+                    )
+                val intent =
+                    Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+                        .setLocationRestriction(bounds)
+                        .build(this)
+                startActivityForResult(intent, AUTOCOMPLETE_ORIG_REQUEST_CODE)
+            } catch (e: Exception) {
+                Log.e("MapsActivity", "Error starting origin search: ${e.message}", e)
+                showCustomSnackbar(this, binding.root, "Error starting location search")
+            }
         }
 
         binding.fakeSearchDestination.setOnClickListener {
-            val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
-            val bounds =
-                RectangularBounds.newInstance(
-                    LatLng(45.065559878032644, 14.148164040937912),
-                    // Southwest bound
-                    LatLng(45.56482545660713, 14.68100096259229),
-                    // Northeast bound
+            try {
+                val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
+                val bounds =
+                    RectangularBounds.newInstance(
+                        LatLng(45.065559878032644, 14.148164040937912),
+                        // Southwest bound
+                        LatLng(45.56482545660713, 14.68100096259229),
+                        // Northeast bound
+                    )
+                val intent =
+                    Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+                        .setLocationRestriction(bounds)
+                        .build(this)
+                startActivityForResult(intent, AUTOCOMPLETE_DEST_REQUEST_CODE)
+            } catch (e: Exception) {
+                Log.e("MapsActivity", "Error starting destination search: ${e.message}", e)
+                showCustomSnackbar(this, binding.root, "Error starting location search")
+            }
+        }
+        
+        binding.fabMyLocation.setOnClickListener {
+            if (userLocation != null) {
+                googleMap.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(userLocation!!, 15f)
                 )
-            val intent =
-                Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-                    .setLocationRestriction(bounds)
-                    .build(this)
-            startActivityForResult(intent, AUTOCOMPLETE_DEST_REQUEST_CODE)
+            } else {
+                if (ActivityCompat.checkSelfPermission(
+                        this, Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    requestLocationUpdates()
+                    showCustomSnackbar(this, binding.root, "Getting your location...")
+                } else {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        LOCATION_PERMISSION_REQUEST_CODE
+                    )
+                }
+            }
         }
     }
 
@@ -253,34 +472,49 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         data: Intent?,
     ) {
         super.onActivityResult(requestCode, resultCode, data)
+        
         if (requestCode == AUTOCOMPLETE_ORIG_REQUEST_CODE) {
             when (resultCode) {
                 RESULT_OK -> {
-                    val place = Autocomplete.getPlaceFromIntent(data!!)
-                    origin = "${place.latLng?.latitude},${place.latLng?.longitude}"
-                    binding.svOrigin.text = place.name
+                    try {
+                        val place = Autocomplete.getPlaceFromIntent(data!!)
+                        origin = "${place.latLng?.latitude},${place.latLng?.longitude}"
+                        binding.svOrigin.text = place.name
+                        Log.d("MapsActivity", "Origin selected: ${place.name}")
+                    } catch (e: Exception) {
+                        Log.e("MapsActivity", "Error processing origin result: ${e.message}", e)
+                        showCustomSnackbar(this, binding.root, "Error processing location selection")
+                    }
                 }
                 AutocompleteActivity.RESULT_ERROR -> {
                     val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                    // Handle error
+                    Log.e("MapsActivity", "Origin search error: ${status.statusMessage}")
+                    showCustomSnackbar(this, binding.root, "Search error: ${status.statusMessage}")
                 }
                 RESULT_CANCELED -> {
-                    // The user canceled the operation
+                    Log.d("MapsActivity", "Origin search canceled by user")
                 }
             }
         } else if (requestCode == AUTOCOMPLETE_DEST_REQUEST_CODE) {
             when (resultCode) {
                 RESULT_OK -> {
-                    val place = Autocomplete.getPlaceFromIntent(data!!)
-                    binding.svDestination.text = place.name
-                    destination = "${place.latLng?.latitude},${place.latLng?.longitude}"
+                    try {
+                        val place = Autocomplete.getPlaceFromIntent(data!!)
+                        binding.svDestination.text = place.name
+                        destination = "${place.latLng?.latitude},${place.latLng?.longitude}"
+                        Log.d("MapsActivity", "Destination selected: ${place.name}")
+                    } catch (e: Exception) {
+                        Log.e("MapsActivity", "Error processing destination result: ${e.message}", e)
+                        showCustomSnackbar(this, binding.root, "Error processing location selection")
+                    }
                 }
                 AutocompleteActivity.RESULT_ERROR -> {
                     val status: Status = Autocomplete.getStatusFromIntent(data!!)
-                    // Handle error
+                    Log.e("MapsActivity", "Destination search error: ${status.statusMessage}")
+                    showCustomSnackbar(this, binding.root, "Search error: ${status.statusMessage}")
                 }
                 RESULT_CANCELED -> {
-                    // The user canceled the operation
+                    Log.d("MapsActivity", "Destination search canceled by user")
                 }
             }
         }
@@ -304,6 +538,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     for (location in locationResult.locations) {
                         // Get the current location coordinates
                         val currentLocation = LatLng(location.latitude, location.longitude)
+                        userLocation = currentLocation
 
                         // Update the origin EditText with the current location
                         binding.svOrigin.text =
@@ -353,15 +588,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         private const val AUTOCOMPLETE_DEST_REQUEST_CODE = 552
     }
 
-    private fun startFetchingBusLocations() {
-        busLocationRunnable =
-            Runnable {
-                busLocationViewModel.getBusLocations()
-                busLocationHandler.postDelayed(busLocationRunnable, busLocationUpdateInterval)
-            }
-        busLocationHandler.post(busLocationRunnable)
-    }
-
     override fun onStart() {
         super.onStart()
         mapFragment.onStart()
@@ -369,24 +595,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onStop() {
         super.onStop()
-        mapFragment.onStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mapFragment.onResume()
-        startFetchingBusLocations()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mapFragment.onPause()
-        busLocationHandler.removeCallbacks(busLocationRunnable)
+        mapFragment.onStop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         mapFragment.onDestroy()
+        // Ensure WebSocket is disconnected when activity is destroyed
+        busLocationViewModel.disconnectWebSocket()
+        // Make sure to unsubscribe from specific bus updates
+        if (followSpecificBus && specificBusId != null) {
+            busLocationViewModel.unsubscribeFromSpecificBus()
+        }
     }
 
     override fun onLowMemory() {
@@ -396,40 +616,169 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
-        // Set initial map position to Rijeka, Croatia
-        val rijeka = LatLng(45.3271, 14.4422)
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(rijeka, 12f))
-
-        lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                setupUserLocation()
+        
+        try {
+            // Try to set map style
+            val success = googleMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    this, R.raw.map_style
+                )
+            )
+            if (!success) {
+                Log.e("MapsActivity", "Style parsing failed")
             }
+        } catch (e: Exception) {
+            Log.e("MapsActivity", "Can't find style. Error: ", e)
         }
+        
+        // Enable location button if we have permission
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            googleMap.isMyLocationEnabled = true
+        }
+        
+        // Check if we're in specific bus tracking mode
+        if (followSpecificBus && specificBusLatitude != 0.0 && specificBusLongitude != 0.0) {
+            // Set initial map position to the bus location
+            val busPosition = LatLng(specificBusLatitude, specificBusLongitude)
+            
+            // Add line stations if available
+            if (lineStationLatitudes != null && lineStationLongitudes != null && 
+                lineStationLatitudes!!.isNotEmpty() && lineStationNames != null) {
+                
+                // Draw the line route connecting all stations
+                drawLineRoute()
+                
+                // Add markers for all stations on this line
+                addLineStationMarkers()
+                
+                // Calculate bounds to show all stations and the bus
+                val boundsBuilder = LatLngBounds.builder()
+                boundsBuilder.include(busPosition)
+                
+                // Add all station positions to bounds
+                for (i in 0 until (lineStationLatitudes?.size ?: 0)) {
+                    val stationLat = lineStationLatitudes!![i]
+                    val stationLng = lineStationLongitudes!![i]
+                    boundsBuilder.include(LatLng(stationLat, stationLng))
+                }
+                
+                // Zoom to show all markers with padding
+                try {
+                    val bounds = boundsBuilder.build()
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
+                } catch (e: Exception) {
+                    // Fallback if bounds calculation fails
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(busPosition, 14f))
+                }
+            } else {
+                // Just zoom to bus if no station data
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(busPosition, 15f))
+            }
+            
+            // Add initial marker for the bus
+            val markerOptions = MarkerOptions()
+                .position(busPosition)
+                .title("Line ${specificLineNumber ?: ""}")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+            specificBusMarker = googleMap.addMarker(markerOptions)
+            
+            // Subscribe to updates for this specific bus
+            if (specificBusId != null) {
+                showCustomSnackbar(this, binding.root, "Tracking bus ${specificLineNumber ?: ""}")
+                busLocationViewModel.subscribeToSpecificBus(specificBusId!!)
+            }
+            
+            // Observe the specific bus location updates
+            busLocationViewModel.currentBusLocation.observe(this) { busLocation ->
+                if (busLocation != null && busLocation.voznjaBusId == specificBusId) {
+                    // Update marker position
+                    val newPosition = LatLng(busLocation.lat, busLocation.lon)
+                    specificBusMarker?.position = newPosition
+                    
+                    // Smoothly move camera to follow the bus
+                    googleMap.animateCamera(
+                        CameraUpdateFactory.newLatLng(newPosition)
+                    )
+                }
+            }
+        } else {
+            // Set initial map position to Rijeka, Croatia
+            val rijeka = LatLng(45.3271, 14.4422)
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(rijeka, 14f))
 
-        scheduleViewModel.getScheduleList(null)
-        busLocationViewModel.getBusLocations()
-        stationsViewModel.getStationsList()
-        // directionsViewModel.getDirections(
-        //    destination,
-        //    origin, "en", "driving", "metric"
-        // )
-
-        busLocationViewModel.busLocationsLiveData.observe(this) { busLocations ->
+            // Load data in background
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
                     setupUserLocation()
                 }
             }
-            scheduleViewModel.scheduleList.observe(this) { scheduleList ->
-                stationsViewModel.stationsList.observe(this) { stationsList ->
-                    updateBusMarkers(busLocations, scheduleList, stationsList)
-                    updateStationMarkers(stationsList, scheduleList)
+
+            // Load data in parallel
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    scheduleViewModel.getScheduleList(null)
+                    stationsViewModel.getStationsList()
                 }
             }
-        }
-        directionsViewModel.directionsLiveData.observe(this) { directions ->
-            drawRouteOnMap(directions.routes.firstOrNull()?.overviewPolyline?.points, directions)
-            openRouteListBottomSheet(directions.routes.firstOrNull()?.legs?.firstOrNull()?.steps)
+            
+            // Connect to WebSocket for real-time bus location updates
+            showCustomSnackbar(this, binding.root, "Loading bus locations...")
+            busLocationViewModel.connectToWebSocket()
+            
+            // Observe WebSocket connection status
+            busLocationViewModel.isWebSocketConnected.observe(this) { connected ->
+                isWebSocketConnected = connected
+                if (connected) {
+                    Log.d("MapsActivity", "WebSocket connected successfully")
+                    showCustomSnackbar(this, binding.root, "Real-time bus tracking connected")
+                } else {
+                    Log.d("MapsActivity", "WebSocket disconnected")
+                    showCustomSnackbar(this, binding.root, "Real-time connection lost")
+                }
+            }
+
+            // Observe bus location updates from WebSocket
+            busLocationViewModel.busLocationsLiveData.observe(this) { busLocations ->
+                // Store all bus locations for filtering
+                allBusLocations.clear()
+                allBusLocations.addAll(busLocations)
+                
+                lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+                        updateBusMarkersWithFilter(busLocations)
+                    }
+                }
+            }
+            
+            // Observe schedule and station data
+            scheduleViewModel.scheduleList.observe(this) { scheduleList ->
+                allSchedules = scheduleList
+                stationsViewModel.stationsList.observe(this) { stationsList ->
+                    allStations = stationsList
+                    lifecycleScope.launch {
+                        withContext(Dispatchers.IO) {
+                            updateStationMarkers()
+                        }
+                    }
+                }
+            }
+            
+            directionsViewModel.directionsLiveData.observe(this) { directions ->
+                if (directions != null) {
+                    lifecycleScope.launch {
+                        withContext(Dispatchers.IO) {
+                            drawRouteOnMap(directions.routes.firstOrNull()?.overviewPolyline?.points, directions)
+                        }
+                    }
+                }
+                if (directions != null) {
+                    openRouteListBottomSheet(directions.routes.firstOrNull()?.legs?.firstOrNull()?.steps)
+                }
+            }
         }
     }
 
@@ -437,76 +786,118 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         polyline: String?,
         response: DirectionsResponse,
     ) {
-        polyline?.let {
-            val decodedPath = PolyUtil.decode(polyline)
-            val latLngList =
-                decodedPath.map {
-                    LatLng(it.latitude, it.longitude)
-                }
-            var busLine = "0"
+        lifecycleScope.launch {
+            polyline?.let {
+                // Process data on background thread
+                val routeData = withContext(Dispatchers.IO) {
+                    val decodedPath = PolyUtil.decode(polyline)
+                    val latLngList = decodedPath.map { LatLng(it.latitude, it.longitude) }
+                    var busLine = "0"
+                    var routeType = "WALK" // Default to WALK
 
-            response.routes.firstOrNull()?.let { route ->
-                val origin = route.legs.firstOrNull()?.startAddress ?: ""
-                val destination = route.legs.firstOrNull()?.endAddress ?: ""
-                val distance = route.legs.firstOrNull()?.distance?.text ?: ""
-                val duration = route.legs.firstOrNull()?.duration?.text ?: ""
-                val startTime = route.legs.firstOrNull()?.depTime?.text ?: ""
-                val endTime = route.legs.firstOrNull()?.arrivalTime?.text ?: ""
+                    response.routes.firstOrNull()?.let { route ->
+                        val origin = route.legs.firstOrNull()?.startAddress ?: ""
+                        val destination = route.legs.firstOrNull()?.endAddress ?: ""
+                        val distance = route.legs.firstOrNull()?.distance?.text ?: ""
+                        val duration = route.legs.firstOrNull()?.duration?.text ?: ""
+                        val startTime = route.legs.firstOrNull()?.depTime?.text ?: ""
+                        val endTime = route.legs.firstOrNull()?.arrivalTime?.text ?: ""
+                        val steps = route.legs.firstOrNull()?.steps ?: emptyList()
 
-                // Check if transit mode was used
-                route.legs.forEach { leg ->
-                    leg.steps.forEach {
-                        if (it.travelMode == "TRANSIT") {
-                            busLine = it.transitDetails!!.line?.name ?: "0"
+                        // Determine route type based on steps
+                        var hasBus = false
+                        var hasWalk = false
+                        
+                        // Check if transit mode was used
+                        route.legs.forEach { leg ->
+                            leg.steps.forEach {
+                                if (it.travelMode == "TRANSIT") {
+                                    busLine = it.transitDetails!!.line?.shortName ?: "0"
+                                    hasBus = true
+                                } else if (it.travelMode == "WALKING") {
+                                    hasWalk = true
+                                }
+                            }
                         }
+                        
+                        // Set route type based on transportation modes
+                        routeType = when {
+                            hasBus && hasWalk -> "MIXED"
+                            hasBus -> "BUS"
+                            else -> "WALK"
+                        }
+
+                        // Create a Route object with the extracted information
+                        val routeInfo = FavoriteRoute(
+                            origin, startTime, destination, endTime, distance, duration, busLine,
+                            getCurrentDateTime(), distance.hashCode().toString(),
+                            routeType, steps
+                        )
+
+                        // Save the route information to the database
+                        directionsViewModel.saveRouteInformation(routeInfo)
+
+                        RouteData(
+                            latLngList = latLngList,
+                            busLine = busLine,
+                            route = route,
+                            routeType = routeType
+                        )
                     }
                 }
+                
+                // Update UI on main thread
+                withContext(Dispatchers.Main) {
+                    routeData?.let { data ->
+                        val message = when (data.routeType) {
+                            "BUS" -> "Bus route saved: Line ${data.busLine}"
+                            "WALK" -> "Walking route saved"
+                            else -> "Mixed route saved: Line ${data.busLine}"
+                        }
+                        showCustomSnackbar(this@MapsActivity, binding.root, message)
+                        
+                        // Draw route polylines
+                        for (leg in data.route.legs) {
+                            for (step in leg.steps) {
+                                val stepPolyline = step.polyline.points
+                                val stepLatLngList = PolyUtil.decode(stepPolyline)
+                                    .map { LatLng(it.latitude, it.longitude) }
 
-                // Create a Route object with the extracted information
-                showCustomSnackbar(this, binding.root, busLine)
-                val routeInfo =
-                    FavoriteRoute(
-                        origin, startTime, destination, endTime, distance, duration, busLine,
-                        getCurrentDateTime(), distance.hashCode().toString(),
-                    )
+                                // Draw dotted line for steps and solid line for bus segments
+                                val stepPolylineOptions = PolylineOptions()
+                                    .addAll(stepLatLngList)
+                                    .width(15f)
+                                    .color(if (step.travelMode == "TRANSIT") Color.BLUE else Color.CYAN)
+                                    .pattern(
+                                        if (step.travelMode == "TRANSIT") {
+                                            null
+                                        } else {
+                                            listOf(Dash(30f), Gap(20f))
+                                        },
+                                    )
+                                googleMap.addPolyline(stepPolylineOptions)
+                            }
+                        }
 
-                // Save the route information to the database
-                directionsViewModel.saveRouteInformation(routeInfo)
+                        val builder = LatLngBounds.builder()
+                        data.latLngList.forEach { builder.include(it) }
+                        val bounds = builder.build()
+                        val padding = 100 // Padding around the route (in pixels)
 
-                for (leg in route.legs) {
-                    for (step in leg.steps) {
-                        val stepPolyline = step.polyline.points
-                        val stepLatLngList =
-                            PolyUtil.decode(stepPolyline)
-                                .map { LatLng(it.latitude, it.longitude) }
-
-                        // Draw dotted line for steps and solid line for bus segments
-                        val stepPolylineOptions =
-                            PolylineOptions()
-                                .addAll(stepLatLngList)
-                                .width(15f)
-                                .color(if (step.travelMode == "TRANSIT") Color.BLUE else Color.CYAN)
-                                .pattern(
-                                    if (step.travelMode == "TRANSIT") {
-                                        null
-                                    } else {
-                                        listOf(Dash(30f), Gap(20f))
-                                    },
-                                )
-                        googleMap.addPolyline(stepPolylineOptions)
+                        // Move camera to show the entire route
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
                     }
                 }
             }
-
-            val builder = LatLngBounds.builder()
-            latLngList.forEach { builder.include(it) }
-            val bounds = builder.build()
-            val padding = 100 // Padding around the route (in pixels)
-
-            // Move camera to show the entire route
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
         }
     }
+
+    private data class RouteData(
+        val latLngList: List<LatLng>,
+        val busLine: String,
+        val route: Route,
+        val routeType: String
+    )
 
     private fun setupUserLocation() {
         if (ActivityCompat.checkSelfPermission(
@@ -515,7 +906,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                location?.let { showUserLocationOnMap(it) }
+                location?.let { 
+                    userLocation = LatLng(location.latitude, location.longitude)
+                    showUserLocationOnMap(location)
+                    
+                    // Zoom to user location on main thread
+                    lifecycleScope.launch {
+                        withContext(Dispatchers.Main) {
+                            googleMap.animateCamera(
+                                CameraUpdateFactory.newLatLngZoom(userLocation!!, 15f)
+                            )
+                        }
+                    }
+                }
             }.addOnFailureListener { exception: Exception ->
                 Toast.makeText(
                     this,
@@ -538,44 +941,60 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val markerOptions =
             MarkerOptions()
                 .position(userLatLng)
-                .title("My Location")
                 .icon(BitmapDescriptorFactory.defaultMarker(180f))
 
         googleMap.addMarker(markerOptions)
     }
 
-    private fun updateStationMarkers(
-        stationsList: ArrayList<Station>,
-        scheduleList: ArrayList<Schedule>,
-    ) {
-        stationMarkers.values.forEach { marker -> marker.remove() }
-        stationMarkers.clear()
-
-        for (station in stationsList) {
-            val direction = findDirection(station, scheduleList)
-            val stationPosition =
-                LatLng(
-                    (station.gpsY),
-                    (station.gpsX),
-                )
-            val markerOptions =
-                MarkerOptions()
-                    .position(stationPosition)
-                    .title(station.shortName)
-                    .snippet(station.longName)
-                    .icon(
-                        BitmapDescriptorFactory.fromBitmap(
-                            createStationMarkerIcon(
-                                this,
-                                direction,
-                            ),
-                        ),
+    private fun updateStationMarkers() {
+        lifecycleScope.launch {
+            // Process data on background thread
+            val stationData = withContext(Dispatchers.IO) {
+                // Prepare station data for all stations
+                allStations.map { station ->
+                    val direction = findDirection(station, allSchedules)
+                    val stationPosition = LatLng(station.gpsY, station.gpsX)
+                    
+                    StationMarkerData(
+                        id = station.id,
+                        position = stationPosition,
+                        title = station.shortName,
+                        direction = direction
                     )
+                }
+            }
+            
+            // Update UI on main thread
+            withContext(Dispatchers.Main) {
+                // Remove previous station markers
+                stationMarkers.values.forEach { marker -> marker.remove() }
+                stationMarkers.clear()
 
-            val marker = googleMap.addMarker(markerOptions)
-            stationMarkers[station.id] = marker!!
+                // Add markers for all stations
+                for (stationData in stationData) {
+                    val markerOptions = MarkerOptions()
+                        .position(stationData.position)
+                        .title(stationData.title)
+                        .icon(
+                            BitmapDescriptorFactory.fromBitmap(
+                                createStationMarkerIcon(this@MapsActivity, stationData.direction)
+                            )
+                        )
+                        .zIndex(1f) // Station markers behind
+
+                    val marker = googleMap.addMarker(markerOptions)
+                    stationMarkers[stationData.id] = marker!!
+                }
+            }
         }
     }
+    
+    private data class StationMarkerData(
+        val id: Int,
+        val position: LatLng,
+        val title: String,
+        val direction: String
+    )
 
     private fun findDirection(
         station: Station,
@@ -588,71 +1007,216 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         return "A"
     }
 
-    private fun updateBusMarkers(
-        busLocations: List<BusLocation>,
-        scheduleList: List<Schedule>,
-        stationList: List<Station>,
-    ) {
-        // Remove previous markers
-        busMarkers.values.forEach { marker -> marker.remove() }
-        busMarkers.clear()
-
-        // Add new markers
-        for (busLocation in busLocations) {
-            val ran = Math.random() / 10000
-            val bus = findBus(busLocation, scheduleList)
-            val station = findStation(busLocation, stationList)
-
-            val busPosition =
-                LatLng(
-                    (station?.gpsY?.plus(ran) ?: 45.3271),
-                    (station?.gpsX?.plus(ran) ?: 14.4422),
-                )
-            val markerOptions =
-                MarkerOptions()
-                    .position(busPosition)
-                    .title(bus?.variantLineName ?: getString(R.string.departure_failed))
-                    .snippet(
-                        "aaaa",
-                    )
-                    .icon(
-                        BitmapDescriptorFactory.fromBitmap(
-                            createLineMarkerIcon(
-                                this,
-                                bus?.lineNumber ?: "",
-                                bus?.direction ?: "",
-                            ),
-                        ),
-                    )
-
-            val marker = googleMap.addMarker(markerOptions)
-            busMarkers[busLocation.busId.toInt()] = marker!!
-        }
-    }
-
-    private fun findStation(
-        busLocation: BusLocation,
-        stationList: List<Station>,
-    ): Station? {
-        val matchingStation = stationList.filter { it.id == busLocation.nextStationId }
-        if (matchingStation.isNotEmpty()) {
-            return matchingStation.first()
-        }
-        return null
-    }
-
-    private fun findBus(
-        busLocation: BusLocation,
-        scheduleList: List<Schedule>,
-    ): Schedule? {
-        val matchingSchedules =
-            scheduleList.filter {
-                it.startId == busLocation.startId.toString()
+    private fun updateBusMarkersWithFilter(busLocations: List<BusLocation>) {
+        lifecycleScope.launch {
+            // Process data on background thread
+            val markerData = withContext(Dispatchers.IO) {
+                // Filter bus locations if filters are active
+                val filteredBusLocations = if (filteredLines.isNotEmpty()) {
+                    busLocations.filter { busLocation ->
+                        val lineNumber = busLocation.brojLinije ?: ""
+                        val direction = busLocation.smjer ?: ""
+                        filteredLines.any { it.first == lineNumber && it.second == direction }
+                    }
+                } else {
+                    busLocations
+                }
+                
+                filteredBusLocations.map { busLocation ->
+                    val busPosition = LatLng(busLocation.lat, busLocation.lon)
+                    val lineNumber = busLocation.brojLinije ?: ""
+                    val direction = busLocation.smjer ?: ""
+                    val variantName = busLocation.nazivVarijanteLinije ?: ""
+                    
+                    Triple(busLocation.gbr, busPosition, MarkerData(
+                        title = variantName.ifEmpty { "Bus ${lineNumber}" },
+                        lineNumber = lineNumber,
+                        direction = direction
+                    ))
+                }
             }
-        if (matchingSchedules.isNotEmpty()) {
-            return matchingSchedules.first()
+            
+            // Update UI on main thread
+            withContext(Dispatchers.Main) {
+                // Get current bus IDs
+                val currentBusIds = busMarkers.keys.toSet()
+                val newBusIds = markerData.map { it.first }.toSet()
+                
+                // Remove markers for buses that are no longer present
+                val busesToRemove = currentBusIds - newBusIds
+                busesToRemove.forEach { busId ->
+                    busMarkers[busId]?.remove()
+                    busMarkers.remove(busId)
+                }
+                
+                // Update or create markers for each bus
+                for ((gbr, position, markerData) in markerData) {
+                    val existingMarker = busMarkers[gbr]
+                    
+                    if (existingMarker != null) {
+                        // Update existing marker position and info
+                        existingMarker.position = position
+                        existingMarker.title = markerData.title
+                    } else {
+                        // Create new marker
+                        val markerOptions = MarkerOptions()
+                            .position(position)
+                            .title(markerData.title)
+                            .icon(
+                                BitmapDescriptorFactory.fromBitmap(
+                                    createLineMarkerIcon(
+                                        this@MapsActivity,
+                                        markerData.lineNumber,
+                                        markerData.direction,
+                                    ),
+                                ),
+                            )
+                            .zIndex(2f) // Bus markers in front
+
+                        val marker = googleMap.addMarker(markerOptions)
+                        busMarkers[gbr] = marker!!
+                    }
+                }
+            }
         }
-        return null
+    }
+    
+    private data class MarkerData(
+        val title: String,
+        val lineNumber: String,
+        val direction: String
+    )
+
+    private fun drawLineRoute() {
+        if (lineStationLatitudes == null || lineStationLongitudes == null || 
+            lineStationLatitudes!!.isEmpty()) {
+            return
+        }
+        
+        // Create list of LatLng points for the polyline
+        val routePoints = mutableListOf<LatLng>()
+        for (i in 0 until lineStationLatitudes!!.size) {
+            val stationLat = lineStationLatitudes!![i]
+            val stationLng = lineStationLongitudes!![i]
+            routePoints.add(LatLng(stationLat, stationLng))
+        }
+        
+        // Get line color based on line number
+        val lineColor = getColorForLine(specificLineNumber)
+        
+        // Create polyline options
+        val polylineOptions = PolylineOptions()
+            .addAll(routePoints)
+            .width(10f)
+            .color(lineColor)
+            .geodesic(true)
+        
+        // Add the polyline to the map
+        lineRoutePolyline = googleMap.addPolyline(polylineOptions)
+    }
+    
+    private fun getColorForLine(lineNumber: String?): Int {
+        // Generate a consistent color based on line number
+        return when (lineNumber) {
+            "1" -> Color.parseColor("#FF5722") // Deep Orange
+            "2" -> Color.parseColor("#2196F3") // Blue
+            "3" -> Color.parseColor("#4CAF50") // Green
+            "4" -> Color.parseColor("#9C27B0") // Purple
+            "5" -> Color.parseColor("#FFC107") // Amber
+            "6" -> Color.parseColor("#795548") // Brown
+            "7" -> Color.parseColor("#607D8B") // Blue Grey
+            "8" -> Color.parseColor("#E91E63") // Pink
+            "9" -> Color.parseColor("#00BCD4") // Cyan
+            else -> {
+                // Generate a color based on hash of line number
+                val hash = lineNumber?.hashCode() ?: 0
+                val hue = (hash % 360).toFloat()
+                val hsv = floatArrayOf(hue, 0.8f, 0.8f)
+                Color.HSVToColor(hsv)
+            }
+        }
+    }
+    
+    private fun addLineStationMarkers() {
+        if (lineStationLatitudes == null || lineStationLongitudes == null || 
+            lineStationNames == null || lineStationLatitudes!!.isEmpty()) {
+            return
+        }
+        
+        // Clear any existing line station markers
+        lineStationMarkers.forEach { it.remove() }
+        lineStationMarkers.clear()
+        
+        // Add markers for each station
+        for (i in 0 until lineStationLatitudes!!.size) {
+            val stationLat = lineStationLatitudes!![i]
+            val stationLng = lineStationLongitudes!![i]
+            val stationName = lineStationNames!![i]
+            val stationId = if (lineStationIds != null && i < lineStationIds!!.size) {
+                lineStationIds!![i]
+            } else {
+                -1
+            }
+            
+            // Create a custom marker for line stations
+            val markerOptions = MarkerOptions()
+                .position(LatLng(stationLat, stationLng))
+                .title(stationName)
+                .icon(BitmapDescriptorFactory.fromBitmap(
+                    createLineStationMarkerIcon(
+                        this, 
+                        specificLineNumber ?: "", 
+                        specificLineDirection ?: "A",
+                        stationId
+                    )
+                ))
+            
+            // Add marker to map and store reference
+            val marker = googleMap.addMarker(markerOptions)
+            if (marker != null) {
+                lineStationMarkers.add(marker)
+            }
+        }
+    }
+    
+    private fun createLineStationMarkerIcon(
+        context: Context,
+        lineNumber: String,
+        lineDirection: String,
+        stationId: Int
+    ): Bitmap {
+        val markerSize = context.resources.getDimensionPixelSize(R.dimen.marker_station_size)
+        val bitmap = createBitmap(markerSize, markerSize)
+        val canvas = Canvas(bitmap)
+
+        // Draw circle background with line-specific color
+        val paint = Paint()
+        paint.color = getColorForLine(lineNumber)
+        
+        // Draw outer circle
+        canvas.drawCircle(markerSize / 2f, markerSize / 2f, markerSize / 2f, paint)
+        
+        // Draw inner circle in white
+        paint.color = Color.WHITE
+        canvas.drawCircle(markerSize / 2f, markerSize / 2f, markerSize / 3f, paint)
+        
+        // Draw station number or symbol
+        paint.color = Color.BLACK
+        paint.textSize = context.resources.getDimensionPixelSize(R.dimen.marker_station_text_size).toFloat()
+        paint.textAlign = Paint.Align.CENTER
+        val x = markerSize / 2f
+        val y = markerSize / 2f - (paint.descent() + paint.ascent()) / 2f
+        
+        // Use a short identifier for the station
+        val stationText = if (stationId > 0) {
+            (stationId % 100).toString()
+        } else {
+            "•"
+        }
+        
+        canvas.drawText(stationText, x, y, paint)
+
+        return bitmap
     }
 }
 

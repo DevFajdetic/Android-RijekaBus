@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="SchedulerPickerItems" >
-        <item>Bus Lines</item>
-        <item>Stations</item>
+        <item>@string/all_bus_lines_rijeka</item>
+        <item>@string/all_bus_stations_rijeka</item>
     </string-array>
 </resources>

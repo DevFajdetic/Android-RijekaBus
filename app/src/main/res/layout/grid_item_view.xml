@@ -1,33 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cl_container"
     android:layout_width="match_parent"
-    android:minWidth="100dp"
-    android:layout_height="40dp"
-    android:background="@drawable/background_stroke">
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:visibility="gone"
-        android:id="@+id/iv_is_active"
-        android:layout_width="8dp"
-        android:layout_height="8dp"
-        android:layout_margin="4dp"
-        android:background="@color/sub_green"
-        app:layout_constraintBottom_toBottomOf="@id/tv_time"
-        app:layout_constraintEnd_toStartOf="@id/tv_time"
-        app:layout_constraintTop_toTopOf="@id/tv_time"
-        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
-
-    <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="10:56 h"
-        android:textAppearance="@style/HeadlineMediumNLv1Left"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Main content (departure time) -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/surface_surface_2"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="08:00"
+                android:textStyle="bold"
+                android:textColor="@color/clean_blue"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_is_active"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_bus"
+                app:tint="@color/color_primary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_expand"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_expand_more"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_is_active"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Expanded content (station timeline) -->
+        <LinearLayout
+            android:id="@+id/expanded_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_station_timeline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

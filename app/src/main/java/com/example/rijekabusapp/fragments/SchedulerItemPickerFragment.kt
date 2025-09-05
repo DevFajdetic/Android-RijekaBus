@@ -46,7 +46,7 @@ class SchedulerItemPickerFragment : Fragment(R.layout.fragment_explore) {
         val spinnerAdapter =
             ArrayAdapter(
                 requireContext(),
-                android.R.layout.simple_spinner_dropdown_item,
+                R.layout.drop_down_toolbar_item,
                 spinnerItems,
             )
         binding.spinner.adapter = spinnerAdapter
@@ -96,6 +96,9 @@ class SchedulerItemPickerFragment : Fragment(R.layout.fragment_explore) {
                 binding.emptyState.setupEmptyStateView(getString(R.string.no_stations_error_desc))
                 binding.emptyState.visibility = View.VISIBLE
                 binding.rv.visibility = View.GONE
+            } else {
+                binding.emptyState.visibility = View.GONE
+                binding.rv.visibility = View.VISIBLE
             }
         }
 
@@ -122,6 +125,15 @@ class SchedulerItemPickerFragment : Fragment(R.layout.fragment_explore) {
                     )
                 binding.rv.adapter = adapter
                 binding.progressBar.visibility = ProgressBar.GONE
+                
+                if (stationsList.isEmpty()) {
+                    binding.emptyState.setupEmptyStateView(getString(R.string.no_stations_error_desc))
+                    binding.emptyState.visibility = View.VISIBLE
+                    binding.rv.visibility = View.GONE
+                } else {
+                    binding.emptyState.visibility = View.GONE
+                    binding.rv.visibility = View.VISIBLE
+                }
             }
         }
 

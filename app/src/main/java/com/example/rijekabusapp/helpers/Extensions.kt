@@ -236,9 +236,11 @@ fun showCustomSnackbar(
     }
 
     // Add bottom margin to the view
-    val layoutParams = view.layoutParams as ViewGroup.MarginLayoutParams
-    layoutParams.setMargins(0, 0, 0, 75)
-    view.layoutParams = layoutParams
+    val layoutParams = view.layoutParams
+    if (layoutParams is ViewGroup.MarginLayoutParams) {
+        layoutParams.setMargins(0, 0, 0, 75)
+        view.layoutParams = layoutParams
+    }
 
     snl.addView(customSnackbarView)
     snackbar.show()
@@ -301,10 +303,11 @@ fun Context.applyTheme(isDarkMode: Boolean) {
 }
 
 fun Context.isDarkThemeEnabled(): Boolean {
-    return when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-        Configuration.UI_MODE_NIGHT_YES -> true
-        else -> false
-    }
+    // First check if we have a saved preference
+    val savedPreference = getBoolFromPreferences(PREF_THEME_MODE, false, this)
+    
+    // Return the saved preference (getBoolFromPreferences already handles null case with default value)
+    return savedPreference
 }
 
 fun Context.getCurrentThemeMode(): Int {

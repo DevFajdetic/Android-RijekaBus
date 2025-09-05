@@ -16,6 +16,7 @@ import com.example.rijekabusapp.adapters.EXTRA_STATION
 import com.example.rijekabusapp.adapters.StationLinesRecyclerAdapter
 import com.example.rijekabusapp.adapters.image.ImageSliderAdapter
 import com.example.rijekabusapp.databinding.FragmentStationLinesBinding
+import com.example.rijekabusapp.databinding.LayoutCommentsBinding
 import com.example.rijekabusapp.fragments.bottomsheet.AddPhotoBottomSheet
 import com.example.rijekabusapp.fragments.bottomsheet.EditPhotosBottomSheet
 import com.example.rijekabusapp.helpers.compareWithCurrentTime
@@ -43,6 +44,10 @@ class StationLinesFragment : Fragment(), OnMapReadyCallback {
     private lateinit var stationItem: Station
     private val imageSliderAdapter by lazy { ImageSliderAdapter(requireContext(), arrayListOf()) }
     private var playerImageList = ArrayList<StationImage>()
+    
+    // Social features
+    private lateinit var commentsBinding: LayoutCommentsBinding
+    private lateinit var socialExtension: StationSocialExtension
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,14 +56,32 @@ class StationLinesFragment : Fragment(), OnMapReadyCallback {
     ): View {
         binding = FragmentStationLinesBinding.inflate(inflater, container, false)
         stationItem = (arguments?.getSerializable(EXTRA_STATION) as? Station)!!
+        
+        // Initialize view bindings for social features
+        commentsBinding = LayoutCommentsBinding.bind(binding.containerComments.root)
 
         binding.googleMap.onCreate(savedInstanceState)
         latitude = stationItem.gpsY
         longitude = stationItem.gpsX
         binding.googleMap.getMapAsync(this)
         setupCurrentSchedule(stationItem, savedInstanceState)
+        
+        // Initialize social features
+        initSocialFeatures(stationItem)
 
         return binding.root
+    }
+    
+    private fun initSocialFeatures(station: Station) {
+        // Create social extension with our view bindings
+        socialExtension = StationSocialExtension(
+            this,
+            binding,
+            commentsBinding
+        )
+        
+        // Setup the social features
+        socialExtension.setup(station)
     }
 
     private fun setupCurrentSchedule(
@@ -144,6 +167,11 @@ class StationLinesFragment : Fragment(), OnMapReadyCallback {
     override fun onDestroy() {
         super.onDestroy()
         binding.googleMap.onDestroy()
+        
+        // Cleanup social features
+        if (::socialExtension.isInitialized) {
+            socialExtension.cleanup()
+        }
     }
 
     override fun onLowMemory() {

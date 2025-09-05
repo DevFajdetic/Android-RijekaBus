@@ -54,13 +54,14 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
                 android:ellipsize="end"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:theme="@style/BodyLargeNLv1Left"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tv_time"
                 app:layout_constraintStart_toEndOf="@+id/lineNumberContainer"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.4"
+                android:textAllCaps="true"
                 tools:text="Novo Naselje - Krnjevo" />
 
             <TextView
@@ -91,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_primary"
-                android:text="NOTIFY"
+                android:text="@string/notify"
                 android:padding="8dp"
                 android:textAppearance="@style/HeadlineSmallNLv1Left"
                 app:layout_constraintBottom_toBottomOf="parent"

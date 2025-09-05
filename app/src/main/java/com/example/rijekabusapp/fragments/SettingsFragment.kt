@@ -13,6 +13,7 @@ import android.view.Window
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -29,6 +30,8 @@ import com.example.rijekabusapp.helpers.getBoolFromPreferences
 import com.example.rijekabusapp.helpers.getStringFromPreferences
 import com.example.rijekabusapp.helpers.savePreferenceBool
 import com.example.rijekabusapp.helpers.savePreferenceString
+import com.example.rijekabusapp.helpers.isDarkThemeEnabled
+import com.example.rijekabusapp.helpers.showCustomSnackbar
 import com.example.rijekabusapp.viewmodels.SettingsViewModel
 import java.util.Locale
 
@@ -48,52 +51,26 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 .navigate(R.id.action_settingsFragment_to_exploreFragment)
         }
 
+        // Check if we need to sync theme with system settings
+        syncThemeWithSystemIfNeeded()
+
         // SET DEFAULT VALUES
         setDefaultValues()
 
         // LANGUAGES
-        binding.actvLanguages.setAdapter(
-            ArrayAdapter(
-                requireContext(),
-                R.layout.drop_down_item,
-                resources.getStringArray(R.array.SpinnerLanguages),
-            ),
-        )
-        binding.actvLanguages.setOnItemClickListener { parent, view, position, id ->
-            val selectedLanguage = parent.getItemAtPosition(position).toString()
-            applyLanguage(selectedLanguage)
-        }
+        setupLanguageSettings()
 
         // DATES
-        binding.actvDateFormat.setAdapter(
-            ArrayAdapter(
-                requireContext(),
-                R.layout.drop_down_item,
-                resources.getStringArray(R.array.SpinnerDateFormats),
-            ),
-        )
-        binding.actvDateFormat.setOnItemClickListener { parent, view, position, id ->
-            val selectedDate = parent.getItemAtPosition(position).toString()
-            savePreferenceString(PREF_SELECTED_DATE, selectedDate, requireContext())
-        }
+        setupDateSettings()
 
         // THEME
-        binding.switchTheme.setOnCheckedChangeListener { _, checked ->
-            savePreferenceBool(PREF_THEME_MODE, checked, requireContext())
-            applyTheme(checked)
-        }
+        setupThemeSettings()
 
         // UNITS
-        binding.metric.setOnCheckedChangeListener { _, checked ->
-            savePreferenceBool(PREF_METRIC, checked, requireContext())
-            binding.imperial.isChecked = !checked
-        }
+        setupUnitSettings()
 
         // CLOCK
-        binding.hours24.setOnCheckedChangeListener { _, checked ->
-            savePreferenceBool(PREF_HOUR, checked, requireContext())
-            binding.hours12.isChecked = !checked
-        }
+        setupClockSettings()
 
         // Clear button
         binding.clearButton.setOnClickListener {
@@ -103,11 +80,119 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         return binding.root
     }
 
+    private fun setupLanguageSettings() {
+        binding.actvLanguages.setAdapter(
+            ArrayAdapter(
+                requireContext(),
+                R.layout.drop_down_item,
+                resources.getStringArray(R.array.SpinnerLanguages),
+            ),
+        )
+        
+        // Set current value from preferences
+        val currentLanguage = getStringFromPreferences(PREF_SELECTED_LANGUAGE, "English", requireContext())
+        binding.actvLanguages.setText(currentLanguage, false)
+        
+        binding.actvLanguages.setOnItemClickListener { parent, _, position, _ ->
+            val selectedLanguage = parent.getItemAtPosition(position).toString()
+            if (selectedLanguage != currentLanguage) {
+                applyLanguage(selectedLanguage)
+            }
+        }
+    }
+    
+    private fun setupDateSettings() {
+        binding.actvDateFormat.setAdapter(
+            ArrayAdapter(
+                requireContext(),
+                R.layout.drop_down_item,
+                resources.getStringArray(R.array.SpinnerDateFormats),
+            ),
+        )
+        
+        // Set current value from preferences
+        val currentDateFormat = getStringFromPreferences(PREF_SELECTED_DATE, "dd/MM/yyyy", requireContext())
+        binding.actvDateFormat.setText(currentDateFormat, false)
+        
+        binding.actvDateFormat.setOnItemClickListener { parent, _, position, _ ->
+            val selectedDate = parent.getItemAtPosition(position).toString()
+            savePreferenceString(PREF_SELECTED_DATE, selectedDate, requireContext())
+            showCustomSnackbar(requireContext(), binding.root, getString(R.string.settings_saved))
+        }
+    }
+    
+    private fun setupThemeSettings() {
+        val isDarkMode = getBoolFromPreferences(PREF_THEME_MODE, false, requireContext())
+        binding.switchTheme.isChecked = isDarkMode
+        
+        binding.switchTheme.setOnCheckedChangeListener { _, checked ->
+            savePreferenceBool(PREF_THEME_MODE, checked, requireContext())
+            applyTheme(checked)
+        }
+    }
+    
+    private fun setupUnitSettings() {
+        val isMetric = getBoolFromPreferences(PREF_METRIC, true, requireContext())
+        binding.metric.isChecked = isMetric
+        binding.imperial.isChecked = !isMetric
+        
+        binding.metric.setOnCheckedChangeListener { _, checked ->
+            if (checked) {
+                savePreferenceBool(PREF_METRIC, true, requireContext())
+                binding.imperial.isChecked = false
+                showCustomSnackbar(requireContext(), binding.root, getString(R.string.settings_saved))
+            }
+        }
+        
+        binding.imperial.setOnCheckedChangeListener { _, checked ->
+            if (checked) {
+                savePreferenceBool(PREF_METRIC, false, requireContext())
+                binding.metric.isChecked = false
+                showCustomSnackbar(requireContext(), binding.root, getString(R.string.settings_saved))
+            }
+        }
+    }
+    
+    private fun setupClockSettings() {
+        val is24Hour = getBoolFromPreferences(PREF_HOUR, true, requireContext())
+        binding.hours24.isChecked = is24Hour
+        binding.hours12.isChecked = !is24Hour
+        
+        binding.hours24.setOnCheckedChangeListener { _, checked ->
+            if (checked) {
+                savePreferenceBool(PREF_HOUR, true, requireContext())
+                binding.hours12.isChecked = false
+                showCustomSnackbar(requireContext(), binding.root, getString(R.string.settings_saved))
+            }
+        }
+        
+        binding.hours12.setOnCheckedChangeListener { _, checked ->
+            if (checked) {
+                savePreferenceBool(PREF_HOUR, false, requireContext())
+                binding.hours24.isChecked = false
+                showCustomSnackbar(requireContext(), binding.root, getString(R.string.settings_saved))
+            }
+        }
+    }
+
+    private fun syncThemeWithSystemIfNeeded() {
+        // Get the current system theme state
+        val systemDarkMode = requireContext().isDarkThemeEnabled()
+        
+        // Get the saved theme preference
+        val savedThemePreference = getBoolFromPreferences(PREF_THEME_MODE, false, requireContext())
+        
+        // If they don't match, update the preference to match the system
+        if (systemDarkMode != savedThemePreference) {
+            savePreferenceBool(PREF_THEME_MODE, systemDarkMode, requireContext())
+        }
+    }
+
     private fun setDefaultValues() {
         val prefLang = getStringFromPreferences(PREF_SELECTED_LANGUAGE, "English", requireContext())
         binding.actvLanguages.setText(prefLang)
 
-        val prefDate = getStringFromPreferences(PREF_SELECTED_LANGUAGE, "27/10/2020", requireContext())
+        val prefDate = getStringFromPreferences(PREF_SELECTED_DATE, "dd/MM/yyyy", requireContext())
         binding.actvDateFormat.setText(prefDate)
 
         val prefTheme = getBoolFromPreferences(PREF_THEME_MODE, false, requireContext())
@@ -157,6 +242,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         btnOk.setOnClickListener {
             viewModel.clearFavoritesList()
             dialog.dismiss()
+            showCustomSnackbar(requireContext(), binding.root, getString(R.string.favorites_cleared))
         }
 
         btnCancel.setOnClickListener {
@@ -167,6 +253,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun applyLanguage(language: String) {
+        // Save the selected language to preferences
         savePreferenceString(PREF_SELECTED_LANGUAGE, language, requireContext())
 
         // Update the configuration with the selected language
@@ -181,8 +268,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         configuration.locale = locale
         resources.updateConfiguration(configuration, resources.displayMetrics)
 
+        // Restart the app with the new language
         val intent = Intent(requireContext(), MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
+        requireActivity().finish()
     }
 }

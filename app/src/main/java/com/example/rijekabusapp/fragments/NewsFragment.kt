@@ -54,11 +54,14 @@ class NewsFragment : Fragment() {
                     NewsScraper.scrapeNews()
                 }
             Log.d("uso", "szavrsio rutine")
-            newsItems.clear()
-            newsItems.addAll(newNewsItems)
-            adapter.notifyItemRangeInserted(0, newNewsItems.size)
-
-            binding.progressBar.visibility = View.GONE
+            
+            // Switch to the main thread before updating UI
+            withContext(Dispatchers.Main) {
+                newsItems.clear()
+                newsItems.addAll(newNewsItems)
+                adapter.notifyItemRangeInserted(0, newNewsItems.size)
+                binding.progressBar.visibility = View.GONE
+            }
         }
     }
 }

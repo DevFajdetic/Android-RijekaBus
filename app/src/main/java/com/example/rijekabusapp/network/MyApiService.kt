@@ -1,6 +1,7 @@
 package com.example.rijekabusapp.network
 
 import com.example.rijekabusapp.network.models.StationImage
+import com.example.rijekabusapp.network.response.BusLocationsResponse
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -20,10 +21,14 @@ interface MyApiService {
     @GET("download")
     suspend fun getStationImages(
         @Query("stationId") stationId: Int,
+        @Query("userId") userId: Int,
     ): List<StationImage>
 
     @DELETE("images/{imageId}")
     suspend fun deleteImage(
         @Path("imageId") imageId: String,
     ): Response<ResponseBody>
+    
+    @GET("bus-locations")
+    suspend fun getBusLocations(): BusLocationsResponse
 }

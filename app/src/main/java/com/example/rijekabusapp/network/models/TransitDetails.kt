@@ -1,6 +1,7 @@
 package com.example.rijekabusapp.network.models
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class TransitDetails(
     @SerializedName("line") val line: BusLine?,
@@ -10,4 +11,4 @@ data class TransitDetails(
     @SerializedName("arrival_time") val arrivalTime: MapTime,
     @SerializedName("departure_time") val departureTime: MapTime,
     @SerializedName("num_stops") val stops: Int,
-)
+) : Serializable

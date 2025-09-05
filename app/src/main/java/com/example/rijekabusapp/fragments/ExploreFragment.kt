@@ -22,8 +22,10 @@ import coil.transform.CircleCropTransformation
 import com.example.rijekabusapp.LoginActivity
 import com.example.rijekabusapp.MyRoutesActivity
 import com.example.rijekabusapp.R
+import com.example.rijekabusapp.RijekaBusApplication
 import com.example.rijekabusapp.SavedPreference
 import com.example.rijekabusapp.databinding.FragmentExploreBinding
+import com.example.rijekabusapp.firebase.FirebaseAuthHelper
 import com.example.rijekabusapp.getPreferantLanguage
 import com.example.rijekabusapp.getPreferantUnit
 import com.example.rijekabusapp.helpers.appendTemperatureMetric
@@ -38,11 +40,15 @@ import com.example.rijekabusapp.viewmodels.WeatherViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 
 class ExploreFragment : Fragment() {
     private lateinit var binding: FragmentExploreBinding
     private lateinit var viewModel: WeatherViewModel
     private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private val firebaseAuthHelper: FirebaseAuthHelper by lazy {
+        (requireActivity().application as RijekaBusApplication).firebaseAuthHelper
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -194,6 +200,16 @@ class ExploreFragment : Fragment() {
                 ),
             )
         }
+        
+        binding.lostAndFound.setOnClickListener {
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.action_exploreFragment_to_lostAndFoundFragment)
+        }
+        
+        binding.chat.setOnClickListener {
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.action_exploreFragment_to_chatFragment)
+        }
     }
 
     private fun setupUIBasedOnLogin() {
@@ -287,6 +303,7 @@ class ExploreFragment : Fragment() {
     private fun signOut() {
         mGoogleSignInClient.signOut().addOnCompleteListener(requireActivity()) {
             SavedPreference.clearPreferences(requireContext())
+            firebaseAuthHelper.signOut()
             val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
         }

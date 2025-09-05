@@ -3,6 +3,7 @@ package com.example.rijekabusapp.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -73,7 +74,12 @@ class FavoriteStationRecyclerAdapter(
 
         imagesList.forEach {
             if (it.size > 0 && it[0].stationId == station.id) {
-                holder.binding.ivStationImage.load(it[0].imageUrl)
+                Log.d("ImageLoad", "Loading URL: ${it[0].imageUrl}")
+                holder.binding.ivStationImage.load(it[0].imageUrl) {
+                    crossfade(true)
+                    placeholder(R.drawable.ic_edit)
+                    error(R.drawable.ic_empty_state)
+                }
                 return
             } else {
                 if (position % 2 == 0) {

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="8dp">
+
+    <!-- Vertical timeline line -->
+    <View
+        android:id="@+id/timeline_line"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:background="@color/color_primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="24dp" />
+
+    <!-- Timeline dot -->
+    <View
+        android:id="@+id/timeline_dot"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:background="@drawable/circle_shape"
+        android:backgroundTint="@color/color_primary"
+        app:layout_constraintStart_toStartOf="@id/timeline_line"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="-5dp" />
+
+    <!-- Station name -->
+    <TextView
+        android:id="@+id/tv_station_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/clean_blue"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/timeline_dot"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_arrival_time"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        tools:text="Jelačić Square" />
+
+    <!-- Arrival time -->
+    <TextView
+        android:id="@+id/tv_arrival_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/color_primary"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_station_name"
+        app:layout_constraintBottom_toBottomOf="@id/tv_station_name"
+        tools:text="08:15" />
+
+</androidx.constraintlayout.widget.ConstraintLayout> 

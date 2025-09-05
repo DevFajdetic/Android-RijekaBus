@@ -39,7 +39,7 @@ class StationDetailsViewModel(application: Application) : AndroidViewModel(appli
     fun getStationImages(id: Int) {
         viewModelScope.launch {
             try {
-                val tmp = ArrayList(Network().getMyApiService().getStationImages(id))
+                val tmp = ArrayList(Network().getMyApiService().getStationImages(id, 0))
                 if (tmp.size > 0) {
                     imagesList.value = tmp
                 }

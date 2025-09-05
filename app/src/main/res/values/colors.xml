@@ -19,6 +19,9 @@
     <color name="color_quinary">#bce6ff</color>
     <color name="color_primary_light">#556cb9</color>
     <color name="color_primary_hightlight">#261d4289</color>
+    <color name="color_lost_and_found_card_background">#E0C03E</color>
+    <color name="color_schedules_card_background">#9EA6AC</color>
+    <color name="color_warning_sign">#FCB424</color>
     <color name="color_secondary_light">#ff8784</color>
     <color name="color_secondary_highlight">#19ff604b</color>
     <color name="on_color_on_color_primary">#ffffff</color>
@@ -37,41 +40,14 @@
     <color name="elevation_elevation_1">#19000000</color>
     <color name="elevation_elevation_2">#33000000</color>
     <color name="overlay_overlay">#66000000</color>
-    <color name="team_pacers_primary">#fcb424</color>
-    <color name="team_bulls_primary">#ce1141</color>
-    <color name="team_hornets_primary">#008ca8</color>
-    <color name="team_nets_primary">#2d2925</color>
-    <color name="team_hawks_primary">#e03a3e</color>
-    <color name="team_bucks_primary">#00471b</color>
-    <color name="team_76_ers_primary">#006bb6</color>
-    <color name="team_wizards_primary">#002b5c</color>
-    <color name="team_magic_primary">#0077c0</color>
-    <color name="team_raptors_primary">#000000</color>
-    <color name="team_knicks_primary">#f26729</color>
-    <color name="team_pistons_primary">#1d42ba</color>
-    <color name="team_heat_primary">#98002e</color>
-    <color name="team_celtics_primary">#007a33</color>
-    <color name="team_cavaliers_primary">#860038</color>
-    <color name="team_grizzlies_primary">#5d76a9</color>
-    <color name="team_kings_primary">#5c666f</color>
-    <color name="team_thunder_primary">#007ac1</color>
-    <color name="team_suns_primary">#1d1160</color>
-    <color name="team_clippers_primary">#c8102e</color>
-    <color name="team_lakers_primary">#552583</color>
-    <color name="team_jazz_primary">#f9a11a</color>
-    <color name="team_pelicans_primary">#002a5b</color>
-    <color name="team_rockets_primary">#393a35</color>
-    <color name="team_warriors_primary">#1d428a</color>
-    <color name="team_mavericks_primary">#007dc5</color>
-    <color name="team_timberwolves_primary">#004f83</color>
-    <color name="team_spurs_primary">#9ea6ac</color>
-    <color name="team_nuggets_primary">#0e2240</color>
     <color name="redish">#e03a3e</color>
     <color name="on_color_on_color_secondary">#80ffffff</color>
     <color name="beige">#DDDEE0</color>
-    <color name="bluish">#0CAEC0</color>
+    <color name="color_traffic_changes">#0CAEC0</color>
+    <color name="color_drive_schedule_and_lines">#480E1A</color>
     <color name="sky">#B2D8EB</color>
     <color name="greenish">#D356C843</color>
+    <color name="quantum_yellow800">#D3D6C70F</color>
     <color name="login_activity_background">#5C99B8</color>
     <color name="wave">#0099FF</color>
     <color name="waveALPHA">#800099FF</color>
@@ -83,73 +59,9 @@
     <color name="favorites_background">#0B9CDB</color>
     <color name="pink_alpha">#FF88B7</color>
     <color name="sub_green">#0DE310</color>
-    <!-- Dark Theme Colors -->
-    <color name="surface_dark">#121212</color>
-    <color name="card_background_dark">#1E1E1E</color>
-    <color name="elevation_dark_1">#1F1F1F</color>
-    <color name="elevation_dark_2">#2D2D2D</color>
-    <color name="elevation_dark_3">#3D3D3D</color>
-    <color name="overlay_dark">#52000000</color>
-
-    <!-- Updated Dark Theme Brand Colors -->
-    <color name="color_primary_dark">#1E88E5</color>
-    <color name="color_primary_variant_dark">#1565C0</color>
-    <color name="color_secondary_dark">#42A5F5</color>
-    <color name="color_tertiary_dark">#64B5F6</color>
-    <color name="color_quaternary_dark">#90CAF9</color>
-    <color name="color_quinary_dark">#BBDEFB</color>
-
-    <!-- Dark Theme Text Colors -->
-    <color name="text_primary_dark">#FFFFFF</color>
-    <color name="text_secondary_dark">#B3FFFFFF</color>
-    <color name="text_disabled_dark">#80FFFFFF</color>
-
-    <!-- Dark Theme Surface Colors -->
-    <color name="surface_dark_primary">#121212</color>
-    <color name="surface_dark_secondary">#1E1E1E</color>
-    <color name="surface_dark_tertiary">#2D2D2D</color>
-
-    <!-- Dark Theme Error and Success Colors -->
-    <color name="error_dark">#CF6679</color>
-    <color name="success_dark">#81C784</color>
-
-    <!-- Dark Theme Accent Colors -->
-    <color name="accent_blue_dark">#64B5F6</color>
-    <color name="accent_green_dark">#81C784</color>
-    <color name="accent_orange_dark">#FFB74D</color>
-    <color name="accent_red_dark">#E57373</color>
-    <color name="accent_purple_dark">#B39DDB</color>
-
-    <!-- Dark Theme Status Colors -->
-    <color name="status_error_dark">#CF6679</color>
-    <color name="status_success_dark">#81C784</color>
-    <color name="status_warning_dark">#FFB74D</color>
-    <color name="status_info_dark">#64B5F6</color>
-
-    <!-- Dark Theme Divider Colors -->
-    <color name="divider_dark">#1FFFFFFF</color>
-    <color name="divider_dark_strong">#33FFFFFF</color>
-
-    <!-- Dark Theme Overlay Colors -->
-    <color name="overlay_dark_light">#1A000000</color>
-    <color name="overlay_dark_medium">#33000000</color>
-    <color name="overlay_dark_strong">#52000000</color>
-
-    <!-- Dark Theme Card Colors -->
-    <color name="card_background_dark_primary">#1E1E1E</color>
-    <color name="card_background_dark_secondary">#2D2D2D</color>
-    <color name="card_background_dark_tertiary">#3D3D3D</color>
-
-    <!-- Dark Theme Button Colors -->
-    <color name="button_primary_dark">#1E88E5</color>
-    <color name="button_secondary_dark">#42A5F5</color>
-    <color name="button_disabled_dark">#80FFFFFF</color>
-
-    <!-- Dark Theme Icon Colors -->
-    <color name="icon_primary_dark">#FFFFFF</color>
-    <color name="icon_secondary_dark">#B3FFFFFF</color>
-    <color name="icon_disabled_dark">#80FFFFFF</color>
     <color name="login_background_color">#F1E7E7</color>
     <color name="login_welcome_text_color">#4e4e4e</color>
     <color name="background_custom_dialog_stroke">#EDEDED</color>
+    <color name="primary_color_transparent">#1A0D47A1</color>
+    <color name="divider_color">#EEEEEE</color>
 </resources>

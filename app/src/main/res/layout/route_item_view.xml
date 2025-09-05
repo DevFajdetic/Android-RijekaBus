@@ -2,32 +2,29 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingBottom="8dp"
-    android:background="@drawable/background_rounded"
-    android:backgroundTint="@color/surface_surface_0"
+    android:background="@drawable/background_rounded_stroke"
     android:layout_width="match_parent"
-    android:layout_marginBottom="8dp"
+    android:paddingVertical="12dp"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/matchItem"
+        android:id="@+id/activityItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/homeImageContainer"
+            android:id="@+id/startStationImageContainer"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
             app:cardCornerRadius="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activityDate"
             tools:backgroundTint="@color/color_tertiary">
 
             <ImageView
-                android:id="@+id/ivHomeTeamImage"
+                android:id="@+id/ivStartStationImage"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
@@ -36,11 +33,10 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/tvMatchDate"
+            android:id="@+id/activityDate"
             android:layout_width="152dp"
             android:layout_height="16dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
             android:textColor="@color/black"
             android:theme="@style/DescriptionNLv2Center"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,56 +45,55 @@
             tools:text="TUESDAY, 19 OCT 2021" />
 
         <ImageView
-            android:id="@+id/scoreDivider"
+            android:id="@+id/activityIcon"
             android:layout_width="24dp"
             android:layout_height="32dp"
-            android:layout_marginBottom="36dp"
+            android:contentDescription="TODO"
             android:src="@drawable/ic_bus"
-            app:layout_constraintBottom_toTopOf="@id/tvMatchStatus"
+            app:layout_constraintBottom_toTopOf="@id/llActivityDuration"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMatchDate" />
+            app:layout_constraintTop_toBottomOf="@+id/activityDate" />
 
         <TextView
-            android:id="@+id/tvHomeTeamPoints"
-            android:layout_width="56dp"
-            android:layout_height="32dp"
+            android:id="@+id/tvStartStationTime"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:textColor="@color/color_primary"
-            android:theme="@style/DisplayLargeNLv1Center"
-            app:layout_constraintVertical_bias="0.3"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/scoreDivider"
-            app:layout_constraintStart_toEndOf="@+id/homeImageContainer"
-            app:layout_constraintTop_toTopOf="parent"
+            android:theme="@style/DisplayLargeNLv1Left"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@id/llActivityDuration"
+            app:layout_constraintEnd_toStartOf="@+id/activityIcon"
+            app:layout_constraintStart_toEndOf="@+id/startStationImageContainer"
+            app:layout_constraintTop_toBottomOf="@id/activityDate"
             tools:text="122" />
 
         <TextView
-            android:id="@+id/tvAwayTeamPoints"
-            android:layout_width="56dp"
-            android:layout_height="32dp"
+            android:id="@+id/tvEndStationTime"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:textColor="@color/color_primary"
-            android:theme="@style/DisplayLargeNLv1Center"
-            app:layout_constraintVertical_bias="0.3"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/awayImageContainer"
-            app:layout_constraintStart_toEndOf="@id/scoreDivider"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="116444" />
+            android:theme="@style/DisplayLargeNLv1Left"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@id/llActivityDuration"
+            app:layout_constraintEnd_toStartOf="@+id/endStationImageContainer"
+            app:layout_constraintStart_toEndOf="@id/activityIcon"
+            app:layout_constraintTop_toBottomOf="@id/activityDate"
+            tools:text="116" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/awayImageContainer"
+            android:id="@+id/endStationImageContainer"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             app:cardCornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activityDate"
             tools:backgroundTint="@color/greenish">
 
             <ImageView
-                android:id="@+id/ivAwayTeamImage"
+                android:id="@+id/ivEndStationImage"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
@@ -107,50 +102,48 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/tvHomeTeamAbbreviation"
-            android:layout_width="70dp"
+            android:id="@+id/tvStartStationName"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:maxLines="3"
             android:ellipsize="end"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="6dp"
             android:theme="@style/AssistiveNLv1Center"
-            app:layout_constraintStart_toStartOf="@+id/homeImageContainer"
-            app:layout_constraintEnd_toEndOf="@id/homeImageContainer"
-            app:layout_constraintTop_toBottomOf="@id/homeImageContainer"
+            app:layout_constraintStart_toStartOf="@+id/startStationImageContainer"
+            app:layout_constraintEnd_toEndOf="@id/startStationImageContainer"
+            app:layout_constraintTop_toBottomOf="@id/startStationImageContainer"
             tools:text="LALAAAAAAAAAAA" />
 
         <TextView
-            android:id="@+id/tvAwayTeamAbbreviation"
-            android:layout_width="70dp"
+            android:id="@+id/tvEndStationName"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="8dp"
             android:maxLines="3"
             android:ellipsize="end"
             android:theme="@style/AssistiveNLv1Center"
-            app:layout_constraintEnd_toEndOf="@id/awayImageContainer"
-            app:layout_constraintTop_toBottomOf="@id/awayImageContainer"
-            app:layout_constraintStart_toStartOf="@id/awayImageContainer"
+            app:layout_constraintEnd_toEndOf="@id/endStationImageContainer"
+            app:layout_constraintTop_toBottomOf="@id/endStationImageContainer"
+            app:layout_constraintStart_toStartOf="@id/endStationImageContainer"
             tools:text="BOSAAAAAAAAAA" />
 
         <LinearLayout
-            android:id="@+id/tvMatchStatus"
-            android:layout_width="150dp"
+            android:id="@+id/llActivityDuration"
+            android:layout_width="0dp"
             android:layout_height="20dp"
-            android:layout_marginTop="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scoreDivider"
+            app:layout_constraintEnd_toStartOf="@id/endStationImageContainer"
+            app:layout_constraintStart_toEndOf="@id/startStationImageContainer"
+            app:layout_constraintTop_toBottomOf="@id/tvStartStationTime"
              >
 
             <TextView
                 android:id="@+id/dur_label"
                 android:textAllCaps="true"
                 android:theme="@style/DescriptionNLv2Center"
-                android:text="DURATION"
-                android:gravity="center_vertical"
+                android:text="@string/duration"
+                android:gravity="center"
                 android:layout_width="0dp"
+                android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent" />
 
@@ -158,8 +151,9 @@
                 android:id="@+id/duration"
                 android:textAllCaps="true"
                 android:gravity="center"
+                android:layout_marginEnd="8dp"
                 android:theme="@style/DescriptionNLv1Center"
-                tools:text="DURATION"
+                tools:text="@string/duration"
                 android:layout_width="0dp"
                 android:layout_weight="1.5"
                 android:layout_height="match_parent" />
@@ -167,21 +161,22 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/tvMatchStatus2"
-            android:layout_width="150dp"
+            android:id="@+id/llActivityDuration2"
+            android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvMatchStatus"
+            app:layout_constraintEnd_toStartOf="@id/endStationImageContainer"
+            app:layout_constraintStart_toEndOf="@id/startStationImageContainer"
+            app:layout_constraintTop_toBottomOf="@id/llActivityDuration"
             app:layout_constraintBottom_toBottomOf="parent" >
 
             <TextView
                 android:id="@+id/dis_label"
                 android:textAllCaps="true"
                 android:theme="@style/DescriptionNLv2Center"
-                android:text="DISTANCE"
-                android:gravity="center_vertical"
+                android:text="@string/distance"
+                android:gravity="center"
+                android:layout_marginStart="8dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent" />
@@ -190,8 +185,9 @@
                 android:id="@+id/distance"
                 android:textAllCaps="true"
                 android:gravity="center"
+                android:layout_marginEnd="8dp"
                 android:theme="@style/DescriptionNLv1Center"
-                tools:text="DURATION"
+                tools:text="@string/duration"
                 android:layout_width="0dp"
                 android:layout_weight="1.5"
                 android:layout_height="match_parent" />

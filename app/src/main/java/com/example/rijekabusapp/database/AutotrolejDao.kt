@@ -9,6 +9,7 @@ import androidx.room.Update
 import com.example.rijekabusapp.database.models.FavoriteLine
 import com.example.rijekabusapp.database.models.FavoriteRoute
 import com.example.rijekabusapp.database.models.FavoriteStation
+import com.example.rijekabusapp.database.models.UserStats
 
 @Dao
 interface AutotrolejDao {
@@ -86,4 +87,23 @@ interface AutotrolejDao {
 
     @Query("SELECT COUNT(*) FROM favoriteRoutes")
     fun countFavoriteRoutes(): Int
+    
+    // User Stats
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertUserStats(userStats: UserStats)
+    
+    @Update
+    fun updateUserStats(userStats: UserStats)
+    
+    @Query("SELECT * FROM userStats WHERE userId = :userId")
+    fun getUserStats(userId: String): UserStats?
+    
+    @Query("SELECT * FROM userStats LIMIT 1")
+    fun getAnyUserStats(): UserStats?
+    
+    @Delete
+    fun deleteUserStats(userStats: UserStats)
+    
+    @Query("DELETE FROM userStats")
+    fun deleteAllUserStats()
 }

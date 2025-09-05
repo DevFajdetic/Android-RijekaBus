@@ -10,7 +10,7 @@ const val BASE_URL_BUS = "https://busri.alwaysdata.net/maps/"
 const val BASE_URL_AUTOTROLEJ = "https://api.autotrolej.hr/api/open/v1/voznired/"
 const val BASE_URL_WEATHER = "https://api.openweathermap.org/data/2.5/"
 const val BASE_URL_DIRECTIONS = "https://maps.googleapis.com/maps/api/"
-const val BASE_URL_MY_API = "http://10.20.35.37:8000/"
+const val BASE_URL_MY_API = "http://192.168.1.27:8080/"
 const val BASE_URL_OSRM = "https://router.project-osrm.org/"
 
 class Network {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="marker_size">30dp</dimen>
-    <dimen name="marker_station_size">10dp</dimen>
-    <dimen name="marker_text_size">10dp</dimen>
-    <dimen name="marker_station_text_size">5dp</dimen>
+    <dimen name="marker_size">35dp</dimen>
+    <dimen name="marker_station_size">20dp</dimen>
+    <dimen name="marker_text_size">19dp</dimen>
+    <dimen name="marker_station_text_size">14dp</dimen>
     <dimen name="schedule_item_min_width">100dp</dimen>
 </resources>

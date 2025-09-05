@@ -1,5 +1,6 @@
 package com.example.rijekabusapp.helpers
 
+import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -28,4 +29,18 @@ fun getCurrentDateTime(): String {
     val currentDateTime = ZonedDateTime.now(croatianZoneId)
     val formatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", croatianLocale)
     return currentDateTime.format(formatter).toUpperCase(croatianLocale)
+}
+
+/**
+ * Gets a formatted date string for today's date with optional offset days
+ * @param offsetDays Number of days to offset from today (negative for past, positive for future)
+ * @return Date string in format yyyy-MM-dd
+ */
+fun getCurrentDateString(offsetDays: Int = 0): String {
+    val date = if (offsetDays == 0) {
+        LocalDate.now()
+    } else {
+        LocalDate.now().plusDays(offsetDays.toLong())
+    }
+    return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 }

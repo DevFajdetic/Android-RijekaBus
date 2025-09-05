@@ -16,7 +16,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:text="GO"/>
+            android:text="@string/go"/>
 
 </LinearLayout>
 

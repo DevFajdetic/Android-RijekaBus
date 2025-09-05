@@ -38,43 +38,14 @@
     <color name="elevation_elevation_2">#CCFFFFFF</color>
     <color name="overlay_overlay">#8B8E8E8E</color>
     <color name="drawer_menu_title_color">#CCCCCC</color>
-
-    <!-- Teams -->
-    <color name="team_pacers_primary">#034BDB</color>
-    <color name="team_bulls_primary">#31EEBE</color>
-    <color name="team_hornets_primary">#FF7357</color>
-    <color name="team_nets_primary">#D2D6DA</color>
-    <color name="team_hawks_primary">#1FC5C1</color>
-    <color name="team_bucks_primary">#FFB8E4</color>
-    <color name="team_76_ers_primary">#FF9449</color>
-    <color name="team_wizards_primary">#FFD4A3</color>
-    <color name="team_magic_primary">#FF883F</color>
-    <color name="team_raptors_primary">#FFFFFF</color>
-    <color name="team_knicks_primary">#0D98D6</color>
-    <color name="team_pistons_primary">#E2BD45</color>
-    <color name="team_heat_primary">#67FFD1</color>
-    <color name="team_celtics_primary">#FF85CC</color>
-    <color name="team_cavaliers_primary">#79FFC7</color>
-    <color name="team_grizzlies_primary">#A28956</color>
-    <color name="team_kings_primary">#A39990</color>
-    <color name="team_thunder_primary">#FF853E</color>
-    <color name="team_suns_primary">#E2EE9F</color>
-    <color name="team_clippers_primary">#37EFD1</color>
-    <color name="team_lakers_primary">#AAD07C</color>
-    <color name="team_jazz_primary">#065EE5</color>
-    <color name="team_pelicans_primary">#FFD5A4</color>
-    <color name="team_rockets_primary">#C6C5CA</color>
-    <color name="team_warriors_primary">#E2BD75</color>
-    <color name="team_mavericks_primary">#FF823A</color>
-    <color name="team_timberwolves_primary">#FFB07C</color>
-    <color name="team_spurs_primary">#615953</color>
-    <color name="team_nuggets_primary">#F1DDBF</color>
-
+    <color name="color_schedules_card_background">#615953</color>
+    <color name="color_warning_sign">#FCB424</color>
     <!-- Misc -->
     <color name="redish">#1FC5C1</color>
     <color name="on_color_on_color_secondary">#7F000000</color>
     <color name="beige">#22121F</color>
-    <color name="bluish">#F3513F</color>
+    <color name="color_traffic_changes">#0CAEC0</color>
+    <color name="color_drive_schedule_and_lines">#480E1A</color>
     <color name="sky">#4D2714</color>
     <color name="greenish">#D356C843</color>
     <color name="login_activity_background">#A36647</color>
@@ -88,73 +59,6 @@
     <color name="favorites_background">#F46324</color>
     <color name="pink_alpha">#007748</color>
     <color name="sub_green">#F21CEF</color>
-
-    <!-- Dark Theme Colors -->
-    <color name="surface_dark">#EDEDED</color>
-    <color name="card_background_dark">#E1E1E1</color>
-    <color name="elevation_dark_1">#E0E0E0</color>
-    <color name="elevation_dark_2">#D2D2D2</color>
-    <color name="elevation_dark_3">#C2C2C2</color>
-    <color name="overlay_dark">#ADFFFFFF</color>
-
-    <!-- Updated Dark Theme Brand Colors -->
-    <color name="color_primary_dark">#E1771A</color>
-    <color name="color_primary_variant_dark">#EA9A3F</color>
-    <color name="color_secondary_dark">#BD5A0A</color>
-    <color name="color_tertiary_dark">#9B4A09</color>
-    <color name="color_quaternary_dark">#6F3506</color>
-    <color name="color_quinary_dark">#441204</color>
-
-    <!-- Dark Theme Text Colors -->
-    <color name="text_primary_dark">#000000</color>
-    <color name="text_secondary_dark">#4C000000</color>
-    <color name="text_disabled_dark">#7F000000</color>
-
-    <!-- Dark Theme Surface Colors -->
-    <color name="surface_dark_primary">#EDEDED</color>
-    <color name="surface_dark_secondary">#E1E1E1</color>
-    <color name="surface_dark_tertiary">#D2D2D2</color>
-
-    <!-- Dark Theme Error and Success Colors -->
-    <color name="error_dark">#309986</color>
-    <color name="success_dark">#7E387B</color>
-
-    <!-- Dark Theme Accent Colors -->
-    <color name="accent_blue_dark">#9B4A09</color>
-    <color name="accent_green_dark">#7E387B</color>
-    <color name="accent_orange_dark">#0048B2</color>
-    <color name="accent_red_dark">#18AC8C</color>
-    <color name="accent_purple_dark">#4C6224</color>
-
-    <!-- Dark Theme Status Colors -->
-    <color name="status_error_dark">#309986</color>
-    <color name="status_success_dark">#7E387B</color>
-    <color name="status_warning_dark">#0048B2</color>
-    <color name="status_info_dark">#9B4A09</color>
-
-    <!-- Dark Theme Divider Colors -->
-    <color name="divider_dark">#E0000000</color>
-    <color name="divider_dark_strong">#CC000000</color>
-
-    <!-- Dark Theme Overlay Colors -->
-    <color name="overlay_dark_light">#E5FFFFFF</color>
-    <color name="overlay_dark_medium">#CCFFFFFF</color>
-    <color name="overlay_dark_strong">#ADFFFFFF</color>
-
-    <!-- Dark Theme Card Colors -->
-    <color name="card_background_dark_primary">#E1E1E1</color>
-    <color name="card_background_dark_secondary">#D2D2D2</color>
-    <color name="card_background_dark_tertiary">#C2C2C2</color>
-
-    <!-- Dark Theme Button Colors -->
-    <color name="button_primary_dark">#E1771A</color>
-    <color name="button_secondary_dark">#BD5A0A</color>
-    <color name="button_disabled_dark">#7F000000</color>
-
-    <!-- Dark Theme Icon Colors -->
-    <color name="icon_primary_dark">#000000</color>
-    <color name="icon_secondary_dark">#4C000000</color>
-    <color name="icon_disabled_dark">#7F000000</color>
     <color name="login_background_color">#0E1818</color>
     <color name="login_welcome_text_color">#B1B1B1</color>
     <color name="background_custom_dialog_stroke">#121212</color>

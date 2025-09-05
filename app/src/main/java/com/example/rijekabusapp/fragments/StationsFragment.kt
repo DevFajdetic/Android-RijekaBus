@@ -56,8 +56,8 @@ class StationsFragment : Fragment() {
 
         // Load data first
         if (requireContext().isOnline()) {
-            viewModel.getStationsList()
             scheduleViewModel.getScheduleList("tjedan")
+            viewModel.getStationsList()
         } else {
             showCustomDialog(getString(R.string.no_internet_connection), requireContext())
         }
@@ -305,10 +305,9 @@ class StationsFragment : Fragment() {
     }
 
     fun getStationsList(direction: String) {
+        binding.progressBar.visibility = ProgressBar.VISIBLE
         viewModel.getFavoriteStations()
         val favoriteStations = viewModel.favoriteStations.value
-
-        binding.progressBar.visibility = ProgressBar.VISIBLE
 
         viewModel.stationsList.observe(viewLifecycleOwner) { stations ->
             android.util.Log.d("StationsFilter", "Total stations: ${stations.size}")

@@ -2,7 +2,9 @@ package com.example.rijekabusapp
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.rijekabusapp.adapters.EXTRA_STATION
@@ -10,17 +12,23 @@ import com.example.rijekabusapp.adapters.viewpager.ViewPagerAdapter
 import com.example.rijekabusapp.databinding.ActivityStationBinding
 import com.example.rijekabusapp.fragments.StationLinesFragment
 import com.example.rijekabusapp.fragments.StationLinesListFragment
+import com.example.rijekabusapp.helpers.LanguageHelper
 import com.example.rijekabusapp.helpers.NOTIFICATION_CHANNEL_ID
 import com.example.rijekabusapp.network.models.Station
+import com.example.rijekabusapp.viewmodels.CommentViewModel
 import com.example.rijekabusapp.viewmodels.ScheduleViewModel
 import com.google.android.material.tabs.TabLayout
 
 class StationActivity : AppCompatActivity() {
     lateinit var scheduleViewModel: ScheduleViewModel
+
     private lateinit var binding: ActivityStationBinding
     private lateinit var stationItem: Station
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Apply language settings
+        LanguageHelper.applyLanguage(this)
+        
         super.onCreate(savedInstanceState)
         binding = ActivityStationBinding.inflate(layoutInflater)
         stationItem = (intent.getSerializableExtra(EXTRA_STATION) as? Station)!!
@@ -28,7 +36,21 @@ class StationActivity : AppCompatActivity() {
         scheduleViewModel = MainActivity.ViewModelHolder.getScheduleViewModel(this, application)
         setupViewPagerAndTabs()
         createNotificationChannel()
+        
+        // Clean up old comments not needed anymore as Firebase handles this
+        
         setContentView(binding.root)
+    }
+    
+    // Override attachBaseContext to apply language settings
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LanguageHelper.createConfigurationContext(newBase))
+    }
+    
+    // Apply language when resuming the activity
+    override fun onResume() {
+        super.onResume()
+        LanguageHelper.applyLanguage(this)
     }
 
     private fun createNotificationChannel() {
@@ -49,7 +71,7 @@ class StationActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        val tabs = listOf("Active", "Lines")
+        val tabs = listOf(R.string.Active, R.string.Lines)
         tabs.forEach { tabTitle ->
             binding.tabLayout.addTab(binding.tabLayout.newTab().setText(tabTitle))
         }

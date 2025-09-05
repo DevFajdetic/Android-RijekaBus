@@ -3,6 +3,7 @@ package com.example.rijekabusapp.database
 import com.example.rijekabusapp.database.models.FavoriteLine
 import com.example.rijekabusapp.database.models.FavoriteRoute
 import com.example.rijekabusapp.database.models.FavoriteStation
+import com.example.rijekabusapp.database.models.UserStats
 
 class AutotrolejRepository(private val autotrolejDao: AutotrolejDao) {
     // Favorite Line
@@ -102,5 +103,30 @@ class AutotrolejRepository(private val autotrolejDao: AutotrolejDao) {
 
     fun deleteFavoriteRoutes() {
         autotrolejDao.deleteFavoriteRoutes()
+    }
+    
+    // User Stats
+    fun getUserStats(userId: String): UserStats? {
+        return autotrolejDao.getUserStats(userId)
+    }
+    
+    fun getAnyUserStats(): UserStats? {
+        return autotrolejDao.getAnyUserStats()
+    }
+    
+    fun insertUserStats(userStats: UserStats) {
+        autotrolejDao.insertUserStats(userStats)
+    }
+    
+    fun updateUserStats(userStats: UserStats) {
+        autotrolejDao.updateUserStats(userStats)
+    }
+    
+    fun deleteUserStats(userStats: UserStats) {
+        autotrolejDao.deleteUserStats(userStats)
+    }
+    
+    fun deleteAllUserStats() {
+        autotrolejDao.deleteAllUserStats()
     }
 }

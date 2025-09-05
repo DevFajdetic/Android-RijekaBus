@@ -7,4 +7,10 @@
         <item name="postSplashScreenTheme">@style/Theme.RijekaBusApp</item>
         <item name="background">@color/wave</item>
     </style>
+    <style name="ShapeAppearance.MaterialComponents.CircleImageView"
+        parent="ShapeAppearance.MaterialComponents">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">?attr/shapeAppearanceSmallComponent</item>
+        <!-- Or your custom theme attribute for corner size -->
+    </style>
 </resources>

@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
+        android:name=".RijekaBusApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -20,6 +21,8 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.BusSplashScreenTheme"
+        android:enableOnBackInvokedCallback="true"
+        android:localeConfig="@xml/locales_config"
         tools:targetApi="31">
         <receiver
             android:name=".helpers.MyAlarmReceiver"
@@ -32,7 +35,8 @@
         <activity
             android:name=".ScheduleActivity"
             android:theme="@style/Theme.RijekaBusApp"
-            android:exported="false" />
+            android:exported="false"
+            android:configChanges="locale|orientation" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -42,36 +46,44 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
+            android:name=".RouteDetailActivity"
+            android:exported="false"
+            android:configChanges="locale|orientation"
+            android:theme="@style/Theme.RijekaBusApp" />
+        <activity
             android:name=".MyRoutesActivity"
             android:exported="false"
+            android:configChanges="locale|orientation"
             android:theme="@style/Theme.RijekaBusApp" />
         <activity
             android:name=".MapsActivity"
             android:exported="false"
-            android:theme="@style/Theme.RijekaBusApp" />
-        <activity
-            android:name=".MapsActivity2"
-            android:exported="false"
+            android:configChanges="locale|orientation"
             android:theme="@style/Theme.RijekaBusApp" />
         <activity
             android:name=".NewsActivity"
             android:exported="false"
+            android:configChanges="locale|orientation"
             android:theme="@style/Theme.RijekaBusApp" />
         <activity
             android:name=".AboutActivity"
             android:exported="false"
+            android:configChanges="locale|orientation"
             android:theme="@style/Theme.RijekaBusApp" />
         <activity
             android:name=".StationActivity"
             android:exported="false"
+            android:configChanges="locale|orientation"
             android:theme="@style/Theme.RijekaBusApp" />
         <activity
             android:name=".LineActivity"
             android:exported="false"
+            android:configChanges="locale|orientation"
             android:theme="@style/Theme.RijekaBusApp" />
         <activity
             android:name=".LoginActivity"
             android:exported="true"
+            android:configChanges="locale|orientation"
             android:theme="@style/Theme.RijekaBusApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -82,6 +94,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
+            android:configChanges="locale|orientation"
             android:theme="@style/Theme.RijekaBusApp" />
     </application>
 

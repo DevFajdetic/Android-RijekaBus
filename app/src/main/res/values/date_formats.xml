@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="SpinnerDateFormats" >
-        <item>27/12/2020</item>
-        <item>12/27/2020</item>
-        <item>2020/12/27</item>
-    </string-array>
-</resources>
