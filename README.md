@@ -1,6 +1,5 @@
 # Android-RijekaBus
 This repo is made as part of Mobile applications college. Main concept relays around providing user with detailed information on Buses, tracking and navigation in Croatian city - Rijeka.
-TODO: Finish readme
 
 <div align="center">
 
